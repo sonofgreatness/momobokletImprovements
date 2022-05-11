@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">shrinetutor2</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shr_app_name">MoMoBooklet</string>
+    <string name="shr_hint_username">username</string>
+    <string name="shr_hint_password">password</string>
+    <string name="shr_button_next">next</string>
+    <string name="shr_button_cancel">"cancel "</string>
+    <string name="momobooklet">MOMOBOOKLET</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="register">register</string>
+    <string name="sm_logo">SM logo</string>
+    <string name="accountregistration">Account registration</string>
+    <string name="hint_momo_name">MoMo Name</string>
+    <string name="hint_momo_phone">MoMo Phone</string>
+    <string name="email_address">Email Address</string>
+    <string name="submit">submit</string>
+
+</resources>
