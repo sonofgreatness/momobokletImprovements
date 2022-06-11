@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/teal_200"
+    app:cardCornerRadius="5dp"
+    app:strokeWidth="2dp"
+    android:id="@+id/cardview"
+    app:cardPreventCornerOverlap="true"
+    android:layout_marginTop="3dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25">
+        <ImageView
+        android:layout_width="match_parent"
+        android:id="@+id/user_profile_image"
+        android:layout_height="64dp"
+        android:layout_gravity="start"
+        android:layout_marginBottom="16dp"
+
+        app:srcCompat="@drawable/user_account_icon"
+        android:contentDescription="@string/userprofileimage"  />
+
+        </RelativeLayout>
+
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.5"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="ABC Mobile Money "
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:id="@+id/CardHead"
+        android:textColor="@color/black"
+        />
+
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="76911464"
+        android:id="@+id/CardSubHead"
+        android:textColor="@color/black"
+        android:textAppearance="?attr/textAppearanceBody2"
+        />
+
+
+
+
+
+    </LinearLayout>
+        <ImageView
+            android:layout_width="0dp"
+            android:id="@+id/Incontrol_status"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+
+            android:layout_weight="0.15"
+            app:srcCompat="@drawable/beeping_radio_btn"
+            android:contentDescription="@string/mainman"  />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.10">
+
+            <ImageView
+                android:id="@+id/collapse_arrow"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_gravity="start"
+                android:layout_marginBottom="16dp"
+
+                android:contentDescription="collapses profile card"
+                app:srcCompat="@drawable/collapsible_right"
+                tools:ignore="ImageContrastCheck" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/user_profile_relatLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:elevation="3dp"
+            android:visibility="gone">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/user_profile_edit_btn"
+                style="@style/Widget.Shrine.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+android:paddingEnd="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_alignParentRight="true"
+                android:text="@string/edit" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/user_profile_give_control_btn"
+                style="@style/Widget.Shrine.Button"
+                android:layout_width="wrap_content"
+                android:paddingStart="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="147dp"
+                android:layout_marginRight="12dp"
+                android:layout_toStartOf="@+id/user_profile_edit_btn"
+                android:drawableLeft="@drawable/ic_baseline_control_point_24"
+                android:elevation="3dp"
+                android:text="@string/give_control" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

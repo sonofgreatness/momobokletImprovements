@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recordtransacts_nav"
+    app:startDestination="@id/mainTransactorFragment">
+
+    <fragment
+        android:id="@+id/mainTransactorFragment"
+        android:name="com.example.momobooklet_by_sm.recordingtransanctions.MainTransactorFragment"
+        android:label="fragment_main_transactor"
+        tools:layout="@layout/fragment_main_transactor" >
+
+        <action
+            android:id="@+id/action_mainTransactorFragment_to_recordDisplayFragment"
+            app:destination="@id/recordDisplayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userAccountsFragment"
+        android:name="com.example.momobooklet_by_sm.manageuser.UserAccountsFragment"
+        android:label="fragment_user_accounts"
+        tools:layout="@layout/fragment_user_accounts" />
+    <fragment
+        android:id="@+id/displayTransactionsLandingFragment"
+        android:name="com.example.momobooklet_by_sm.displaytransactions.DisplayTransactionsLandingFragment"
+        android:label="fragment_display_transactions_landing"
+        tools:layout="@layout/fragment_display_transactions_landing" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/recordDisplayFragment"
+        android:name="com.example.momobooklet_by_sm.recordingtransanctions.RecordDisplayFragment"
+        android:label="fragment_record_display"
+        tools:layout="@layout/fragment_record_display" >
+        <action
+            android:id="@+id/action_recordDisplayFragment_to_mainTransactorFragment"
+            app:destination="@id/mainTransactorFragment" />
+    </fragment>
+</navigation>

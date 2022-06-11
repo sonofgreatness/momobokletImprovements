@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".recordingtransanctions.MainTransactorFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/loginPageBackgroundColor"
+    android:id="@+id/main_transactor_layout"
+    >
+
+
+    <com.google.android.material.appbar.AppBarLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.Toolbar
+        style="@style/Widget.Shrine.Toolbar2"
+
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+       />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:layout_marginTop="56dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:paddingTop="16dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Shrine.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/textColorPrimary"
+             android:layout_marginTop="12dp"
+                app:endIconTint="@color/black"
+                app:endIconDrawable="@drawable/black_cancel"
+                app:endIconMode="clear_text"
+                android:hint="@string/customer_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"
+                    android:inputType="text"
+                    android:id="@+id/customername_id"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Shrine.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="13"
+                android:textColorHint="@color/textColorPrimary"
+                android:textColor="@color/black"
+                app:endIconTint="@color/black"
+                app:counterTextColor="@color/textColorPrimary"
+                app:endIconDrawable="@drawable/black_cancel"
+                app:endIconMode="clear_text"
+                app:helperTextEnabled="true"
+                app:helperTextTextColor="@color/textColorPrimary"
+                app:helperText="@string/error_pin"
+                android:hint="@string/customer_pin"
+                android:id="@+id/input_customerpin">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:id="@+id/customerpin_id"
+                    android:inputType="number"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Shrine.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:counterEnabled="true"
+                app:counterMaxLength="8"
+                app:endIconTint="@color/black"
+                app:endIconDrawable="@drawable/black_cancel"
+                app:endIconMode="clear_text"
+                app:startIconTint="@color/black"
+                app:startIconDrawable="@drawable/swazi_phone"
+                android:layout_marginTop="12dp"
+                android:hint="@string/customer_phone"
+                app:counterTextColor="@color/textColorPrimary"
+                app:helperTextEnabled="true"
+                app:helperText="@string/error_phone"
+                app:helperTextTextColor="@color/textColorPrimary"
+                android:textColorHint="@color/textColorPrimary"
+                android:id="@+id/input_customerphone_id"
+             >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:id ="@+id/customerphone_id"
+                    android:textColor="@color/black"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/transactiontype_id"
+                    style="@style/TextAppearance.Shrine.justText"
+                    android:layout_width="234dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="129dp"
+                    android:checked="true"
+                    android:text="@string/buy" />
+            </RelativeLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Shrine.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/textColorPrimary"
+                app:startIconDrawable="@drawable/letter_e"
+                app:startIconTint="@color/black"
+                android:layout_marginTop="12dp"
+                app:endIconMode="clear_text"
+                    app:endIconTint="@color/black"
+
+                app:endIconDrawable="@drawable/black_cancel"
+                android:hint="@string/amount">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:id="@+id/transactionamount_id"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/recordtransact_btn"
+                    style="@style/Widget.Shrine.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/record" />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

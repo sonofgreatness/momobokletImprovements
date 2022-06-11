@@ -1,0 +1,73 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="210dp"
+            android:height="297dp"
+            android:viewportWidth="210"
+            android:viewportHeight="297">
+            <group android:name="group">
+                <path
+                    android:name="path"
+                    android:pathData="M 105.145 90.807 C 95.198 90.807 85.502 94.208 77.454 100.521 C 69.407 106.834 63.414 115.74 60.34 125.954 C 57.266 136.169 57.266 147.176 60.34 157.391 C 63.414 167.605 69.407 176.511 77.454 182.823 C 85.502 189.136 95.198 192.538 105.145 192.538 C 115.092 192.538 124.788 189.136 132.836 182.823 C 140.883 176.511 146.876 167.605 149.949 157.391 C 153.023 147.176 153.023 136.169 149.949 125.954 C 146.876 115.74 140.883 106.834 132.836 100.521 C 124.788 94.208 115.092 90.807 105.145 90.807 Z"
+                    android:fillColor="@color/Main"
+                    android:strokeWidth="0"/>
+                <path
+                    android:name="path_1"
+                    android:pathData="M 104.804 85.345 C 90.413 85.345 76.598 91.463 66.422 102.343 C 56.247 113.222 50.524 127.993 50.524 143.379 C 50.524 153.566 53.032 163.575 57.796 172.396 C 62.56 181.218 69.413 188.545 77.664 193.639 C 85.915 198.732 95.276 201.414 104.804 201.414 C 114.331 201.414 123.692 198.732 131.943 193.639 C 140.194 188.545 147.047 181.218 151.811 172.396 C 156.575 163.575 159.083 153.566 159.083 143.379 C 159.083 127.993 153.36 113.222 143.185 102.343 C 133.009 91.463 119.194 85.345 104.804 85.345 Z M 105.486 88.076 C 118.428 88.076 130.854 93.763 140.005 103.874 C 149.157 113.985 154.303 127.714 154.303 142.014 C 154.303 156.314 149.157 170.042 140.005 180.154 C 130.854 190.265 118.428 195.952 105.486 195.952 C 92.544 195.952 80.119 190.265 70.967 180.154 C 61.816 170.042 56.669 156.314 56.669 142.014 C 56.669 127.714 61.816 113.985 70.967 103.874 C 80.119 93.763 92.544 88.076 105.486 88.076 Z"
+                    android:fillColor="@color/Main"
+                    android:strokeWidth="0"/>
+            <group android:name="group1">
+                <path
+                    android:name="path_2"
+                    android:pathData="M 104.804 85.345 C 90.413 85.345 76.598 91.463 66.422 102.343 C 56.247 113.222 50.524 127.993 50.524 143.379 C 50.524 153.566 53.032 163.575 57.796 172.396 C 62.56 181.218 69.413 188.545 77.664 193.639 C 85.915 198.732 95.276 201.414 104.804 201.414 C 114.331 201.414 123.692 198.732 131.943 193.639 C 140.194 188.545 147.047 181.218 151.811 172.396 C 156.575 163.575 159.083 153.566 159.083 143.379 C 159.083 127.993 153.36 113.222 143.185 102.343 C 133.009 91.463 119.194 85.345 104.804 85.345 Z M 105.486 88.076 C 118.428 88.076 130.854 93.763 140.005 103.874 C 149.157 113.985 154.303 127.714 154.303 142.014 C 154.303 156.314 149.157 170.042 140.005 180.154 C 130.854 190.265 118.428 195.952 105.486 195.952 C 92.544 195.952 80.119 190.265 70.967 180.154 C 61.816 170.042 56.669 156.314 56.669 142.014 C 56.669 127.714 61.816 113.985 70.967 103.874 C 80.119 93.763 92.544 88.076 105.486 88.076 Z"
+                    android:fillColor="#000"
+                    android:strokeWidth="1"/>
+            </group>
+            </group>
+
+
+
+
+        </vector>
+    </aapt:attr>
+
+
+
+
+
+
+
+
+    <target android:name="group1">
+        <aapt:attr name="android:animation">
+            <set>
+
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:startOffset="200"
+
+                    android:duration="@integer/radio_button_duration"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:valueFrom="1"
+                    android:valueTo="1.1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="@integer/radio_button_duration"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:startOffset="200"
+
+                    android:valueFrom="1"
+                    android:valueTo="1.1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

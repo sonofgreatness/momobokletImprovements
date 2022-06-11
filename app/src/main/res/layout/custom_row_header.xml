@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@drawable/no_top_border_blue"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            style="@style/TextAppearance.MomoBooklet.tableHeader"
+            android:id="@+id/header_date_id"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:text="@string/date"
+            android:paddingStart="16dp"
+            android:textColor="@color/black"
+            android:layout_weight="0.16"/>
+        <TextView
+            style="@style/TextAppearance.MomoBooklet.tableHeader"
+            android:id="@+id/header_name_id"
+            android:text="@string/customer_name_as_is"
+            android:textColor="@color/textColorPrimary"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.21"/>
+
+        <TextView
+            style="@style/TextAppearance.MomoBooklet.tableHeader"
+            android:id="@+id/header_pin_id"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:text="@string/customer_pin_as_is"
+            android:textColor="@color/textColorPrimary"
+            android:layout_weight="0.21"/>
+        <TextView
+            style="@style/TextAppearance.MomoBooklet.tableHeader"
+            android:id="@+id/header_s_t_transactiont_type_id"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:layout_width="0dp"
+            android:text="@string/transactiontype"
+            android:layout_weight="0.16"/>
+        <TextView
+            style="@style/TextAppearance.MomoBooklet.tableHeader"
+            android:id="@+id/header_s_t_amount_id"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:layout_width="0dp"
+            android:text="@string/amount"
+            android:layout_weight="0.26"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

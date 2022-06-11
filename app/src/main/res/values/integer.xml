@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <integer name="radio_button_duration">1000</integer>
+
+
+</resources>

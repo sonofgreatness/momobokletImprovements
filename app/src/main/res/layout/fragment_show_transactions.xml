@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".displaytransactions.ShowTransactions">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_show_transactions"
+        android:background="?attr/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="@string/transactions_as_is"
+        app:menu="@menu/show_transactions_menu"
+        app:navigationIcon="@drawable/white_arrow_back_24">
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/loginPageBackgroundColor"
+            android:id="@+id/recycler_view_showtransactions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
