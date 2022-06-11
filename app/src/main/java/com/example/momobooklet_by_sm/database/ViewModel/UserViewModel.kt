@@ -13,7 +13,7 @@ import com.example.momobooklet_by_sm.database.model.UserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-   abstract  class UserViewModel(
+ class UserViewModel(
     application: Application):AndroidViewModel(application) {
 
 

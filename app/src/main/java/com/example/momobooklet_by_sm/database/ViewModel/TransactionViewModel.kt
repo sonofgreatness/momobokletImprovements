@@ -12,18 +12,20 @@ import com.example.momobooklet_by_sm.database.model.TransactionModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-abstract class TransactionViewModel (   application: Application,
+class TransactionViewModel (   application: Application,
 
                                         ):AndroidViewModel(application) {
 
 
-    private val readAllTransactiondata: LiveData<List<TransactionModel>>
+    val readAllTransactiondata_bydate: LiveData<List<TransactionModel>>
+    val readAllTransactiondata: LiveData<List<TransactionModel>>
     private val repository: TransactionRepository
 
     init {
         val userDao = UserDatabase.getDatabase(application)?.userDao()
         repository = userDao?.let { TransactionRepository(it) }!!
         readAllTransactiondata = repository.readAllTransactiondata
+        readAllTransactiondata_bydate=repository.readAllTransactiondata_bydate
     }
 
 

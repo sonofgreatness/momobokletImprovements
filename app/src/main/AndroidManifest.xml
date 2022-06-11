@@ -10,7 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shrinetutor2">
         <activity
-            android:name="com.example.momobooklet_by_sm.MainActivity"
+            android:name=".displaytransactions.DisplayTransactions"
+            android:exported="false" />
+        <activity
+            android:name=".ManageUsers"
+            android:exported="false" />
+        <activity
+            android:name=".recordingtransanctions.RecordTransacts"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

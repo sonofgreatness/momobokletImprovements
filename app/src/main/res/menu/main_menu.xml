@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/search"
+        android:title="search"
+        app:showAsAction="always" />
+
+
+    <group
+        android:checkableBehavior ="none">
+        <item
+            android:id="@+id/user_profile"
+            android:icon="@drawable/userprofile"
+            android:title="@string/profile"
+             />
+        <item
+            android:id="@+id/transaction_data_raw"
+            android:icon="@drawable/library_icon"
+            android:title="@string/transactiondata"
+         />
+        <item
+            android:id="@+id/data_to_pdf"
+            android:icon="@drawable/change"
+            android:title="@string/convertdatatopdfs"
+             />
+
+
+    <item
+
+        android:id="@+id/Help"
+        android:icon="@drawable/help"
+        android:title="Help"
+        />
+
+    </group>
+
+
+</menu>

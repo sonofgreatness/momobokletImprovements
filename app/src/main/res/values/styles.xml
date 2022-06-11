@@ -1,5 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
 
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="Theme.Shrine" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -9,11 +9,13 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Widget.Shrine.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextAppearance">@style/TextAppearance.Shrine.TextInputLayout.HintText</item>
-        <item name="hintTextColor">@color/textColorPrimary</item>
+
+
         <item name ="android:textColor">@color/black</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="boxStrokeColor">@color/textInputOutlineColor</item>
@@ -21,6 +23,9 @@
 
     <style name="TextAppearance.Shrine.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:textColor">@color/black</item>
+        <item name="hintTextColor">@color/black</item>
+
+
     </style>
 
     <style name="Widget.Shrine.Button" parent="Widget.MaterialComponents.Button">
@@ -36,7 +41,7 @@
     </style>
 
     <style name="Widget.Shrine.Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="android:background">?attr/colorAccent</item>
+        <item name="android:background">@color/Main</item>
         <item name="android:theme">@style/Theme.Shrine</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="titleTextAppearance">@style/TextAppearance.Shrine.Toolbar</item>
@@ -70,6 +75,51 @@
     <style name="Widget.Shrine.Backdrop" parent="">
         <item name="android:background">@color/colorAccent</item>
     </style>
+
+    <style name="Widget.Shrine.Toolbar2" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/white</item>
+        <item name="android:theme">@style/Theme.Shrine</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Shrine.Toolbar</item>
+    </style>
+
+    <style name="Widget.Shrine.PopUpBackdrop" parent="">
+        <item name="android:background">@color/optional</item>
+    </style>
+// for UserProfile Fragments...
+    <style name="Widget.Shrine.Toolbar_for_UserProfile" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorAccent</item>
+        <item name="android:theme">@style/Theme.Shrine</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Shrine.Toolbar_for_UserProfile</item>
+    </style>
+
+    <style name="TextAppearance.Shrine.Toolbar_for_UserProfile" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">16sp</item>
+        <item name ="android:textColor">@color/black</item>
+
+    </style>
+
+//Show transactions header
+    <style name = "TextAppearance.MomoBooklet.tableHeader" parent="">
+
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name ="android:textColor">@color/black</item>
+
+
+    </style>
+
+    //Show transaction field
+    <style name = "TextAppearance.MomoBooklet.record_attrs" parent="">
+    <item name="android:textAllCaps">true</item>
+    <item name="android:textAlignment">viewStart</item>
+
+    <item name ="android:textColor">@color/black</item>
+    </style>
+
+
+
 
 
 

@@ -3,14 +3,79 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/background_border2.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/background_border_signature_pad.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/beeping_radio_btn.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/bottom_border.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/collapsible_down.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/collapsible_down_blue.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/collapsible_right.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/collapsible_right_blue.xml" value="0.1905" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/edittext_round_corners.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/no_top_border_blue.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/tablemake_background.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/activity_display_transactions.xml" value="0.17239583333333333" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/activity_main.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/activity_manage_users.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/activity_record_transacts.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/custom_row.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/custom_row_header.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/fragment_display_transactions_landing.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/fragment_main_transactor.xml" value="0.3706293706293706" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/fragment_manage_user_landing.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/fragment_record_display.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/fragment_record_transactions_landing_fragments.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/fragment_register.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/fragment_show_transactions.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/fragment_user_accounts.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/list_item.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/signaturepad_home.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/tablefields_card.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/user_profile_card.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/menu/main_menu.xml" value="0.67" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/menu/show_transactions_menu.xml" value="0.18645833333333334" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/background_signature_pad.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/beeping_radio_btn.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/beeping_radio_btn_red.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/change.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/collapsible_down.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/collapsible_right.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/ic_baseline_cancel_24.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/ic_baseline_phone_24.xml" value="0.1" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/ic_drawing2.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/ic_drawing2_icon.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/ic_e_svg.xml" value="0.75" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/letter_e.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/menu_unclicked.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/newBeeper.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/radio_button_checked.xml" value="0.1" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/shr_logo.xml" value="0.1" />
-        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/activity_main.xml" value="0.15760869565217392" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/sm_beeping_slow.xml" value="0.25" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/swazi_phone.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/user_account_icon.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/drawable/userprofile.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/activity_record_transacts.xml" value="0.18645833333333334" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/fragment_blank.xml" value="0.27074235807860264" />
-        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/fragment_register.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/fragment_display_transactions_landing.xml" value="0.18645833333333334" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/fragment_main_transactor.xml" value="0.18867924528301888" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/fragment_manage_p_d_fs_landing.xml" value="0.18645833333333334" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/fragment_manage_user_landing.xml" value="0.18645833333333334" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/fragment_record_display.xml" value="0.2146118721461187" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/fragment_record_transactions_landing_fragments.xml" value="0.18645833333333334" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/fragment_reg.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/fragment_register.xml" value="0.25" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/main_activity_toolbar.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/signaturepad_home.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/tablefields_card.xml" value="0.16" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/layout/user_profile_card.xml" value="0.2" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/menu/main_menu.xml" value="0.1" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/shrinetutor2/app/src/main/res/xml/main_activity_toolbar.xml" value="0.1" />
       </map>
     </option>
   </component>
@@ -19,5 +84,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.16" />
+      </ProjectState>
+    </option>
   </component>
 </project>

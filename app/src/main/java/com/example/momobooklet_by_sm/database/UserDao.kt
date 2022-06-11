@@ -27,7 +27,8 @@ interface UserDao {
 
     @Query("SELECT*FROM RECORDS_SHEET ORDER BY Transaction_ID ASC")
     fun readAllTransactiondata () : LiveData<List<TransactionModel>>
-
+    @Query("SELECT*FROM RECORDS_SHEET ORDER BY Time ASC")
+    fun readAllTransactiondata_bydate() :LiveData<List<TransactionModel>>
     @Delete
     fun deleteUser(user:UserModel)
 

@@ -10,7 +10,7 @@ class TransactionRepository(private val userDao: UserDao){
 
 
     val readAllTransactiondata:LiveData<List<TransactionModel>> =userDao.readAllTransactiondata()
-
+    val readAllTransactiondata_bydate: LiveData<List<TransactionModel>> =userDao.readAllTransactiondata_bydate()
     suspend fun addTransaction (transaction:TransactionModel){
 
         userDao.addTransaction(transaction)

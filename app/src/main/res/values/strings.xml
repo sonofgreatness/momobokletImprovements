@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">shrinetutor2</string>
+    <string name="app_name">MoMoBooklet</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="shr_app_name">MoMoBooklet</string>
     <string name="shr_hint_username">username</string>
     <string name="shr_hint_password">password</string>
     <string name="shr_button_next">next</string>
-    <string name="shr_button_cancel">"cancel "</string>
+    <string name="shr_button_cancel">Dialer</string>
     <string name="momobooklet">MOMOBOOKLET</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="register">register</string>
@@ -16,5 +16,53 @@
     <string name="hint_momo_phone">MoMo Phone</string>
     <string name="email_address">Email Address</string>
     <string name="submit">submit</string>
+    <string name="viewpdfs">ViewPDFs</string>
+    <string name="UserAccounts">Users</string>
+    <string name="Transactions">TransActs</string>
+    <string name="profile">Profile</string>
+    <string name="transactiondata">TransactionData</string>
+    <string name="convertdatatopdfs">convertDataToPdfs</string>
+    <string name="customer_name">Cust_Name</string>
+    <string name="customer_pin">Cust_PIN</string>
+    <string name="customer_phone">Cust_Phone</string>
+    <string name="amount">Amount</string>
+    <string name="buy">Buys MOMO</string>
+    <string name="sell">Sells MOMO</string>
+    <string name="record">Record</string>
+    <string name="accept">Accept</string>
+    <string name="clear">clear</string>
+    <string name="cancel_logo_description">Cancel logo</string>
+    <string name="customer_signature">Customer Signature</string>
+    <string name="userprofileimage">userprofileimage</string>
+    <string name="mainman">IsInControl</string>
+    <string name="give_control">Give Control</string>
+    <string name="edit">Edit</string>
+    <string name="useraccounts_title">User Accounts</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="change_to">Change To:</string>
+
+
+    <string name="error_pin">must contain 13 characters</string>
+    <string name="error_phone">must contain 8 characters</string>
+
+
+    <string name="pin_check_hint">New PIN </string>
+    <string name="phone_check_hint">New Phone Number</string>
+    <string name="amount_check_hint">New Amount</string>
+    <string name="transaction_type_check_hint"> BUY OR SELL</string>
+    <string name="name_check_hint">New Name</string>
+    <string name="sort_b_date">Sort By Date</string>
+    <string name="sort_by_type">Sort By Type</string>
+    <string name="sort_by_amount">Sort By Amount</string>
+    <string name="sort_by_customername">Sort By CustomerName</string>
+    <string name="search_transactions">search transactions...</string>
+    <string name="transactions_as_is">Transactions</string>
+    <string name="signature">Signature</string>
+    <string name="transactiontype">BUY/SELL</string>
+    <string name="customer_pin_as_is"> pin</string>
+    <string name="customer_name_as_is">Name</string>
+    <string name="date">Date</string>
+
 
 </resources>

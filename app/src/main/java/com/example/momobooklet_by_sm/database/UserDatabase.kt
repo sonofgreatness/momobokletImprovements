@@ -18,11 +18,11 @@ abstract class UserDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: UserDatabase? = null
-        val tempInstance = INSTANCE
+
 
 
         fun getDatabase(context: Context): UserDatabase{
-
+         val tempInstance = INSTANCE
 
             if (tempInstance != null) {
 

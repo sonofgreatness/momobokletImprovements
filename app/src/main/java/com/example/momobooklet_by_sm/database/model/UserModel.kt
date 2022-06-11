@@ -9,11 +9,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity(tableName= "User_Accounts")
-
 data class UserModel(
-
-
-
    // val id :Int,
     val MoMoName:String,
     @PrimaryKey
@@ -21,4 +17,5 @@ data class UserModel(
     val MoMoNumber:String,
     val AgentEmail:String,
 
-     val AgentPassword:String): Parcelable
+     val AgentPassword:String,
+     val IsIncontrol:Boolean,): Parcelable
