@@ -11,29 +11,46 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.momobooklet_by_sm.R
-import com.example.momobooklet_by_sm.database.model.TransactionModel
+import com.example.momobooklet_by_sm.database.models.TransactionModel
 
 
 class ListAdapter : RecyclerView.Adapter<com.example.momobooklet_by_sm.displaytransactions.ListAdapter.MyViewHolder>() {
 
-    private var userList = emptyList<TransactionModel>()
-   class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {}
+
+  inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+
+    private val  differCallback= object : DiffUtil.ItemCallback<TransactionModel>(){
+        override fun areItemsTheSame(oldItem: TransactionModel, newItem: TransactionModel): Boolean {
+            return   oldItem.Transaction_ID==newItem.Transaction_ID
+        }
+
+        override fun areContentsTheSame(oldItem: TransactionModel, newItem: TransactionModel):Boolean {
+            return oldItem==newItem
+        }
+
+
+    }
+
+
+    val differ = AsyncListDiffer(this,differCallback)
 
 
 
-     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder{
          return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.custom_row, parent, false))
      }
 
     override fun getItemCount(): Int {
-        return userList.size
+        return differ.currentList.size
     }
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = userList[position]
+        val currentItem =differ.currentList[position]
  holder.itemView.findViewById<TextView>(R.id.date_id).text=currentItem.Date
         holder.itemView.findViewById<TextView>(R.id.name_id).text= currentItem.C_Name
         holder.itemView.findViewById<TextView>(R.id.pin_id).text=currentItem.C_ID
@@ -104,10 +121,7 @@ class ListAdapter : RecyclerView.Adapter<com.example.momobooklet_by_sm.displaytr
 
 
 
-    fun setData(transaction: List<TransactionModel>){
-        this.userList = transaction
-        notifyDataSetChanged()
-    }
+
 
 
 }

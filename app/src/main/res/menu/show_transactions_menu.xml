@@ -2,35 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view"
+
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/search"
         android:icon="@drawable/search"
+        app:showAsAction="always"
         android:title="search"
-        app:showAsAction="always" />
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+
     <group
-        android:checkableBehavior ="single">
+        android:checkableBehavior ="none">
         <item
-            android:id="@+id/sort_date"
-            android:title="@string/sort_b_date"
+            android:id="@+id/menu_help_records"
+            android:title="Help"
             />
 
-
-        <item
-            android:id="@+id/sort_type"
-            android:title="@string/sort_by_type"
-            />
-
-
-        <item
-            android:id="@+id/sort_amount"
-            android:title="@string/sort_by_amount"
-            />
-
-        <item
-            android:id="@+id/sort_name"
-            android:title="@string/sort_by_customername"
-            />
 
     </group>
 

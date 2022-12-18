@@ -35,7 +35,6 @@
         android:layout_height="64dp"
         android:layout_gravity="start"
         android:layout_marginBottom="16dp"
-
         app:srcCompat="@drawable/user_account_icon"
         android:contentDescription="@string/userprofileimage"  />
 
@@ -93,7 +92,6 @@
                 android:layout_height="64dp"
                 android:layout_gravity="start"
                 android:layout_marginBottom="16dp"
-
                 android:contentDescription="collapses profile card"
                 app:srcCompat="@drawable/collapsible_right"
                 tools:ignore="ImageContrastCheck" />

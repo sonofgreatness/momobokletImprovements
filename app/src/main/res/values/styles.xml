@@ -73,9 +73,8 @@
     </style>
 
     <style name="Widget.Shrine.Backdrop" parent="">
-        <item name="android:background">@color/colorAccent</item>
+        <item name="android:background">@color/optional</item>
     </style>
-
     <style name="Widget.Shrine.Toolbar2" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">@color/white</item>
         <item name="android:theme">@style/Theme.Shrine</item>
@@ -117,8 +116,6 @@
 
     <item name ="android:textColor">@color/black</item>
     </style>
-
-
 
 
 

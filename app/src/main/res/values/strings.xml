@@ -63,6 +63,10 @@
     <string name="customer_pin_as_is"> pin</string>
     <string name="customer_name_as_is">Name</string>
     <string name="date">Date</string>
+    <string name="reload">reload</string>
+    <string name="click_button_to_record_transactions">Click Button To Record Transactions</string>
+    <string name="choose_file_type_to_manage">Choose File Type To Manage</string>
+    <string name="click_button_toView_record_transactions">Click Button To View Recorded Transactions</string>
 
 
 </resources>

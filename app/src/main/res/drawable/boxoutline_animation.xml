@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:duration="500"
+        android:drawable="@drawable/bottom_border_1"/>
+    //color to straight blue
+
+    <item android:duration="500"
+        android:drawable="@drawable/endborder_1"/>// here make bottom border
+    //color to straight blue
+
+
+    <item android:duration="500"
+        android:drawable="@drawable/topborder_1"/>
+
+    //color to straight blue
+    <item android:duration="500"
+        android:drawable="@drawable/startborder_1"/>
+    //color to straight blue
+</animation-list>

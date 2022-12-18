@@ -18,7 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:title="@string/transactions_as_is"
-        app:menu="@menu/show_transactions_menu"
         app:navigationIcon="@drawable/white_arrow_back_24">
     </androidx.appcompat.widget.Toolbar>
 

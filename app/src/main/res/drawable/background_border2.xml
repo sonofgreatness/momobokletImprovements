@@ -3,9 +3,6 @@
     <!-- This is the stroke you want to define -->
     <stroke android:width="3dp"
         android:color="@color/Main"/>
-
-
-
     <!-- Optional, fill the rest of your background with a color or gradient, use transparent if you only want the border to be displayed-->
 
 </shape>

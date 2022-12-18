@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/mainTransactorFragment">
+
+    <fragment
+        android:id="@+id/mainTransactorFragment"
+        android:name="com.example.momobooklet_by_sm.recordingtransanctions.MainTransactorFragment"
+        android:label="fragment_main_transactor"
+        tools:layout="@layout/fragment_main_transactor" >
+        <action
+            android:id="@+id/action_mainTransactorFragment_to_recordDisplayFragment"
+            app:destination="@id/recordDisplayFragment" />
+        <action
+            android:id="@+id/action_mainTransactorFragment_to_showTransactions"
+            app:destination="@id/showTransactions" />
+    </fragment>
+    <fragment
+        android:id="@+id/displayTransactionsLandingFragment"
+        android:name="com.example.momobooklet_by_sm.displaytransactions.DisplayTransactionsLandingFragment"
+        android:label="fragment_display_transactions_landing"
+        tools:layout="@layout/fragment_display_transactions_landing" />
+    <fragment
+        android:id="@+id/recordDisplayFragment"
+        android:name="com.example.momobooklet_by_sm.recordingtransanctions.RecordDisplayFragment"
+        android:label="fragment_record_display"
+        tools:layout="@layout/fragment_record_display" >
+        <action
+            android:id="@+id/action_recordDisplayFragment_to_mainTransactorFragment"
+            app:destination="@id/mainTransactorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.momobooklet_by_sm.manageuser.LoginFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_blank" />
+    <fragment
+        android:id="@+id/managePDFsLandingFragment2"
+        android:name="com.example.momobooklet_by_sm.managefiles.ManagePDFsLandingFragment"
+        android:label="fragment_manage_p_d_fs_landing"
+        tools:layout="@layout/fragment_manage_p_d_fs_landing" />
+    <fragment
+        android:id="@+id/manageUserLandingFragment2"
+        android:name="com.example.momobooklet_by_sm.manageuser.ManageUserLandingFragment"
+        android:label="fragment_manage_user_landing"
+        tools:layout="@layout/fragment_manage_user_landing" />
+    <fragment
+        android:id="@+id/recordTransactionsLandingFragment2"
+        android:name="com.example.momobooklet_by_sm.recordingtransanctions.RecordTransactionsLandingFragment"
+        android:label="fragment_record_transactions_landing_fragments"
+        tools:layout="@layout/fragment_record_transactions_landing_fragments" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.momobooklet_by_sm.manageuser.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_userAccountsFragment"
+            app:destination="@id/userAccountsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showTransactions"
+        android:name="com.example.momobooklet_by_sm.displaytransactions.ShowTransactions"
+        android:label="fragment_show_transactions"
+        tools:layout="@layout/fragment_show_transactions" >
+        <action
+            android:id="@+id/action_showTransactions_to_mainTransactorFragment"
+            app:destination="@id/mainTransactorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userAccountsFragment"
+        android:name="com.example.momobooklet_by_sm.manageuser.UserAccountsFragment"
+        android:label="fragment_user_accounts"
+        tools:layout="@layout/fragment_user_accounts" >
+        <action
+            android:id="@+id/action_userAccountsFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.momobooklet_by_sm.MainActivity"
+        android:label="MainActivity" />
+
+</navigation>

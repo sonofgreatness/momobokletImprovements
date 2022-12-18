@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.momobooklet_by_sm.NavigationHost
 
-import com.example.momobooklet_by_sm.database.ViewModel.UserViewModel
-import com.example.momobooklet_by_sm.database.model.UserModel
+import com.example.momobooklet_by_sm.database.models.UserModel
+
+
 import com.example.momobooklet_by_sm.databinding.FragmentRegisterBinding
+import com.example.momobooklet_by_sm.ui.viewmodels.UserViewModel
 
 
 class RegisterFragment : Fragment() {
@@ -57,11 +58,11 @@ binding.submitBtn.setOnClickListener {
         // Use values to create UserModel Object
         if( validator(RegMoMoName,RegEmail,RegPass,Regphone)){
 
-             val user =UserModel(RegMoMoName,Regphone,RegEmail, RegPass,false)
+             val user = UserModel(RegMoMoName,Regphone,RegEmail, RegPass,false)
           mUserViewModel.addUser(user)
             Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_LONG).show()
             // Navigate Back
-            (activity as NavigationHost).navigateTo(LoginFragment(), false) // Navigate to the next Fragment
+         // Navigate to the next Fragment
         }else{
             Toast.makeText(requireContext(), "Please fill out all fields.", Toast.LENGTH_LONG).show()
         }

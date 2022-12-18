@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.momobooklet_by_sm.ManageUsers;
-import com.example.momobooklet_by_sm.R;
 import com.example.momobooklet_by_sm.databinding.FragmentManageUserLandingBinding;
 
 
@@ -30,8 +28,7 @@ public class ManageUserLandingFragment extends Fragment {
         binding.usersDoorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(getContext(), ManageUsers.class);
-                startActivity(i);
+
             }
         });
 

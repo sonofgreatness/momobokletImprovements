@@ -2,9 +2,7 @@
     android:insetLeft="-2dp"
     android:insetRight="-2dp"
     android:insetTop="-2dp"
-
     >
-
     <shape android:shape="rectangle">
         <stroke android:width="2dp" android:color="@color/black" />
     </shape>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mainTransactorFragment"
+        android:enabled="true"
+        android:icon="@drawable/home"
+        android:title="Home"/>
+    <item
+        android:id="@+id/showTransactions"
+        android:icon="@drawable/library_icon"
+        android:enabled="true"
+
+        android:title="RECORDS"/>
+    <item
+        android:id="@+id/userAccountsFragment"
+        android:enabled="true"
+        android:icon="@drawable/user_account_icon"
+        android:title="USERS"/>
+    <item
+        android:id="@+id/managePDFsLandingFragment2"
+        android:enabled="true"
+        android:icon="@drawable/swap_icon"
+        android:title="FILES"/>
+</menu>

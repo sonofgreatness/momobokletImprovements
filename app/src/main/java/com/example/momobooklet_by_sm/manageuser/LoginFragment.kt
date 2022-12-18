@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.momobooklet_by_sm.NavigationHost
 import com.example.momobooklet_by_sm.databinding.FragmentBlankBinding
 
 class LoginFragment : Fragment() {
@@ -27,18 +26,7 @@ private lateinit var _binding :FragmentBlankBinding
         binding.nextButton.setOnClickListener {
         }
         binding.registerBtn.setOnClickListener{
-
-
-
-      //      findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-
-            (activity as NavigationHost).navigateTo(RegisterFragment(), false) // Navigate to the next Fragment
-
         }
-
-
-
-
 
         return view
         }

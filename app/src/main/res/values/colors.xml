@@ -15,18 +15,16 @@
     <color name="loginPageBackgroundColor">#FFFFFF</color>
     <color name="productGridBackgroundColor">#FFFBFA</color>
     <color name="textInputOutlineColor">@color/Main</color>
-
     <color name="white">#FFFFFFFF</color>
-
-
 <color name = "muesli_green" >#298b28</color>
-
 
     <!--  color pallete-->
     <color name ="Main">#009688</color>
     <color name ="optional">#00897B</color>
     <color name ="Secondary">#4DD0E1</color>
     <color name="redWarning">#F81302</color>
-
+    <color name ="boxOutlineStartColor">#87ceeb</color>
+    <color name = "boxOutlineCenterColor" >#00bfff</color>
+    <color name = "boxOutlineEndColor">#1e90ff</color>
 
 </resources>
