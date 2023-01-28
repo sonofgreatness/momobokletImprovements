@@ -1,8 +1,7 @@
 package com.example.momobooklet_by_sm.manageuser
 
-import android.graphics.drawable.Animatable
 import android.transition.TransitionManager
-import com.example.momobooklet_by_sm.database.models.UserModel
+import com.example.momobooklet_by_sm.database.local.models.UserModel
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import android.view.View
@@ -13,9 +12,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import com.example.momobooklet_by_sm.R
+import com.example.momobooklet_by_sm.ui.viewmodels.UserViewModel
 
-
-class UserProfileRecyclerViewAdapter :
+class UserProfileRecyclerViewAdapter(val mUserViewModel:UserViewModel) :
     RecyclerView.Adapter<UserProfileRecyclerViewAdapter.MyViewHolderr>() {
 
 
@@ -62,13 +61,20 @@ class UserProfileRecyclerViewAdapter :
                     holder.itemView.findViewById<ImageView>(R.id.collapse_arrow) .setImageResource(R.drawable.collapsible_right)
                 }
             }
-            if (!curretItem.IsIncontrol) holder.itemView.findViewById<ImageView>(R.id.Incontrol_status).setImageResource(R.drawable.newbeeper)
+            if (!curretItem.IsIncontrol) holder.itemView.findViewById<ImageView>(R.id.Incontrol_status).setImageResource(R.drawable.circle_teal_fill)
             if (curretItem.IsIncontrol) holder.itemView.findViewById<ImageView>(R.id.Incontrol_status).setImageResource(R.drawable.beeping_radio_btn)
-            //
+            /*
             val animatable = holder.itemView.findViewById<ImageView>(R.id.Incontrol_status).drawable as Animatable
             animatable.start()
+             */
             //AnimatedVectorDrawableCompat animatedVectorDrawableCompat = AnimatedVectorDrawableCompat.create(holder.cardview.getContext(), R.drawable.beeping_radio_btn);
             // holder.UserIncontrolStatusImagr.setImageDrawable(animatedVectorDrawableCompat);
+
+            /* On Click Listeners */
+            holder.itemView.findViewById<ImageView>(R.id.delete_icon).setOnClickListener({
+                mUserViewModel.deleteUser(curretItem)
+            })
+
         }
     }
 }

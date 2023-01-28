@@ -7,9 +7,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.momobooklet_by_sm.databinding.FragmentRecordTransactionsLandingFragmentsBinding
 
-
-
-
 class RecordTransactionsLandingFragment : Fragment() {
     private var binding: FragmentRecordTransactionsLandingFragmentsBinding? = null
     override fun onCreateView(

@@ -17,9 +17,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,12 +61,26 @@
         android:textColor="@color/black"
         android:textAppearance="?attr/textAppearanceBody2"
         />
-
-
-
-
-
     </LinearLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="4dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="67dp"
+            android:layout_weight="0.10"
+            android:background="@drawable/border_green_circle">
+
+            <ImageView
+                android:id="@+id/delete_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:contentDescription="deletes a user"
+                android:padding="6dp"
+                app:srcCompat="@drawable/delete_icon"
+                tools:ignore="ImageContrastCheck" />
+        </RelativeLayout>
         <ImageView
             android:layout_width="0dp"
             android:id="@+id/Incontrol_status"

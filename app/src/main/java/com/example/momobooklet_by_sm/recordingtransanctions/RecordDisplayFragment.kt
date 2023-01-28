@@ -21,19 +21,18 @@ import androidx.annotation.RequiresApi
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.transition.TransitionManager
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.R
-import com.example.momobooklet_by_sm.database.models.TransactionModel
+import com.example.momobooklet_by_sm.database.local.models.TransactionModel
 import com.example.momobooklet_by_sm.databinding.FragmentRecordDisplayBinding
 import com.example.momobooklet_by_sm.databinding.TablefieldsCardBinding
 import com.example.momobooklet_by_sm.ui.viewmodels.TransactionViewModel
 import com.github.gcacace.signaturepad.views.SignaturePad
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class RecordDisplayFragment : Fragment() {
@@ -363,11 +362,8 @@ class RecordDisplayFragment : Fragment() {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
-
                 //display the popup window
                 popupWindow!!.showAtLocation(binding.parentRecordTransacts, Gravity.CENTER, 0, 0)
-
-
             }
         )
 
@@ -429,10 +425,11 @@ class RecordDisplayFragment : Fragment() {
         // translate dataObject to transactionViewmodel ready object (TransactionModel)
 
 
-        val sdf = SimpleDateFormat("dd/M/yyyy ")
+        val sdf = SimpleDateFormat("dd-MM-yyyy ")
         val currentDate = sdf.format(Date())
-        val sd1f = SimpleDateFormat("dd/M/yyyy hh:mm:ss a")
+        val sd1f = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a")
         val currentTime = sd1f.format(Date())
+
 // little to no use
         val byteArray: ByteArray? = arguments?.getByteArray("signature_key")
         byteArray!!
@@ -466,8 +463,8 @@ class RecordDisplayFragment : Fragment() {
             "+26876911464"
         )
         mTransactionViewModel.addTransaction(transaction)
-
-//        val callIntent: Intent = Uri.parse(arguments?.getString("phone_dial_key")).let { number ->
+        mTransactionViewModel.calculateThenUpdateDailyCommission()
+        //val callIntent: Intent = Uri.parse(arguments?.getString("phone_dial_key")).let { number ->
         //          Intent(Intent.ACTION_DIAL, number)
 
     }
@@ -478,8 +475,6 @@ class RecordDisplayFragment : Fragment() {
         else
             return "tel:*007*2*" + cust_phone + "*" + amount + "#"// sells Momo
         // check momo codes and update this string accordingly
-
-
     }
 }
 

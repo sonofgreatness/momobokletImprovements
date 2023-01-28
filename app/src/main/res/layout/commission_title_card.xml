@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:cardElevation="10dp"
+        app:strokeColor ="@color/middle_yellow"
+        app:strokeWidth="1.8dp"
+        app:cardCornerRadius="20dp"
+        app:shapeAppearance ="@drawable/oval_rectangle_green_yellow"
+        app:cardBackgroundColor="@color/optional"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/commission_analysis_title"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textAlignment="center"
+                android:text="Analytics"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                android:layout_centerInParent="true"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="45sp"
+                android:text="Commission"/>
+                <!--android:layout_alignBottom="@+id/commission_analysis_title"
+                -->
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

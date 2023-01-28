@@ -14,7 +14,7 @@
     <string name="accountregistration">Account registration</string>
     <string name="hint_momo_name">MoMo Name</string>
     <string name="hint_momo_phone">MoMo Phone</string>
-    <string name="email_address">Email Address</string>
+    <string name="email_address">*Email Address (optional)</string>
     <string name="submit">submit</string>
     <string name="viewpdfs">ViewPDFs</string>
     <string name="UserAccounts">Users</string>
@@ -56,7 +56,7 @@
     <string name="sort_by_type">Sort By Type</string>
     <string name="sort_by_amount">Sort By Amount</string>
     <string name="sort_by_customername">Sort By CustomerName</string>
-    <string name="search_transactions">search transactions...</string>
+    <string name="search_transactions">search transactions…</string>
     <string name="transactions_as_is">Transactions</string>
     <string name="signature">Signature</string>
     <string name="transactiontype">BUY/SELL</string>
@@ -67,6 +67,21 @@
     <string name="click_button_to_record_transactions">Click Button To Record Transactions</string>
     <string name="choose_file_type_to_manage">Choose File Type To Manage</string>
     <string name="click_button_toView_record_transactions">Click Button To View Recorded Transactions</string>
+    <string name="add_account">Add Account</string>
+    <string name="otp_prompt">A 6 digit pin has been sent to</string>
+    <string name="momo_agent_name">MoMo Agent Name</string>
+
+
+    <string name = "permission_alert_dialog_title">SMS Permission</string>
+    <string name="permission_dialog_message">Enable SMS Permission so we can \n autodetect incoming sms and
+    improve your verification experience.</string>
+    <string name="action_ok">OK</string>
+    <string name="action_no_thanks">No Thanks</string>
+    <string name="today_s_commission">Today\'s Commission</string>
+    <string name="last_month_s_commission">Last Month\'s Commission</string>
+    <string name="dd_mm_yy">dd-MM-yy</string>
+    <string name="search_hint">Search Transactions</string>
+    <string name="no_results">No Results  Found ...</string>
 
 
 </resources>

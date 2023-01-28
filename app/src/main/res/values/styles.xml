@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="Theme.Shrine" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Shrine" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -66,11 +66,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
     </style>
-    <style name="TextAppearance.Shrine.Title" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="textAllCaps">true</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
+
 
     <style name="Widget.Shrine.Backdrop" parent="">
         <item name="android:background">@color/optional</item>
@@ -118,6 +114,52 @@
     </style>
 
 
+
+
+    <style name="TextAppearance.Shrine.Title" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name ="android:fontFamily">@font/artifika</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Widget.MoMoBooklet.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/TextAppearance.MoMoBooklet.TextInputLayout.HintText</item>
+        <item name="hintTextColor">@color/textColorPrimary</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="shapeAppearanceOverlay">
+            @style/ShapeAppearanceOverlay.MoMoBooklet.TextInputLayout.Rounded
+        </item>
+        <item name="boxStrokeColor">@color/boxOutlineStartColor</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">32dp</item>
+    </style>
+
+    <style name="TextAppearance.MoMoBooklet.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MoMoBooklet.TextInputLayout.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">32dp</item>
+    </style>
+
+    <style name ="Widget.MoMoBooklet.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/Main</item>
+    </style>
+    <style name="Widget.MoMoBooklet.Toolbar2" parent="Widget.AppCompat.Toolbar">
+    <item name="android:background">@color/white</item>
+    <item name="android:theme">@style/Theme.Shrinetutor2</item>
+    <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
+
+    <style name="TextAppearance.MoMoBooklet.Commision" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name ="android:fontFamily">@font/artifika</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 
 
 </resources>

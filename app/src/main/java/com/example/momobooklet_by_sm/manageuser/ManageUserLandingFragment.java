@@ -1,6 +1,5 @@
 package com.example.momobooklet_by_sm.manageuser;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,14 +10,8 @@ import android.view.ViewGroup;
 
 import com.example.momobooklet_by_sm.databinding.FragmentManageUserLandingBinding;
 
-
-public class ManageUserLandingFragment extends Fragment {
+    public class ManageUserLandingFragment extends Fragment {
     private FragmentManageUserLandingBinding binding;
-
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,11 +21,8 @@ public class ManageUserLandingFragment extends Fragment {
         binding.usersDoorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
-
-
         View view = binding.getRoot() ;
         return view ;
     }

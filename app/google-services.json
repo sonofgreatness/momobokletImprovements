@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "823164563202",
+    "project_id": "digibooklet-cd4fc",
+    "storage_bucket": "digibooklet-cd4fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823164563202:android:55e51f97c669377c6b5c1b",
+        "android_client_info": {
+          "package_name": "com.example.momobooklet_by_sm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823164563202-9pahkl8irnm9fbc5uevfbeuptsrss4t7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.momobooklet_by_sm",
+            "certificate_hash": "39321c354dea06cba6fe29142dd07ce0bb1bf574"
+          }
+        },
+        {
+          "client_id": "823164563202-o85buli5mhs4hq0mhhhf0je5i2814ot9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYoSYFuBZGwOu4EbfEkHsJQf8q1S3fhQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823164563202-o85buli5mhs4hq0mhhhf0je5i2814ot9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

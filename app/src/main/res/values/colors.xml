@@ -27,4 +27,16 @@
     <color name = "boxOutlineCenterColor" >#00bfff</color>
     <color name = "boxOutlineEndColor">#1e90ff</color>
 
+    <color name = "yellow">#FEDF00</color>
+    <color name = "middle_yellow">#FFEB00</color>
+
+
+
+    <color name = "hotpink">#FFBEDE</color>
+    <color name = "cardinal">#C41e3a</color>
+    <color name = "cerise">#DE3163</color>
+    <color name = "Pearl">#E7ACCF</color>
+
+
+    <color name= "DarkGray">#5A5A5A</color>
 </resources>

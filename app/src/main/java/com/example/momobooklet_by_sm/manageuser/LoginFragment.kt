@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.momobooklet_by_sm.databinding.FragmentBlankBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
 
@@ -21,15 +24,21 @@ private lateinit var _binding :FragmentBlankBinding
     ): View?{
         // Inflate the layout for this fragment
         _binding = FragmentBlankBinding.inflate(inflater, container, false)
-
         val view = binding.root
-        binding.nextButton.setOnClickListener {
-        }
-        binding.registerBtn.setOnClickListener{
-        }
 
+        binding.nextButton.setOnClickListener {}
+        binding.registerBtn.setOnClickListener{}
+        couritines()
         return view
         }
 
+    private fun couritines() {
+        GlobalScope.launch {
+            val job: Job =  launch {
 
+            }
+            job.join()
+                
+        }
+    }
 }

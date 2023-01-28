@@ -1,7 +1,5 @@
 package com.example.momobooklet_by_sm.displaytransactions
 
-import android.os.Bundle
-import android.os.Build
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.transition.TransitionManager
@@ -9,13 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.momobooklet_by_sm.R
-import com.example.momobooklet_by_sm.database.models.TransactionModel
+import com.example.momobooklet_by_sm.database.local.models.TransactionModel
 
 
 class ListAdapter : RecyclerView.Adapter<com.example.momobooklet_by_sm.displaytransactions.ListAdapter.MyViewHolder>() {
@@ -78,7 +74,7 @@ class ListAdapter : RecyclerView.Adapter<com.example.momobooklet_by_sm.displaytr
 
                 holder.itemView.findViewById<LinearLayout>(R.id.layout_change).visibility = View.GONE
                 holder.itemView.findViewById<ImageView>(R.id.s_t_button_id).setImageResource(R.drawable.collapsible_down_blue)
-
+                holder.itemView.findViewById<LinearLayout>(R.id.s_t_phone_layout).visibility = View.GONE
 
             }else if(holder.itemView.findViewById<LinearLayout>(R.id.layout_change).visibility==View.GONE){
 
@@ -88,14 +84,14 @@ class ListAdapter : RecyclerView.Adapter<com.example.momobooklet_by_sm.displaytr
 
                 holder.itemView.findViewById<LinearLayout>(R.id.layout_change).visibility = View.VISIBLE
                 holder.itemView.findViewById<ImageView>(R.id.s_t_button_id).setImageResource(R.drawable.collapsible_right_blue)
-
+                holder.itemView.findViewById<LinearLayout>(R.id.s_t_phone_layout).visibility = View.VISIBLE
 
             }
 
 
         })
         holder.itemView.findViewById<TextView>(R.id.s_t_date).text=currentItem.Time
-
+        holder.itemView.findViewById<TextView>(R.id.s_t_phone).text=currentItem.C_PHONE
 
 
 

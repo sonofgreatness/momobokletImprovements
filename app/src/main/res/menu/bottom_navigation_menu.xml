@@ -21,4 +21,9 @@
         android:enabled="true"
         android:icon="@drawable/swap_icon"
         android:title="FILES"/>
+    <item
+        android:id="@+id/commission"
+        android:enabled="true"
+        android:icon="@drawable/attach_money"
+        android:title="COMMISSION"/>
 </menu>

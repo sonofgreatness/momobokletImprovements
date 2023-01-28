@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_main_transactor" >
         <action
             android:id="@+id/action_mainTransactorFragment_to_recordDisplayFragment"
-            app:destination="@id/recordDisplayFragment" />
-        <action
-            android:id="@+id/action_mainTransactorFragment_to_showTransactions"
-            app:destination="@id/showTransactions" />
+            app:destination="@id/recordDisplayFragment"
+            app:popUpTo="@id/mainTransactorFragment"
+            app:popUpToInclusive="false" />
+
     </fragment>
     <fragment
         android:id="@+id/displayTransactionsLandingFragment"
@@ -29,7 +29,9 @@
         tools:layout="@layout/fragment_record_display" >
         <action
             android:id="@+id/action_recordDisplayFragment_to_mainTransactorFragment"
-            app:destination="@id/mainTransactorFragment" />
+            app:destination="@id/mainTransactorFragment"
+            app:popUpTo="@id/mainTransactorFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -58,16 +60,19 @@
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_userAccountsFragment"
-            app:destination="@id/userAccountsFragment" />
+            app:destination="@id/userAccountsFragment"
+            app:popUpTo="@id/userAccountsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_registerFragment_to_otpConfirmFragment"
+            app:destination="@id/otpConfirmFragment" />
     </fragment>
     <fragment
         android:id="@+id/showTransactions"
         android:name="com.example.momobooklet_by_sm.displaytransactions.ShowTransactions"
         android:label="fragment_show_transactions"
         tools:layout="@layout/fragment_show_transactions" >
-        <action
-            android:id="@+id/action_showTransactions_to_mainTransactorFragment"
-            app:destination="@id/mainTransactorFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/userAccountsFragment"
@@ -82,5 +87,27 @@
         android:id="@+id/mainActivity"
         android:name="com.example.momobooklet_by_sm.MainActivity"
         android:label="MainActivity" />
-
+    <fragment
+        android:id="@+id/otpConfirmFragment"
+        android:name="com.example.momobooklet_by_sm.manageuser.OtpConfirmFragment"
+        android:label="fragment_otp_confirm"
+        tools:layout="@layout/fragment_otp_confirm" >
+        <action
+            android:id="@+id/action_otpConfirmFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:popUpTo="@id/registerFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string"
+            android:defaultValue="popo" />
+        <action
+            android:id="@+id/action_otpConfirmFragment_to_userAccountsFragment"
+            app:destination="@id/userAccountsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/commission"
+        android:name="com.example.momobooklet_by_sm.Commission"
+        android:label="fragment_commission"
+        tools:layout="@layout/fragment_commission" />
 </navigation>

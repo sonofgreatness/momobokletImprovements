@@ -19,12 +19,11 @@ import android.view.Gravity
 import android.widget.Toast
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.momobooklet_by_sm.MainActivity
-import com.example.momobooklet_by_sm.database.models.UserModel
+import com.example.momobooklet_by_sm.database.local.models.UserModel
 import com.example.momobooklet_by_sm.databinding.FragmentMainTransactorBinding
 import com.example.momobooklet_by_sm.ui.viewmodels.UserViewModel
-import com.example.momobooklet_by_sm.util.constants.Constants
+import com.example.momobooklet_by_sm.util.Constants
 import com.google.android.material.textfield.TextInputEditText
 import timber.log.Timber
 
@@ -245,7 +244,7 @@ class MainTransactorFragment : Fragment() {
     }
 
     private fun addUser() {
-        var User = UserModel("ABC Mobile","+26876911464","test@email.com","password", false)
+        var User = UserModel("ABC Mobile","+26876911464","test@email.com","password", false,false)
         mUserViewModel.addUser(User)
         Timber.e("user_addes ->${User.MoMoNumber}")
 

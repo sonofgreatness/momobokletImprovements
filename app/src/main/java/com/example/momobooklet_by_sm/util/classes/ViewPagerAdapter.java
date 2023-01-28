@@ -1,4 +1,4 @@
-package com.example.momobooklet_by_sm;
+package com.example.momobooklet_by_sm.util.classes;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
