@@ -29,7 +29,11 @@ class TransactionRepository(private val userDao: DatabaseDao){
         return userDao.getTodaysTransactions(date)
     }
 
-    suspend fun getTransactionsBetweenDates(startDate:String, endDate:String) = userDao.getTransactionsBetweenDates(startDate, endDate)
+
+   suspend fun getDailyTransactions(date:String): List<TransactionModel>
+                                              = userDao.getDailyTransactions(date)
+
+
     suspend fun addTransaction (transaction:TransactionModel){
         userDao.addTransaction(transaction)
     }
@@ -40,4 +44,6 @@ class TransactionRepository(private val userDao: DatabaseDao){
         userDao.removeTransaction(transaction)
     }
 
+
+    suspend fun getAllTransactionsRegularData() = userDao.getAllTransactionsRegularData()
 }

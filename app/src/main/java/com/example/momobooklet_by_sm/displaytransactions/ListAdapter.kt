@@ -47,7 +47,7 @@ class ListAdapter : RecyclerView.Adapter<com.example.momobooklet_by_sm.displaytr
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem =differ.currentList[position]
- holder.itemView.findViewById<TextView>(R.id.date_id).text=currentItem.Date
+ holder.itemView.findViewById<TextView>(R.id.date_id).text=currentItem.Date.toString()
         holder.itemView.findViewById<TextView>(R.id.name_id).text= currentItem.C_Name
         holder.itemView.findViewById<TextView>(R.id.pin_id).text=currentItem.C_ID
         if(currentItem.Transaction_type==true)
@@ -59,16 +59,9 @@ class ListAdapter : RecyclerView.Adapter<com.example.momobooklet_by_sm.displaytr
         val bitmap:Bitmap=BitmapFactory.decodeByteArray(currentItem.Signature,0,currentItem.Signature.size)
 
         holder.itemView.findViewById<ImageView>(R.id.s_t_imageview_id).setImageBitmap(bitmap)
-
-
-
         holder.itemView.findViewById<ImageView>(R.id.s_t_button_id).setOnClickListener(View.OnClickListener {
 
-
-
             if (holder.itemView.findViewById<LinearLayout>(R.id.layout_change).visibility==View.VISIBLE){
-
-
                 //CHANGING AFOREMENTIONED WIDGET TO COLLAPSED
                 TransitionManager.beginDelayedTransition(holder.itemView.findViewById(R.id.constrainView))
 
@@ -77,27 +70,18 @@ class ListAdapter : RecyclerView.Adapter<com.example.momobooklet_by_sm.displaytr
                 holder.itemView.findViewById<LinearLayout>(R.id.s_t_phone_layout).visibility = View.GONE
 
             }else if(holder.itemView.findViewById<LinearLayout>(R.id.layout_change).visibility==View.GONE){
-
-
-
                 TransitionManager.beginDelayedTransition(holder.itemView.findViewById(R.id.constrainView))
-
                 holder.itemView.findViewById<LinearLayout>(R.id.layout_change).visibility = View.VISIBLE
                 holder.itemView.findViewById<ImageView>(R.id.s_t_button_id).setImageResource(R.drawable.collapsible_right_blue)
                 holder.itemView.findViewById<LinearLayout>(R.id.s_t_phone_layout).visibility = View.VISIBLE
 
             }
 
-
         })
-        holder.itemView.findViewById<TextView>(R.id.s_t_date).text=currentItem.Time
+        holder.itemView.findViewById<TextView>(R.id.s_t_date).text=currentItem.Time.toString()
         holder.itemView.findViewById<TextView>(R.id.s_t_phone).text=currentItem.C_PHONE
 
-
-
 /*
-
-
         holder.itemView.id_txt.text = currentItem.id.toString()
         holder.itemView.firstName_txt.text = currentItem.firstName
         holder.itemView.lastName_txt.text = currentItem.lastName
@@ -108,16 +92,6 @@ class ListAdapter : RecyclerView.Adapter<com.example.momobooklet_by_sm.displaytr
             holder.itemView.findNavController().navigate(action)
         }
         */
-
-
-
-
-
     }
-
-
-
-
-
 
 }

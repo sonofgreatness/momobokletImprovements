@@ -46,13 +46,11 @@ class OtpConfirmFragment : Fragment() {
 
     //private lateinit var   requestPermissionLauncher : ActivityResultLauncher
     private  lateinit var mySMS_ACTION_HANDLER: SMS_ACTION_HANDLER
-        /*Request SMS_READ permission
-        *
-        **/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-      requestPermissionLauncher =
+    /*  requestPermissionLauncher =
                 registerForActivityResult(
                     ActivityResultContracts.RequestPermission()
                 ) { isGranted: Boolean ->
@@ -64,7 +62,8 @@ class OtpConfirmFragment : Fragment() {
                         mySMS_ACTION_HANDLER =SMS_ACTION_HANDLER.READ_EDITTEXTS
                         initiatePhoneAuthRegistration(mySMS_ACTION_HANDLER)
                     }
-                }
+               }
+     */
 
     }
     override fun onCreateView(
@@ -76,18 +75,36 @@ class OtpConfirmFragment : Fragment() {
         mUserViewModel = ViewModelProvider(this )[UserViewModel::class.java]
         binding.otpSubtitleUsermobile.text = requireArguments().getString(Constants.PHONE_NUMBER_KEY)
         rootView = binding.root
-        mUserViewModel.registrationSmSBody.observe(viewLifecycleOwner){
-            Timber.e("vieModelSMS -> ${it}")
-        }
-        check_for_permission_and_request()
-        mUserViewModel.registrationSmSBody.observe(viewLifecycleOwner){
-            Timber.e("vieModelSMSAfter -> ${it}")
-        }
+        RegForReal = AddUserAcc(requireArguments().getString(Constants.PHONE_NUMBER_KEY)!!,requireActivity(),auth)
+
+
         setupUpNavigationOnClick()
         setupSubmitButtonOnClick()
     return rootView
     }
 
+
+    private fun makeSubmitButtonVisible() {
+        binding.otpEnterBtn.visibility = View.VISIBLE
+        binding.otpEnterBtn.isEnabled = true
+    }
+    private fun setupSubmitButtonOnClick() {
+        binding.otpEnterBtn.setOnClickListener {
+            smsString = binding.otpEditText1.text.toString()
+            RegForReal.setSMS(smsString)
+            RegForReal.signInwithSms()
+            Toast.makeText(requireContext(),"SuccessFull Registration", Toast.LENGTH_SHORT).show()
+            it.findNavController().navigate(R.id.action_otpConfirmFragment_to_userAccountsFragment)
+
+        }
+    }
+    private fun setupUpNavigationOnClick() {
+        binding.appBarOtp.setOnClickListener {
+            it.findNavController().navigate(R.id.action_otpConfirmFragment_to_registerFragment)
+        }
+    }
+
+/*
     private fun check_for_permission_and_request() {
         when {
             ContextCompat.checkSelfPermission(
@@ -150,6 +167,8 @@ class OtpConfirmFragment : Fragment() {
     {
         makeSubmitButtonInvisible()
         RegForReal = AddUserAcc(requireArguments().getString(Constants.PHONE_NUMBER_KEY)!!,requireActivity(),auth)
+
+
         mUserViewModel.registrationSmSBody.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             if(!isEmpty(it))
@@ -169,22 +188,6 @@ class OtpConfirmFragment : Fragment() {
         makeSubmitButtonVisible()
         RegForReal = AddUserAcc(requireArguments().getString(Constants.PHONE_NUMBER_KEY)!!,requireActivity(),auth)
 
-    }
-    private fun makeSubmitButtonVisible() {
-        binding.otpEnterBtn.visibility = View.VISIBLE
-        binding.otpEnterBtn.isEnabled = true
-    }
-    private fun setupSubmitButtonOnClick() {
-        binding.otpEnterBtn.setOnClickListener {
-            smsString = binding.otpEditText1.text.toString()
-            Toast.makeText(requireContext(), smsString, Toast.LENGTH_SHORT).show()
-            RegForReal.setSMS(smsString)
-            RegForReal.signInwithSms()
-        }
-    }
-    private fun setupUpNavigationOnClick() {
-        binding.appBarOtp.setOnClickListener {
-            it.findNavController().navigate(R.id.action_otpConfirmFragment_to_registerFragment)
-        }
-    }
+    }*/
+
 }

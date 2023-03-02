@@ -72,7 +72,7 @@
     <string name="momo_agent_name">MoMo Agent Name</string>
 
 
-    <string name = "permission_alert_dialog_title">SMS Permission</string>
+    <string name="permission_alert_dialog_title">SMS Permission</string>
     <string name="permission_dialog_message">Enable SMS Permission so we can \n autodetect incoming sms and
     improve your verification experience.</string>
     <string name="action_ok">OK</string>
@@ -81,7 +81,44 @@
     <string name="last_month_s_commission">Last Month\'s Commission</string>
     <string name="dd_mm_yy">dd-MM-yy</string>
     <string name="search_hint">Search Transactions</string>
-    <string name="no_results">No Results  Found ...</string>
+    <string name="no_results">No Results  Found …</string>
+    <string name="this_months_commission">This Month\'s Commission</string>
+    <string name="yesterdays_commission">Yesterday\'s Commission</string>
+    <string name="visual_clue_to_pull_up">visual clue to pull up</string>
+    <string name="to"> \t to \to </string>
+    <string name="makesboxappearasprompt">makesBoxAppearAsPrompt</string>
+    <string name="number_of_transactions">Number of Transactions :</string>
+    <string name="custom_day">Custom Day\'s Commission</string>
+    <string name="generate_report_file">Generate Report File</string>
+    <string name="show_all_reports">Show All Reports</string>
+    <string name="show_filtered_reports">Show Filtered Reports</string>
+    <string name="weekly_reports">Weekly Reports</string>
+    <string name="biweekly_reports">BiWeekly Reports</string>
+    <string name="monthly_reports">Monthly Reports</string>
+    <string name="trimonthly_reports">TriMonthly Reports</string>
+    <string name="annual_reports">Annual Reports</string>
+    <string name="pdf_reports">PDF Reports</string>
+    <string name="csv_reports">CSV Reports</string>
+    <string name="file_storage">File Storage</string>
+    <string name="_3_months_reports">3 Months Reports</string>
+    <string name="_3_month_report">3 Month Report</string>
+    <string name="monthly_report">Monthly Report</string>
+    <string name="biweekly_report">BiWeekly Report</string>
+    <string name="both">BOTH</string>
+    <string name="pdf">PDF</string>
+    <string name="csv">CSV</string>
+    <string name="create">CREATE</string>
+    <string name="select_report_type_s">Select Report Type(s)</string>
+    <string name="weekly_report">Weekly Report</string>
+    <string name="select_file_format">Select File Format</string>
+    <string name="generate_report_files">Generate Report Files</string>
+    <string name="pick_startdate">Pick StartDate</string>
+    <string name="commission_ammount">Commission Amount</string>
+    <string name="navigate_back_icon">navigate_back icon</string>
+    <string name="share_report_button">share report button</string>
+    <string name="delete_report_button">delete report button</string>
+    <string name="report_type_figure">report Type Figure</string>
+    <string name="report_title">Report Title</string>
 
 
 </resources>

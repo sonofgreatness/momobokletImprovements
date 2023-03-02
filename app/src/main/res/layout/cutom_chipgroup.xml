@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chip_group_parent_card"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginStart="34dp"
+    android:layout_marginEnd="34dp"
+    app:cardBackgroundColor="@color/hotpink"
+    app:cardElevation="24dp"
+    app:cardCornerRadius="24dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/chip_group_parent_constraintLayout"
+    >
+    <TextView
+        android:id="@+id/chip_group_title"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:text="@string/select_report_type_s"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.chip.ChipGroup
+
+        android:id="@+id/chip_group_in_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:padding="30dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chip_group_title">
+        <com.google.android.material.chip.Chip
+            android:id="@+id/weekly_chip"
+            app:checkedIconTint="@color/colorPrimaryDark"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/weekly_report" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/biweekly_chip"
+            app:checkedIconTint="@color/colorPrimaryDark"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/biweekly_report" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/monthly_chip"
+            app:checkedIconTint="@color/colorPrimaryDark"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/monthly_report" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/trimonth_chip"
+            app:checkedIconTint="@color/colorPrimaryDark"
+            android:checkable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/_3_month_report" />
+    </com.google.android.material.chip.ChipGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

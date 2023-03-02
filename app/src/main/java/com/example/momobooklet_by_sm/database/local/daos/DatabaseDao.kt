@@ -40,10 +40,17 @@ interface DatabaseDao {
     @Query("DELETE FROM RECORDS_SHEET")
     fun deleteAll()
 
-    @Query("SELECT * FROM RECORDS_SHEET WHERE Time BETWEEN :startDate AND :endDate")
-    suspend fun getTransactionsBetweenDates(startDate:String, endDate:String) : List<TransactionModel>
 
     @Query("SELECT * FROM RECORDS_SHEET WHERE Date = :date ")
     fun getTodaysTransactions(date:String): Flow<List<TransactionModel>>
+
+
+    @Query("SELECT * FROM RECORDS_SHEET WHERE Date = :date ")
+     suspend fun getDailyTransactions(date:String): List<TransactionModel>
+
+
+    @Query("SELECT * FROM RECORDS_SHEET")
+    suspend fun getAllTransactionsRegularData(): List<TransactionModel>
+
 
 }

@@ -36,7 +36,7 @@
     <color name = "cardinal">#C41e3a</color>
     <color name = "cerise">#DE3163</color>
     <color name = "Pearl">#E7ACCF</color>
-
+    <color name = "lightGray">#e4e4e4ff</color>
 
     <color name= "DarkGray">#5A5A5A</color>
 </resources>

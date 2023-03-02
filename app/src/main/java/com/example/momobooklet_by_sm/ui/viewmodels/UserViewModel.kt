@@ -29,7 +29,7 @@ class UserViewModel(
     init {
         val userDao = Database.getDatabase(
             application
-        )?.getUserAccountsDao()
+        ).getUserAccountsDao()
         repository = userDao.let { UserRepository(it) }!!
         getPsuedoActiveUser()
         viewModelScope.launch {

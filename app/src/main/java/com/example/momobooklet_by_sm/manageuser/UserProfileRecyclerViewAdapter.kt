@@ -71,9 +71,9 @@ class UserProfileRecyclerViewAdapter(val mUserViewModel:UserViewModel) :
             // holder.UserIncontrolStatusImagr.setImageDrawable(animatedVectorDrawableCompat);
 
             /* On Click Listeners */
-            holder.itemView.findViewById<ImageView>(R.id.delete_icon).setOnClickListener({
+            holder.itemView.findViewById<ImageView>(R.id.delete_icon).setOnClickListener {
                 mUserViewModel.deleteUser(curretItem)
-            })
+            }
 
         }
     }

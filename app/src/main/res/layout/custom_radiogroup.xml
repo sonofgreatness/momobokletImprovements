@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/radio_group_parent_card"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_marginStart="34dp"
+    android:layout_marginEnd="34dp"
+    app:cardBackgroundColor="@color/Pearl"
+    app:cardElevation="24dp"
+    app:cardCornerRadius="24dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/radio_group_parent_constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<TextView
+    android:id="@+id/radio_group_title"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:textColor="@color/black"
+    android:text="@string/select_file_format"
+    android:textAlignment="center"
+    tools:ignore="MissingConstraints"
+    />
+    <RadioGroup
+        android:orientation="horizontal"
+        android:id ="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:padding="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radio_group_title">
+        <RadioButton
+            android:id="@+id/csv_radio_btn"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:textColor="@color/white"
+            android:text="@string/csv"/>
+        <RadioButton
+            android:id="@+id/pdf_radio_btn"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            app:checkedIconTint="@color/redWarning"
+            android:layout_weight="0.3"
+            android:textColor="@color/white"
+            android:text="@string/pdf"/>
+
+        <RadioButton
+            android:id="@+id/both_radio_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="@string/both"
+            android:textColor="@color/white" />
+    </RadioGroup>
+    <View
+        app:layout_constraintTop_toBottomOf="@id/radio_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"/>
+
+    <TextView
+
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/showdate_customradiogroup"
+        android:textColor="@color/white"
+        android:text="No Start Date Picked......."
+        app:layout_constraintEnd_toStartOf="@id/pick_date_btn_customradiogroup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintBottom_toBottomOf="@id/pick_date_btn_customradiogroup"
+        />
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/showdate_customradiogroup"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/pick_startdate"
+        android:textColor="@color/redWarning"
+        android:id="@+id/pick_date_btn_customradiogroup"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

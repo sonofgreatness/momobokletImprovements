@@ -26,22 +26,26 @@ import androidx.transition.TransitionManager
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.R
 import com.example.momobooklet_by_sm.database.local.models.TransactionModel
+import com.example.momobooklet_by_sm.database.local.models.UserModel
 import com.example.momobooklet_by_sm.databinding.FragmentRecordDisplayBinding
 import com.example.momobooklet_by_sm.databinding.TablefieldsCardBinding
+import com.example.momobooklet_by_sm.ui.viewmodels.CommissionViewModel
 import com.example.momobooklet_by_sm.ui.viewmodels.TransactionViewModel
+import com.example.momobooklet_by_sm.ui.viewmodels.UserViewModel
 import com.github.gcacace.signaturepad.views.SignaturePad
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
+
 import java.util.*
 
 class RecordDisplayFragment : Fragment() {
     private lateinit var mTransactionViewModel: TransactionViewModel
     private lateinit var _cardviewbinding: TablefieldsCardBinding
-    var popupWindow: PopupWindow? = null
+    private var popupWindow: PopupWindow? = null
     private var signatureCaptured = false
-    private val cardviewbinding get() = _cardviewbinding
-
+    private lateinit var mCommissionViewModel: CommissionViewModel
+    private lateinit var mUserViewModel: UserViewModel
+    private var mainUser: UserModel? = null
 
     private lateinit var _binding: FragmentRecordDisplayBinding
     private val binding get() = _binding
@@ -58,7 +62,7 @@ class RecordDisplayFragment : Fragment() {
     private fun cardClick(cardviewbinding: TablefieldsCardBinding) {
 
 
-        cardviewbinding.root.setOnClickListener(View.OnClickListener {
+        cardviewbinding.root.setOnClickListener {
 
 
             val value: Boolean = cardviewbinding.linearlayout.isVisible
@@ -77,11 +81,8 @@ class RecordDisplayFragment : Fragment() {
             }
             // Change Button OnclickListener
 
-            cardviewbinding.changeDataBtn.setOnClickListener(View.OnClickListener {
-
+            cardviewbinding.changeDataBtn.setOnClickListener {
                 // If text field is null do not change data
-
-
                 val test: Int = cardviewbinding.changeDataEditTxt.text.toString().length
 
                 if (test != 0) {
@@ -96,24 +97,16 @@ class RecordDisplayFragment : Fragment() {
                     cardviewbinding.tablefieldsCardview.isEnabled = true
                 }
 
-
-
-
                 if (test == 0) {
-
                     TransitionManager.beginDelayedTransition(cardviewbinding.tablefieldsCardview)
                     cardviewbinding.linearlayout.isVisible = true
                     cardviewbinding.linearlayout2.isVisible = false
-
                     // enable card
-
                     cardviewbinding.tablefieldsCardview.isEnabled = true
                 }
+            }
 
-
-            })
-
-        })
+        }
     }
 
 
@@ -121,7 +114,7 @@ class RecordDisplayFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
 
         _binding = FragmentRecordDisplayBinding.inflate(inflater, container, false)
@@ -131,6 +124,11 @@ class RecordDisplayFragment : Fragment() {
 
         //STEP 1
         mTransactionViewModel = (activity as MainActivity).mTransactionViewModel
+        mCommissionViewModel = (activity as MainActivity).mCommissionViewModel
+        mUserViewModel = (activity as MainActivity).mUserViewModel
+
+        setmainUser()
+
 
         val customView: View = inflater.inflate(R.layout.signaturepad_home, null)
         // signature pad variable to be used by other methods
@@ -150,7 +148,6 @@ class RecordDisplayFragment : Fragment() {
                 val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
                 imageView.setImageBitmap(signature)
                 signatureCaptured = true
-                Toast.makeText(context, "Signed", Toast.LENGTH_SHORT).show()
             }
 
             override fun onClear() {
@@ -201,7 +198,7 @@ class RecordDisplayFragment : Fragment() {
 
         // define OnClicklistener for save Button
         customView.findViewById<Button>(R.id.recordtransact_btn2)
-            .setOnClickListener(View.OnClickListener {
+            .setOnClickListener {
 
                 // 1 set bitmap  in pad  to signature_check imageView
                 // 2 dismiss popUpWindow
@@ -228,7 +225,7 @@ class RecordDisplayFragment : Fragment() {
                 customView.findViewById<View>(R.id.recordtransact_btn2).visibility = View.INVISIBLE
                 popupWindow?.dismiss()
 
-            })
+            }
 
 //define pop up canceller
         customView.findViewById<ImageView>(R.id.popup_canceller)
@@ -279,15 +276,6 @@ class RecordDisplayFragment : Fragment() {
         binding.nameCheck.changeDataInputLayout.hint = getString(R.string.name_check_hint)
 
 
-        //Animate card
-        val set: AnimatorSet =
-            AnimatorInflater.loadAnimator(requireContext(), R.animator.property_animator)
-                .apply {
-                    setTarget(binding.nameCheck.tablefieldsCardview)
-                    start()
-                } as AnimatorSet
-
-
         // CARD 3
         cardClick(binding.phoneCheck)
         binding.phoneCheck.textfieldCardText.setText(arguments?.getString("phone_key"))
@@ -306,18 +294,6 @@ class RecordDisplayFragment : Fragment() {
 //customize EditText
         binding.amountCheck.changeDataEditTxt.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL
         binding.amountCheck.changeDataInputLayout.hint = getString(R.string.amount_check_hint)
-
-
-        //animate card
-
-        val set2: AnimatorSet = AnimatorInflater.loadAnimator(
-            requireContext(),
-            R.animator.property_animator_4_secs_later
-        )
-            .apply {
-                setTarget(binding.amountCheck.tablefieldsCardview)
-                start()
-            } as AnimatorSet
 
 
         // CARD 5
@@ -342,7 +318,116 @@ class RecordDisplayFragment : Fragment() {
         binding.signatureCheck.setImageBitmap(bitmap)
 
 
-        val set3: AnimatorSet = AnimatorInflater.loadAnimator(
+//set on click listener for signature layout . must enable user to "correct" signature
+
+
+        binding.checkSignatureLayout.setOnClickListener {
+            //call a pop up window
+            popupWindow = PopupWindow(
+                customView,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            //display the popup window
+            popupWindow!!.showAtLocation(binding.parentRecordTransacts, Gravity.CENTER, 0, 0)
+        }
+        setUpcardAnimations()
+        setUpRecordData_btn_Onclick()
+        setUpNavigation()
+        return view
+    }
+
+    private fun setmainUser() {
+
+         if (mUserViewModel._readAllData.value?.size!= 0)
+             mainUser = mUserViewModel._readAllData.value?.get(0)
+
+    }
+
+    private fun setUpRecordData_btn_Onclick() {
+        binding.transactCheckBtn.setOnClickListener {
+
+            if (mainUser!= null) {
+                addTransaction(mainUser!!.MoMoNumber)
+                Toast.makeText(requireContext(), "Transaction Added", Toast.LENGTH_SHORT).show()
+
+                if (arguments?.getBoolean("phone_dial_key")!!) {
+                    val number = Uri.parse(
+                        createDialerString(
+                            arguments?.getBoolean("type_check")!!,
+                            arguments?.getString("phone_key")!!,
+                            arguments?.getString("amount_key")!!
+                        )
+                    )
+                    val callIntent = Intent(Intent.ACTION_DIAL, number)
+                    startActivity(callIntent)
+                }
+                it!!.findNavController()
+                    .navigate(R.id.action_recordDisplayFragment_to_mainTransactorFragment)
+            }
+            else {
+
+                informativeMoveToRegistration()
+            }
+        }
+    }
+
+    /**************************************************************
+     * informativeMoveToRegistration() -> Either User Table is
+     *          empty or no row has the attribute "IsinControl"
+     *          set to positive  , let user know this the navigate
+     *          to Registration Fragment
+     *
+     **************************************************************/
+    private fun informativeMoveToRegistration() {
+
+        //Do More Here
+        Toast.makeText(requireContext(), "User Account Needed ,\n Add One ",
+            Toast.LENGTH_SHORT).show()
+        binding.root.findNavController()
+            .navigate(R.id.action_recordDisplayFragment_to_userAccountsFragment)
+    }
+
+
+
+    /*************************************************
+     * setUpNavigation -> makes up navigate to
+     *                      mainTransactor Fragment
+     **********************************************/
+    private fun setUpNavigation() {
+        binding.appBarCheck.setNavigationOnClickListener {
+            it.findNavController()
+                .navigate(R.id.action_recordDisplayFragment_to_mainTransactorFragment)
+        }
+    }
+
+
+    /************************************************************
+     * setUpcardAnimations -> scales cards so they
+     *                          provide user clue that cards
+     *                          are clickable
+     ************************************************************/
+    private fun setUpcardAnimations() {
+
+        //Animate card
+        AnimatorInflater.loadAnimator(requireContext(), R.animator.property_animator)
+            .apply {
+                setTarget(binding.nameCheck.tablefieldsCardview)
+                start()
+            } as AnimatorSet
+
+        //animate card
+        AnimatorInflater.loadAnimator(
+            requireContext(),
+            R.animator.property_animator_4_secs_later
+        )
+            .apply {
+                setTarget(binding.amountCheck.tablefieldsCardview)
+                start()
+            } as AnimatorSet
+
+
+        AnimatorInflater.loadAnimator(
             requireContext(),
             R.animator.property_animator_7_secs_later
         )
@@ -350,54 +435,11 @@ class RecordDisplayFragment : Fragment() {
                 setTarget(binding.checkSignatureLayout)
                 start()
             } as AnimatorSet
-
-//set on click listener for signature layout . must nable user to "correct" signature
-
-
-        binding.checkSignatureLayout.setOnClickListener(
-            View.OnClickListener {
-                //call a pop up window
-                popupWindow = PopupWindow(
-                    customView,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
-                //display the popup window
-                popupWindow!!.showAtLocation(binding.parentRecordTransacts, Gravity.CENTER, 0, 0)
-            }
-        )
-
-
-        // RECORD DATA IN CARDS AND SIGNATURE IN ROOM DATABASE
-        binding.transactCheckBtn.setOnClickListener(View.OnClickListener {
-            AddTransaction()
-
-            Toast.makeText(requireContext(), "Transaction Added", Toast.LENGTH_SHORT).show()
-            if (arguments?.getBoolean("phone_dial_key")!! == true) {
-                val number = Uri.parse(
-                    createDialerString(
-                        arguments?.getBoolean("type_check")!!,
-                        arguments?.getString("phone_key")!!,
-                        arguments?.getString("amount_key")!!
-                    )
-                )
-                val callIntent = Intent(Intent.ACTION_DIAL, number)
-                startActivity(callIntent)
-
-            }
-            it!!.findNavController()
-                .navigate(R.id.action_recordDisplayFragment_to_mainTransactorFragment)
-        })
-        binding.appBarCheck.setNavigationOnClickListener(View.OnClickListener {
-            view.findNavController()
-                .navigate(R.id.action_recordDisplayFragment_to_mainTransactorFragment)
-        })
-        return view
     }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun AddTransaction() {
+    private fun addTransaction(phoneNumber: String) {
         val customername: String = binding.nameCheck.textfieldCardText.text.toString()
         val customerphone: String = binding.phoneCheck.textfieldCardText.text.toString()
         val customerpin: String = binding.pinCheck.textfieldCardText.text.toString()
@@ -405,75 +447,63 @@ class RecordDisplayFragment : Fragment() {
 
         val transactiontype: String = binding.typeCheck.textfieldCardText.text.toString()
         val dbtransactiontype: Boolean
-        if (transactiontype.startsWith("B", ignoreCase = true)) {
-            dbtransactiontype = true
-
-        } else {
-            dbtransactiontype = false
-        }
-
-        dataObject.customersiganature
-
-
-//    val signature :ByteArray=dataObject.customersiganature
-
-        dataObject.customername = customername
-        dataObject.customerphone = customerphone
-        dataObject.customerpin = customerpin
-        dataObject.transactionamount = transactionamount
-        dataObject.transactiontype = dbtransactiontype
-        // translate dataObject to transactionViewmodel ready object (TransactionModel)
-
-
         val sdf = SimpleDateFormat("dd-MM-yyyy ")
         val currentDate = sdf.format(Date())
+
         val sd1f = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a")
         val currentTime = sd1f.format(Date())
 
-// little to no use
-        val byteArray: ByteArray? = arguments?.getByteArray("signature_key")
-        byteArray!!
-        //  val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-
-        val text1: String = Base64.getEncoder().encodeToString(byteArray)
 
 
-        //little use
-        val imageView = binding.signatureCheck
-        val bitmap: Bitmap =
-            imageView.drawable.toBitmap(imageView.width, imageView.height, Bitmap.Config.RGB_565)
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        val byteArray1 = stream.toByteArray()
-        val text2: String = Base64.getEncoder().encodeToString(byteArray1)
+        dbtransactiontype = transactiontype.startsWith("B", ignoreCase = true)
 
-        dataObject.customersiganature = byteArray1
+        dataObject.customersiganature
+        dataObject.customername = customername
+        dataObject.customerphone = customerphone
+        dataObject.customerpin = customerpin
 
-        //Toast.makeText(requireContext(),text2,Toast.LENGTH_SHORT).show()
+        dataObject.transactionamount = transactionamount
+        dataObject.transactiontype = dbtransactiontype
+        dataObject.customersiganature = byteArrayMaker()
+
         val transaction = TransactionModel(
-            0,
-            currentDate,
+            0, currentDate.trim(),
             dataObject.customername,
             dataObject.customerpin,
             dataObject.customerphone,
             dataObject.transactiontype,
             dataObject.transactionamount.toFloat(),
             dataObject.customersiganature,
-            currentTime,
-            "+26876911464"
+            currentTime.trim(),
+            phoneNumber
         )
         mTransactionViewModel.addTransaction(transaction)
-        mTransactionViewModel.calculateThenUpdateDailyCommission()
-        //val callIntent: Intent = Uri.parse(arguments?.getString("phone_dial_key")).let { number ->
-        //          Intent(Intent.ACTION_DIAL, number)
+        mCommissionViewModel.calculateThenUpdateDailyCommission()
+
 
     }
 
+    /******************************************************
+     * byteArrayMaker -> gets Bitmap of signature  and
+     *                  converts it to a byteArray
+     * @return : Returns byteArray of Image (Signature)
+     *******************************************************/
+    private fun byteArrayMaker(): ByteArray? {
+
+        val imageView = binding.signatureCheck
+        val bitmap: Bitmap =
+            imageView.drawable.toBitmap(imageView.width, imageView.height, Bitmap.Config.RGB_565)
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+
+        return stream.toByteArray()
+    }
+
     private fun createDialerString(type: Boolean, cust_phone: String, amount: String): String {
-        if (type)//buy momo
-            return "tel:*007*1*" + cust_phone + "*" + amount + "#"
+        return if (type)//buy momo
+            "tel:*007*1*$cust_phone*$amount#"
         else
-            return "tel:*007*2*" + cust_phone + "*" + amount + "#"// sells Momo
+            "tel:*007*2*$cust_phone*$amount#"// sells Momo
         // check momo codes and update this string accordingly
     }
 }

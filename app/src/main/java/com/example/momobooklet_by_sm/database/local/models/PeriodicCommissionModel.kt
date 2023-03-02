@@ -2,6 +2,7 @@ package com.example.momobooklet_by_sm.database.local.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.sql.Date
 
 @Entity(tableName = "Monthly Commission")
 data class PeriodicCommissionModel(

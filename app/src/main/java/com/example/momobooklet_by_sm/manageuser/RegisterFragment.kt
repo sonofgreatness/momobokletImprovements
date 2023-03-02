@@ -30,6 +30,8 @@ import org.greenrobot.eventbus.Subscribe
 
 
 class RegisterFragment : Fragment() {
+
+
     private lateinit  var  mAuth: FirebaseAuth
     private lateinit var  drawableSpan: DrawableSpan
     private lateinit var  mUserViewModel: UserViewModel
@@ -37,7 +39,6 @@ class RegisterFragment : Fragment() {
     private lateinit var rootView:View
     private val binding get() = _binding
     private var passwordEndIconChangeHelper = true
-
     private var mBundle:Bundle = Bundle()
 
 
@@ -103,7 +104,7 @@ class RegisterFragment : Fragment() {
         // Use values to create UserModel Object
         if(!(validator(regMoMoName,regEmail,regPass,regphone))){
                 if(checkifPhoneisValid()){
-                    val user = UserModel(regMoMoName, regphone, regEmail, regPass, false,false)
+                    val user = UserModel(regMoMoName, regphone, regEmail, regPass, true,false)
                     mUserViewModel.addUser(user)
                     changeTextToProgressbar(view)
                     mBundle.putString(PHONE_NUMBER_KEY, COUNTRY_CODE.plus(regphone))

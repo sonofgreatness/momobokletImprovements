@@ -14,7 +14,11 @@
             android:id="@+id/action_mainTransactorFragment_to_recordDisplayFragment"
             app:destination="@id/recordDisplayFragment"
             app:popUpTo="@id/mainTransactorFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
 
     </fragment>
     <fragment
@@ -31,7 +35,16 @@
             android:id="@+id/action_recordDisplayFragment_to_mainTransactorFragment"
             app:destination="@id/mainTransactorFragment"
             app:popUpTo="@id/mainTransactorFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_recordDisplayFragment_to_userAccountsFragment"
+            app:destination="@id/userAccountsFragment"
+            app:popUpTo="@id/mainTransactorFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -42,17 +55,18 @@
         android:id="@+id/managePDFsLandingFragment2"
         android:name="com.example.momobooklet_by_sm.managefiles.ManagePDFsLandingFragment"
         android:label="fragment_manage_p_d_fs_landing"
-        tools:layout="@layout/fragment_manage_p_d_fs_landing" />
-    <fragment
-        android:id="@+id/manageUserLandingFragment2"
-        android:name="com.example.momobooklet_by_sm.manageuser.ManageUserLandingFragment"
-        android:label="fragment_manage_user_landing"
-        tools:layout="@layout/fragment_manage_user_landing" />
-    <fragment
-        android:id="@+id/recordTransactionsLandingFragment2"
-        android:name="com.example.momobooklet_by_sm.recordingtransanctions.RecordTransactionsLandingFragment"
-        android:label="fragment_record_transactions_landing_fragments"
-        tools:layout="@layout/fragment_record_transactions_landing_fragments" />
+        tools:layout="@layout/fragment_manage_p_d_fs_landing" >
+        <action
+            android:id="@+id/action_managePDFsLandingFragment2_to_generateReportFile"
+            app:destination="@id/generateReportFile"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/managePDFsLandingFragment2" />
+    </fragment>
+
+
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.momobooklet_by_sm.manageuser.RegisterFragment"
@@ -62,6 +76,10 @@
             android:id="@+id/action_registerFragment_to_userAccountsFragment"
             app:destination="@id/userAccountsFragment"
             app:popUpTo="@id/userAccountsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_registerFragment_to_otpConfirmFragment"
@@ -81,7 +99,11 @@
         tools:layout="@layout/fragment_user_accounts" >
         <action
             android:id="@+id/action_userAccountsFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
     </fragment>
     <activity
         android:id="@+id/mainActivity"
@@ -96,7 +118,11 @@
             android:id="@+id/action_otpConfirmFragment_to_registerFragment"
             app:destination="@id/registerFragment"
             app:popUpTo="@id/registerFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
         <argument
             android:name="phoneNumber"
             app:argType="string"
@@ -107,7 +133,25 @@
     </fragment>
     <fragment
         android:id="@+id/commission"
-        android:name="com.example.momobooklet_by_sm.Commission"
+        android:name="com.example.momobooklet_by_sm.commission.Commission"
         android:label="fragment_commission"
-        tools:layout="@layout/fragment_commission" />
+        tools:layout="@layout/fragment_commission" >
+        <action
+            android:id="@+id/action_commission_to_userAccountsFragment"
+            app:destination="@id/userAccountsFragment"
+            app:popUpTo="@id/userAccountsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/generateReportFile"
+        android:name="com.example.momobooklet_by_sm.managefiles.GenerateReportFile"
+        android:label="GenerateReportFile" >
+        <action
+            android:id="@+id/action_generateReportFile_to_managePDFsLandingFragment2"
+            app:destination="@id/managePDFsLandingFragment2"
+            app:popUpTo="@id/managePDFsLandingFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+    </fragment>
 </navigation>

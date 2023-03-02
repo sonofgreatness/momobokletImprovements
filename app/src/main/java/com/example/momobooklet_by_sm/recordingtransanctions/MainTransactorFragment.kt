@@ -48,7 +48,7 @@ class MainTransactorFragment : Fragment() {
             )
 
         mUserViewModel = (activity as MainActivity).mUserViewModel
-        addUser()
+
 
         // back arrow in the appbar OnclickListener
         val customView = inflater.inflate(R.layout.signaturepad_home, null)
@@ -243,12 +243,7 @@ class MainTransactorFragment : Fragment() {
         return binding!!.root
     }
 
-    private fun addUser() {
-        var User = UserModel("ABC Mobile","+26876911464","test@email.com","password", false,false)
-        mUserViewModel.addUser(User)
-        Timber.e("user_addes ->${User.MoMoNumber}")
 
-    }
 
     private fun TransactionRecorded(mBundle: Bundle?) {
         findNavController(binding!!.root).navigate(

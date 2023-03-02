@@ -74,7 +74,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/otp_text_input1"
                         style="@style/Widget.MoMoBooklet.TextInputLayout"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintHorizontal_weight="1"
                         app:errorEnabled="true"
@@ -84,10 +84,12 @@
                             android:id="@+id/otp_edit_text1"
                             android:textColorHint="@color/black"
                             android:textColor="@color/black"
+                            android:hint="Enter OTP here"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="numberDecimal" />
                     </com.google.android.material.textfield.TextInputLayout>
+                    <!--
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/otp_text_input2"
                         style="@style/Widget.MoMoBooklet.TextInputLayout"
@@ -181,14 +183,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="numberDecimal" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>-->
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <Button
                     android:id="@+id/otp_enter_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button" />
+                    android:text="Submit" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

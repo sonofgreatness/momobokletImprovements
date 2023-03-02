@@ -1,19 +1,32 @@
 package com.example.momobooklet_by_sm.displaytransactions
 
 
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.res.AssetManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.Settings
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.R
 import com.example.momobooklet_by_sm.databinding.FragmentShowTransactionsBinding
 import com.example.momobooklet_by_sm.ui.viewmodels.TransactionViewModel
 import timber.log.Timber
+import java.io.File
+import java.io.IOException
 
 
 class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
@@ -29,14 +42,41 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
         // Inflate the layout for this fragment
         _binding = FragmentShowTransactionsBinding.inflate(inflater, container, false)
         //inflate menu
-        mTransactionViewModel = ViewModelProvider(this)[TransactionViewModel::class.java]
+        mTransactionViewModel = (activity as MainActivity).mTransactionViewModel
         setupToolbar()
         setupRecyclerView()
         getAllTransaction()
+        /*
+        if (Build.VERSION.SDK_INT >= 30) {
+            if (!Environment.isExternalStorageManager()) {
+                val getpermission = Intent()
+                getpermission.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                startActivity(getpermission)
+            }
+            checkPermissionSMS()
+        }*/
         val view = binding.root
         return view
     }
 
+
+
+
+
+
+
+
+    @Throws(IOException::class)
+    fun getFileFromAssets(context: Context, fileName: String): File = File(context.cacheDir, fileName)
+        .also {
+            if (!it.exists()) {
+                it.outputStream().use { cache ->
+                    context.assets.open(fileName).use { inputStream ->
+                        inputStream.copyTo(cache)
+                    }
+                }
+            }
+        }
     /***************************************************************
      * Sets up Toolbar
      *              inflates menu with R.menu.show_transactions_menu
@@ -117,21 +157,74 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
      */
 
     private fun showCustomToast() {
+        val layout = layoutInflater.
+                     inflate(
+                       R.layout.custom_toast_layout, null
+                        )
 
-        val layout = layoutInflater.inflate(
-            R.layout.custom_toast_layout, null
-        )
-        //make a toast
         val toast: Toast = Toast(requireContext())
         toast.apply {
             view = layout
-            setGravity(Gravity.CENTER, 0, 1)
+            setGravity(Gravity.CENTER, 0, 0)
             duration = Toast.LENGTH_SHORT
             view = layout
             show()
         }
     }
 
+
+    private fun checkPermissionSMS() {
+
+        if (ContextCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            )
+            {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            }
+            else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    43
+                )
+            }
+        } else {
+            // Permission has already been granted
+            //mTransactionViewModel.exportTransactionsToPdf()
+        }
+
+    }
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+
+
+        if (requestCode == 43)
+        {
+            // If request is cancelled, the result arrays are empty.
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                // permission was granted, yay!
+               // mTransactionViewModel.exportTransactionsToPdf()
+            } else {
+                // permission denied, boo! Disable the
+                // functionality
+            }
+            return
+
+        }
+    }
 
 }
 

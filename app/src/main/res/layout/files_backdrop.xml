@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--merge xmlns:android="http://schemas.android.com/apk/res/android"-->
+
+    <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/line"
+    style="@style/Widget.Shrine.Backdrop"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="88dp"
+    >
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/generate_report_btn"
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/generate_report_file" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id ="@+id/show_allreports_btn"
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_all_reports" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id ="@+id/show_filteredreports_btn"
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_filtered_reports" />
+
+    <CheckBox
+        android:id ="@+id/weekly_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/weekly_reports"
+        />
+    <CheckBox
+        android:id ="@+id/biweekly_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/biweekly_report"
+        />
+    <CheckBox
+        android:id ="@+id/monthly_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/monthly_reports"
+        />
+    <CheckBox
+        android:id ="@+id/trimonthly_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3_months_reports"
+        />
+    <CheckBox
+        android:id ="@+id/pdf_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pdf_reports"
+        />
+    <CheckBox
+        android:id ="@+id/csv_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/csv_reports"
+        />
+    <View
+        android:layout_width="56dp"
+        android:layout_height="1dp"
+        android:layout_margin="16dp"
+        android:background="@color/black"/>
+    <com.google.android.material.button.MaterialButton
+        android:id ="@+id/file_storagebtn"
+        style="@style/Widget.Shrine.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/file_storage" />
+</LinearLayout>
+<!--/merge-->

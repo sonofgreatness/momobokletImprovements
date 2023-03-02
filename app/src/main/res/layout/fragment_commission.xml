@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/commission_root"
+
+    >
+<androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
     <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
-    tools:context=".Commission">
-
-
+    tools:context=".commission.Commission">
     <include
         android:id="@+id/title_card"
         layout="@layout/commission_title_card"
@@ -20,8 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         app:layout_constraintTop_toTopOf="parent" />
-
-
     <include
         android:id="@+id/company_name"
         layout="@layout/commission_company_name"
@@ -36,22 +39,131 @@
     <include
         android:id="@+id/daily_commission_card"
         layout="@layout/daily_commission_card"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/company_name" />
 
     <include
+        android:id="@+id/monthly_commission_card_editable"
         layout="@layout/monthly_commission_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="114dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/daily_commission_card" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/standard_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_sheet_rounded"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        >
+        <!-- Bottom sheet contents. -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           >
+        <ImageView
+            android:id="@+id/bottomsheet_puller"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/remove"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center|top"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/visual_clue_to_pull_up" />
+
+
+           <include
+               android:id="@+id/bottom_sheet_thismonth_commission"
+               layout="@layout/monthly_commission_card"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="40dp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/bottomsheet_puller" />
+           <include
+               android:id="@+id/bottom_sheet_lastmonth_commission"
+               layout="@layout/monthly_commission_card"
+
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="40dp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_thismonth_commission" />
+           <com.google.android.material.button.MaterialButton
+               style="@style/Widget.Shrine.Button"
+               android:id="@+id/modify_monthly_startdate_btn"
+               android:layout_height="wrap_content"
+               android:layout_width="wrap_content"
+                android:text="change monthly startDate"
+               app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_lastmonth_commission"
+               app:layout_constraintStart_toStartOf="parent"
+               />
+           <include
+               android:id="@+id/daily_commission_card_bottomsheet_today"
+               layout="@layout/daily_commission_card"
+
+
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="68dp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/modify_monthly_startdate_btn" />
+           <include
+               android:id="@+id/daily_commission_card_bottomsheet_yesterday"
+               layout="@layout/daily_commission_card"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="38dp"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintTop_toBottomOf="@+id/daily_commission_card_bottomsheet_today"/>
+
+           <com.google.android.material.button.MaterialButton
+               style="@style/Widget.Shrine.Button"
+               android:id="@+id/see_custom_day_commission_btn"
+               android:layout_height="wrap_content"
+               android:layout_width="wrap_content"
+               android:text="choose my own day"
+               app:layout_constraintTop_toBottomOf="@+id/daily_commission_card_bottomsheet_yesterday"
+               app:layout_constraintStart_toStartOf="parent"
+               />
+           <include
+               android:id="@+id/bottomsheet_customdaily_commission_card"
+               layout="@layout/daily_commission_card"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="8dp"
+               android:layout_marginBottom="34dp"
+               android:visibility="gone"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/see_custom_day_commission_btn"/>
+       </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

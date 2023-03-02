@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".managefiles.GenerateReportFile">
+
+        <ImageView
+            android:id="@+id/custom_upicon"
+            android:contentDescription="@string/navigate_back_icon"
+             android:layout_height="wrap_content"
+            android:src="@drawable/back_arrow_black"
+             android:layout_width="wrap_content"
+            android:padding="24dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/generate_file_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/generate_report_files"
+            android:textSize="28sp"
+            android:fontFamily="@font/artifika"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_upicon" />
+
+        <include
+            android:id="@+id/chip_group"
+            layout="@layout/cutom_chipgroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            app:layout_constraintTop_toBottomOf="@id/generate_file_title" />
+
+        <include
+            android:id="@+id/radio_group"
+            layout="@layout/custom_radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/chip_group" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/create_btn"
+            style="@style/Widget.Shrine.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:text="@string/create"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radio_group"
+            app:layout_constraintVertical_bias="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

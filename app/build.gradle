@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.momobooklet_by_sm"
-        minSdk 23
+        minSdk 26
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -26,6 +26,13 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+    configurations {
+        all {
+            // resolves conflicts of openCSV with platform common-logging
+            exclude group: 'commons-logging', module: 'commons-logging'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -41,17 +48,15 @@ android {
     }
 
 
-
-
     buildFeatures {
         viewBinding = true
         dataBinding true
     }
+
     defaultConfig {
-
         vectorDrawables.useSupportLibrary = true
-
     }
+
 }
 
 dependencies {
@@ -164,10 +169,17 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-appcheck-playintegrity'
 
+    //CardView
+    implementation("androidx.cardview:cardview:1.0.0")
 
-//CardView
-        implementation("androidx.cardview:cardview:1.0.0")
+    // OpenCsv
+    implementation ("com.opencsv:opencsv:5.3")
 
+    //Logging
+    implementation "commons-logging:commons-logging-api:1.1"
+
+    //Useful For writing PDFs
+    implementation 'com.github.wwdablu:SimplyPDF:2.0.0'
 
 }
 

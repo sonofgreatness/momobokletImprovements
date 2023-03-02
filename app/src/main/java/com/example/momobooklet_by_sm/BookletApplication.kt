@@ -6,8 +6,6 @@ import timber.log.Timber
 
 class BookletApplication :Application(){
 
-
-
     init {
 
         if(BuildConfig.DEBUG){

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    >
     <com.google.android.material.card.MaterialCardView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-
         app:cardElevation="24dp"
         app:strokeColor ="@color/cardinal"
         app:strokeWidth="1.8dp"
@@ -34,7 +35,6 @@
                     android:layout_centerInParent="true"
                     app:cardCornerRadius="34dp"
                     android:layout_marginStart="12dp"
-
                     app:cardBackgroundColor="@color/middle_yellow"
                     app:cardElevation="34dp">
 
@@ -43,7 +43,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginTop="18sp"
-                        android:text="1500 SZL"
+                        android:text="@{Double.toString(CommissionViewmodel._dailyCommission.commission_Amount)}"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="18dp"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
@@ -53,30 +55,37 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
                 <TextView
                     android:id="@+id/monthly_commission_title_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
-                    android:text="dd-MM-yy to dd-MM-yy"
+                    android:text="@{CommissionViewmodel.thisMonthStartAndEndDates[0] + @string/to + CommissionViewmodel.thisMonthStartAndEndDates[1]}"
                     android:textAlignment="center"
                     android:textFontWeight="400"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
-
                 <TextView
+                    android:id="@+id/monthly_commission_title_text_big"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/monthly_commission_title_text"
-                    android:text="@string/last_month_s_commission"
+                    android:text="  "
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textFontWeight="400"
                     android:textSize="25sp" />
+                <include
+                    android:id="@+id/monthly_numberof_transactions_card"
+                    layout="@layout/numberoftransactionscard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:layout_below="@+id/monthly_commission_title_text_big" />
             </RelativeLayout>
+
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
