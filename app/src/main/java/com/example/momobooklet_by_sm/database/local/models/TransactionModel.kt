@@ -7,7 +7,6 @@ import android.os.Parcelable
 import androidx.room.*
 import com.example.momobooklet_by_sm.services.csv.Exportable
 import kotlinx.android.parcel.Parcelize
-import java.sql.Date
 
 @Parcelize
 
@@ -18,12 +17,12 @@ import java.sql.Date
             parentColumns = arrayOf("MoMoNumber"),
             childColumns = arrayOf("AgentPhoneNumber"),
             onDelete = CASCADE))
-   */
+  */
 )
 
 data class TransactionModel(
-    @PrimaryKey(autoGenerate = true)
-    val Transaction_ID: Int,
+    @PrimaryKey
+    val Transaction_ID:String,
     val Date: String,
     val C_Name:String,
     val C_ID: String,

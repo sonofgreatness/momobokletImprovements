@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".manageuser.OtpConfirmFragment">
+    tools:context=".manageuser.OtpConfirmFragment2">
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -186,13 +186,15 @@
                     </com.google.android.material.textfield.TextInputLayout>-->
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/otp_enter_btn"
+                    style="@style/Widget.Shrine.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Submit" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/submit" />
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
-
 </FrameLayout>

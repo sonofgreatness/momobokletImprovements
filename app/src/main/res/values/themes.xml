@@ -16,5 +16,28 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Theme.Shrinetutor2.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Shrinetutor2.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Shrinetutor2.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--style name="Theme.DigiBooklet.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style-->
+
+    <style name="Theme.DigiBooklet.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.DigiBooklet.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- SplashScreen theme. -->
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="android:windowBackground">@drawable/splashscreenbackground</item>
+    </style>
 
 </resources>

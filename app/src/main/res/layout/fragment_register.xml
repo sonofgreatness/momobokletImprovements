@@ -152,5 +152,4 @@
         </RelativeLayout>
     </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>

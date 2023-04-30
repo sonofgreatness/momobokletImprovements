@@ -47,6 +47,7 @@ class UserProfileRecyclerViewAdapter(val mUserViewModel:UserViewModel) :
             holder.itemView.findViewById<TextView>(R.id.CardHead).text=curretItem.MoMoName
             holder.itemView.findViewById<TextView>(R.id.CardSubHead).text=curretItem.MoMoNumber
 
+           /*
             holder.itemView.findViewById<ImageView>(R.id.collapse_arrow).setOnClickListener {
                 // INITIALLY VIEWING WIDGET IS NOT VISIBLE->UN-COLLAPSED
                 if (holder.itemView.findViewById<RelativeLayout>(R.id.user_profile_relatLayout).visibility == View.GONE) {
@@ -61,6 +62,10 @@ class UserProfileRecyclerViewAdapter(val mUserViewModel:UserViewModel) :
                     holder.itemView.findViewById<ImageView>(R.id.collapse_arrow) .setImageResource(R.drawable.collapsible_right)
                 }
             }
+            */
+
+
+
             if (!curretItem.IsIncontrol) holder.itemView.findViewById<ImageView>(R.id.Incontrol_status).setImageResource(R.drawable.circle_teal_fill)
             if (curretItem.IsIncontrol) holder.itemView.findViewById<ImageView>(R.id.Incontrol_status).setImageResource(R.drawable.beeping_radio_btn)
             /*
@@ -70,11 +75,10 @@ class UserProfileRecyclerViewAdapter(val mUserViewModel:UserViewModel) :
             //AnimatedVectorDrawableCompat animatedVectorDrawableCompat = AnimatedVectorDrawableCompat.create(holder.cardview.getContext(), R.drawable.beeping_radio_btn);
             // holder.UserIncontrolStatusImagr.setImageDrawable(animatedVectorDrawableCompat);
 
-            /* On Click Listeners */
-            holder.itemView.findViewById<ImageView>(R.id.delete_icon).setOnClickListener {
+        /* On Click Listeners */
+           /* holder.itemView.findViewById<ImageView>(R.id.delete_icon).setOnClickListener {
                 mUserViewModel.deleteUser(curretItem)
-            }
-
+            }*/
         }
     }
 }

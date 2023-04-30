@@ -63,14 +63,13 @@
         />
     </LinearLayout>
 
-        <RelativeLayout
+        <!--RelativeLayout
             android:layout_marginTop="4dp"
 
             android:layout_width="wrap_content"
             android:layout_height="67dp"
             android:layout_weight="0.10"
             android:background="@drawable/border_green_circle">
-
             <ImageView
                 android:id="@+id/delete_icon"
                 android:layout_width="wrap_content"
@@ -80,23 +79,21 @@
                 android:padding="6dp"
                 app:srcCompat="@drawable/delete_icon"
                 tools:ignore="ImageContrastCheck" />
-        </RelativeLayout>
+        </RelativeLayout-->
         <ImageView
             android:layout_width="0dp"
             android:id="@+id/Incontrol_status"
             android:layout_height="64dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"
-
             android:layout_weight="0.15"
             app:srcCompat="@drawable/beeping_radio_btn"
             android:contentDescription="@string/mainman"  />
 
-        <RelativeLayout
+        <!--RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.10">
-
             <ImageView
                 android:id="@+id/collapse_arrow"
                 android:layout_width="match_parent"
@@ -105,14 +102,10 @@
                 android:layout_marginBottom="16dp"
                 android:contentDescription="collapses profile card"
                 app:srcCompat="@drawable/collapsible_right"
-                tools:ignore="ImageContrastCheck" />
-
-        </RelativeLayout>
-
-
+                tools:ignore="ImageContrastCheck"/>
+        </RelativeLayout-->
     </LinearLayout>
-
-        <RelativeLayout
+        <!--RelativeLayout
             android:id="@+id/user_profile_relatLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -126,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-android:paddingEnd="16dp"
+                android:paddingEnd="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_alignParentRight="true"
                 android:text="@string/edit" />
@@ -145,8 +138,7 @@ android:paddingEnd="16dp"
                 android:drawableLeft="@drawable/ic_baseline_control_point_24"
                 android:elevation="3dp"
                 android:text="@string/give_control" />
-        </RelativeLayout>
-
+        </RelativeLayout-->
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

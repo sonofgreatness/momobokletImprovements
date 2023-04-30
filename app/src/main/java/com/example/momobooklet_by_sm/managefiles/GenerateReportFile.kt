@@ -1,13 +1,15 @@
 package com.example.momobooklet_by_sm.managefiles
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.R
@@ -16,7 +18,6 @@ import com.example.momobooklet_by_sm.ui.viewmodels.CommissionViewModel
 import com.example.momobooklet_by_sm.util.classes.FileFormatType
 import com.example.momobooklet_by_sm.util.classes.ReportType
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class GenerateReportFile : Fragment() {
@@ -30,6 +31,7 @@ class GenerateReportFile : Fragment() {
 
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,12 +39,13 @@ class GenerateReportFile : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentGenerateReportFileBinding.inflate(inflater,container,false)
         mCommissionViewModel = (activity as MainActivity).mCommissionViewModel
-
+        (activity as MainActivity).getFileManagementPermissions()
         setupOnClickListeners()
         return binding.root
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupOnClickListeners() {
 
         binding.customUpicon.setOnClickListener {
@@ -51,7 +54,8 @@ class GenerateReportFile : Fragment() {
         }
 
         binding.createBtn.setOnClickListener{
-           createReportFromInputs()
+            trackGenerateReport()
+            createReportFromInputs()
          }
 
         binding.radioGroup.pickDateBtnCustomradiogroup.setOnClickListener{
@@ -59,48 +63,65 @@ class GenerateReportFile : Fragment() {
         }
     }
 
+    /*********************************************************************************
+     * trackGenerateReport()  -> check Network State , if connected
+     *                          send mixpanel data
+     ***********************************************************************************/
+    private fun trackGenerateReport() {
+
+       // if ((activity as MainActivity).myIsConnected)
+        //    (activity as MainActivity).mMixpanel.people.increment("generate file called", 1.0)
+
+    }
+
     /***********************************************************************************
      * createReportFromInputs()  -> creates report File(s)  by  using
      *                          data selected by user in RadioGroup, ChipGroup
      *                          and selected Date
      **********************************************************************************/
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("LogNotTimber")
     private fun createReportFromInputs(){
 
-
         if (listOfReportTypes.isNotEmpty())
-            listOfReportTypes.clear()
+                listOfReportTypes.clear()
 
-        collectReportTypeDateFromChips()
-        if (listOfReportTypes.isNotEmpty())
-        {
-        collectFileFormatFromRadioButtons()
-        if(fileFormat!=null) {
+            collectReportTypeDateFromChips()
+            if (listOfReportTypes.isNotEmpty()) {
+                collectFileFormatFromRadioButtons()
+                if (fileFormat != null) {
 
-            if (startDate!=null) {
-                discriminateReportTypesByFileFormat()
-                for (type in listOfReportTypes)
-                    mCommissionViewModel.writeReport(startDate!!, type)
-                Toast.makeText(requireContext(), "File Write SuccessFul", Toast.LENGTH_SHORT).show()
+                    if (startDate != null) {
+                        discriminateReportTypesByFileFormat()
+                        for (type in listOfReportTypes)
+                            mCommissionViewModel.writeReport(startDate!!, type)
+                        Toast.makeText(
+                            requireContext(),
+                            "File Write SuccessFul",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Please Pick A  Start Date",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Please Specify File Format",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            } else {
+                // Do animations in these else statemets
+                Toast.makeText(requireContext(), "Please Select Report Type", Toast.LENGTH_SHORT)
+                    .show()
             }
-            else{
-                Toast.makeText(requireContext(), "Please Pick A  Start Date",Toast.LENGTH_SHORT).show()
-            }
-
-        }
-
-        else
-           {
-                 Toast.makeText(requireContext(), "Please Specify File Format", Toast.LENGTH_SHORT)
-                .show()
-         }
-        }
-        else {
-            // Do animations in these else statemets
-            Toast.makeText(requireContext(), "Please Select Report Type", Toast.LENGTH_SHORT).show()
-        }
     }
-
-
 
     /*************************************************************************************
      * collectReportTypeDateFromChips - translates  choice made by user into list
@@ -151,6 +172,7 @@ class GenerateReportFile : Fragment() {
      * getStartDate() ->  shows  DatePicker Dialogue  and  converts date
      *                  picked by user to string of the the form dd-MM-YYYY
      **********************************************************************/
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun getStartDate() {
         showDateAlertDialogue()
 
@@ -161,14 +183,13 @@ class GenerateReportFile : Fragment() {
      * showAlertDialogue() -> shows DatePickerDialogue
      *                         set on Today's Date
      **********************************************************/
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showDateAlertDialogue() {
 
         val c: Calendar = Calendar.getInstance()
         val mYear: Int = c.get(Calendar.YEAR) // current year
         val mMonth: Int = c.get(Calendar.MONTH) // current month
         val mDay: Int = c.get(Calendar.DAY_OF_MONTH) // current day
-
-        Log.d("numbers here", "${mDay} ${mMonth} ${mYear}")
 
         DatePickerDialog (requireContext(),
             { view, year, month, dayOfMonth ->
@@ -182,12 +203,11 @@ class GenerateReportFile : Fragment() {
             .show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun getDatePicked(dayOfMonth: Int, month: Int, year: Int):String {
         return mCommissionViewModel.datesManager
             .convertDatePickerIntToMyDate(dayOfMonth,month,year)
     }
-
-
     /*******************************************************************************
      * discriminateReportTypesByFileFormat()
      *                          -> updates the listofReportTypes variable using the
@@ -201,10 +221,9 @@ class GenerateReportFile : Fragment() {
      *
      *                        if fileFormat = BOTH listofReport types should have
      *                        ReportTypes of ordinals 0-7
-     ********************************************************************************/
+     *******************************************************************************/
     private fun discriminateReportTypesByFileFormat() {
         when(fileFormat){
-
             FileFormatType.CSV->{
                 //change list to contain attributes with ordinals > 4
                 incrementOrdinalsinListofReportTypes(listOfReportTypes)
@@ -279,4 +298,5 @@ class GenerateReportFile : Fragment() {
             else->{ ReportType.TRIMONTHLY_1 }
         }
     }
+
 }

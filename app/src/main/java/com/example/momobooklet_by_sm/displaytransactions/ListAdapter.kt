@@ -14,31 +14,38 @@ import com.example.momobooklet_by_sm.R
 import com.example.momobooklet_by_sm.database.local.models.TransactionModel
 
 
-class ListAdapter : RecyclerView.Adapter<com.example.momobooklet_by_sm.displaytransactions.ListAdapter.MyViewHolder>() {
+class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
 
-  inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    private val  differCallback= object : DiffUtil.ItemCallback<TransactionModel>(){
-        override fun areItemsTheSame(oldItem: TransactionModel, newItem: TransactionModel): Boolean {
-            return   oldItem.Transaction_ID==newItem.Transaction_ID
+    private val differCallback = object : DiffUtil.ItemCallback<TransactionModel>() {
+        override fun areItemsTheSame(
+            oldItem: TransactionModel,
+            newItem: TransactionModel
+        ): Boolean {
+            return oldItem.Transaction_ID == newItem.Transaction_ID
         }
 
-        override fun areContentsTheSame(oldItem: TransactionModel, newItem: TransactionModel):Boolean {
-            return oldItem==newItem
+        override fun areContentsTheSame(
+            oldItem: TransactionModel,
+            newItem: TransactionModel
+        ): Boolean {
+            return oldItem == newItem
         }
 
 
     }
 
 
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder{
-         return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.custom_row, parent, false))
-     }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        return MyViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.custom_row, parent, false)
+        )
+    }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
@@ -46,19 +53,29 @@ class ListAdapter : RecyclerView.Adapter<com.example.momobooklet_by_sm.displaytr
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem =differ.currentList[position]
- holder.itemView.findViewById<TextView>(R.id.date_id).text=currentItem.Date.toString()
-        holder.itemView.findViewById<TextView>(R.id.name_id).text= currentItem.C_Name
-        holder.itemView.findViewById<TextView>(R.id.pin_id).text=currentItem.C_ID
-        if(currentItem.Transaction_type==true)
-            holder.itemView.findViewById<TextView>(R.id.s_t_transactiont_type_id).text="Buys MoMo"
-        if (currentItem.Transaction_type==false)
-   holder.itemView.findViewById<TextView>(R.id.s_t_transactiont_type_id).text="Sells MoMo"
-        holder.itemView.findViewById<TextView>(R.id.s_t_amount_id).text=currentItem.Amount.toString()
+        val currentItem = differ.currentList[position]
+        holder.itemView.findViewById<TextView>(R.id.date_id).text = currentItem.Date
+        holder.itemView.findViewById<TextView>(R.id.name_id).text = currentItem.C_Name
+        holder.itemView.findViewById<TextView>(R.id.pin_id).text = currentItem.C_ID
+        if (currentItem.Transaction_type == true)
+            holder.itemView.findViewById<TextView>(R.id.s_t_transactiont_type_id).text = "Buys MoMo"
+        if (currentItem.Transaction_type == false)
+            holder.itemView.findViewById<TextView>(R.id.s_t_transactiont_type_id).text =
+                "Sells MoMo"
+        holder.itemView.findViewById<TextView>(R.id.s_t_amount_id).text =
+            currentItem.Amount.toString()
         // Get ByteArray from transaction Transaction Model obect convert to Bitmap
-        val bitmap:Bitmap=BitmapFactory.decodeByteArray(currentItem.Signature,0,currentItem.Signature.size)
 
+        if (currentItem.Signature.size > 2)
+        {
+
+        val bitmap: Bitmap =
+        BitmapFactory.decodeByteArray(currentItem.Signature, 0, currentItem.Signature.size)
         holder.itemView.findViewById<ImageView>(R.id.s_t_imageview_id).setImageBitmap(bitmap)
+        }
+        else
+            holder.itemView.findViewById<ImageView>(R.id.s_t_imageview_id).setImageResource(R.drawable.remove)
+
         holder.itemView.findViewById<ImageView>(R.id.s_t_button_id).setOnClickListener(View.OnClickListener {
 
             if (holder.itemView.findViewById<LinearLayout>(R.id.layout_change).visibility==View.VISIBLE){

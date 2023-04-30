@@ -2,17 +2,15 @@ package com.example.momobooklet_by_sm.services
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.os.Environment
 import android.print.PrintAttributes
 import android.util.Log
 import androidx.annotation.WorkerThread
-import com.example.momobooklet_by_sm.R
-import com.example.momobooklet_by_sm.services.pdf.TransactionTablePDFManager
 import com.example.momobooklet_by_sm.services.csv.CsvConfig
 import com.example.momobooklet_by_sm.services.csv.Exportable
 import com.example.momobooklet_by_sm.services.csv.Exports
 import com.example.momobooklet_by_sm.services.pdf.DailyCommissionModelPDFManager
 import com.example.momobooklet_by_sm.services.pdf.PdfConfig
+import com.example.momobooklet_by_sm.services.pdf.TransactionTablePDFManager
 import com.example.momobooklet_by_sm.util.classes.WRITETO
 import com.opencsv.CSVWriter
 import com.opencsv.bean.StatefulBeanToCsvBuilder
@@ -47,8 +45,7 @@ object ExportService {
         flow<Boolean> {
             with(csvConfig) {
 
-                var myhostPath : String
-                myhostPath = if(location.ordinal == WRITETO.EXTERNAL.ordinal)
+                val myhostPath : String = if(location.ordinal == WRITETO.EXTERNAL.ordinal)
                     hostPath
                 else
                     internalhostPath
@@ -62,7 +59,7 @@ object ExportService {
                 }
                 // 👇 create csv file
                 val csvFile = File("${hostDirectory.path}/${fileName}")
-                var csvWriter: CSVWriter
+                val csvWriter: CSVWriter
 
                 csvWriter = try {
                     Log.d("Create File Status (Exists) :  ", "${csvFile.exists()}")
@@ -100,8 +97,7 @@ object ExportService {
     fun writePDF(pdfConfig: PdfConfig, content: TransactionTablePDFManager,content2: DailyCommissionModelPDFManager) =
         flow {
             with(pdfConfig) {
-                var myhostPath : String
-                myhostPath = if(location.ordinal == WRITETO.EXTERNAL.ordinal)
+                val myhostPath : String = if(location.ordinal == WRITETO.EXTERNAL.ordinal)
                     hostPath
                 else
                     internalhostPath

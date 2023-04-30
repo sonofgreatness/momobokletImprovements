@@ -19,6 +19,7 @@ import android.view.Gravity
 import android.widget.Toast
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.database.local.models.UserModel
 import com.example.momobooklet_by_sm.databinding.FragmentMainTransactorBinding
@@ -47,7 +48,7 @@ class MainTransactorFragment : Fragment() {
                 false
             )
 
-        mUserViewModel = (activity as MainActivity).mUserViewModel
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
 
         // back arrow in the appbar OnclickListener

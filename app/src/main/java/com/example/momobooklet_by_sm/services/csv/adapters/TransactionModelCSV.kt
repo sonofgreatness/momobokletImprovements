@@ -8,7 +8,7 @@ import java.sql.Time
 
 data class TransactionModelCSV (
         @CsvBindByName(column = "Transaction_ID")
-        val Transaction_ID: Int,
+        val Transaction_ID: String,
         @CsvBindByName(column = "Date")
         val Date: String,
         @CsvBindByName(column = "C_Name")

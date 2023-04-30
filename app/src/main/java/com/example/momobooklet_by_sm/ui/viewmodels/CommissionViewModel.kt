@@ -357,7 +357,6 @@ class CommissionViewModel   (val application: Application,
             repository.getDailyTransactions(date).let {
                 weekTransactions = weekTransactions + it
             }
-
         return weekTransactions
     }
 

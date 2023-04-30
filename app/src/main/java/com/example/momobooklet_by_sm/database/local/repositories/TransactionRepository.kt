@@ -1,6 +1,8 @@
 package com.example.momobooklet_by_sm.database.local.repositories
 
+
 import com.example.momobooklet_by_sm.database.local.daos.DatabaseDao
+import com.example.momobooklet_by_sm.database.local.models.BACKUP_METADATA
 import com.example.momobooklet_by_sm.database.local.models.TransactionModel
 import kotlinx.coroutines.flow.Flow
 
@@ -44,6 +46,14 @@ class TransactionRepository(private val userDao: DatabaseDao){
         userDao.removeTransaction(transaction)
     }
 
+
+
+    /*----------------------------------------------------------------------
+                            BACKUP_META DATA
+ -----------------------------------------------------------------------*/
+    fun  clearTransactionMetaData() = userDao.clearTransactionMetaData()
+    suspend fun  getTransactionMetaData():List<BACKUP_METADATA> = userDao.getTransactionMetaData()
+    suspend fun addTransactionMetaData(data: BACKUP_METADATA) = userDao.addTransactionMetaData(data)
 
     suspend fun getAllTransactionsRegularData() = userDao.getAllTransactionsRegularData()
 }

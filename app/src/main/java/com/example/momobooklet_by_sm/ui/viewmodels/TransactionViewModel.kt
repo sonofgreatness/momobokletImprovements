@@ -2,6 +2,8 @@ package com.example.momobooklet_by_sm.ui.viewmodels
 
 import android.app.Activity
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.momobooklet_by_sm.database.local.Database
 import com.example.momobooklet_by_sm.database.local.models.TransactionModel
@@ -39,6 +41,7 @@ val activity: Activity
 
     private val exportService: ExportService = ExportService
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private val datesManager:CommisionDatesManager = CommisionDatesManager(activity)
 
     val _searchResults = MutableLiveData<List<TransactionModel>>()

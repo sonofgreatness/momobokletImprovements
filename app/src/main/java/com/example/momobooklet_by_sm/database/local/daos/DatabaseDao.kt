@@ -1,6 +1,7 @@
 package com.example.momobooklet_by_sm.database.local.daos
 
 import androidx.room.*
+import com.example.momobooklet_by_sm.database.local.models.BACKUP_METADATA
 import com.example.momobooklet_by_sm.database.local.models.TransactionModel
 import kotlinx.coroutines.flow.Flow
 
@@ -52,5 +53,18 @@ interface DatabaseDao {
     @Query("SELECT * FROM RECORDS_SHEET")
     suspend fun getAllTransactionsRegularData(): List<TransactionModel>
 
+
+    /*----------------------------------------------------------------------
+                                BACKUP_META DATA
+     -----------------------------------------------------------------------*/
+    @Query("DELETE FROM BACKUP_METADATA")
+    fun  clearTransactionMetaData()
+
+    @Query("SELECT *  FROM BACKUP_METADATA")
+    suspend fun  getTransactionMetaData():List<BACKUP_METADATA>
+
+    @Insert
+        ( onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addTransactionMetaData(data:BACKUP_METADATA)
 
 }

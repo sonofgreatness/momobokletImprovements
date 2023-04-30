@@ -34,7 +34,7 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 
-
+@RequiresApi(Build.VERSION_CODES.O)
 class Commission : Fragment() {
 
     private lateinit var _binding : FragmentCommissionBinding
@@ -69,6 +69,7 @@ class Commission : Fragment() {
 
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpAllViews()
     {
 
@@ -87,6 +88,7 @@ class Commission : Fragment() {
 
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupLastMonthView() {
         val strings = datesManager.getLastMonthDates_()
         val size = strings.size
@@ -295,11 +297,14 @@ class Commission : Fragment() {
             .root
 
 
-        binding.dailyCommissionCardBottomsheetYesterday.
-                commissionAnalysisTitleText.text = datesManager.getYesterdayStringUltimate()
 
-        binding.dailyCommissionCardBottomsheetYesterday.
-        commissionAnalysisTitleTextBig.text= getString(R.string.yesterdays_commission)
+        binding.dailyCommissionCardBottomsheetYesterday
+            .commissionAnalysisTitleText
+            .text = datesManager.getYesterdayStringUltimate()
+
+        binding.dailyCommissionCardBottomsheetYesterday
+                        .commissionAnalysisTitleTextBig.text = getString(R.string.yesterdays_commission)
+
 
         mCommissionViewModel.yesterDayCommission.observe(viewLifecycleOwner){
             if(it!= null) {

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/signin_navgraph"
+    app:startDestination="@id/registerFragment2">
+    <fragment
+        android:id="@+id/registerFragment2"
+        android:name="com.example.momobooklet_by_sm.manageuser.RegisterFragment2"
+        android:label="RegisterFragment2" >
+        <action
+            android:id="@+id/action_registerFragment2_to_otpConfirmFragment2"
+            app:destination="@id/otpConfirmFragment2"
+            app:popUpTo="@id/registerFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/otpConfirmFragment2"
+        android:name="com.example.momobooklet_by_sm.manageuser.OtpConfirmFragment2"
+        android:label="OtpConfirmFragment2">
+        <action
+            android:id="@+id/action_otpConfirmFragment2_to_registerFragment2"
+            app:destination="@id/registerFragment2"
+            app:popUpTo="@id/registerFragment2" />
+    </fragment>
+</navigation>

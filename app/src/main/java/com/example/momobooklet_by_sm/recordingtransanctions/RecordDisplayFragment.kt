@@ -344,6 +344,7 @@ class RecordDisplayFragment : Fragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpRecordData_btn_Onclick() {
         binding.transactCheckBtn.setOnClickListener {
 
@@ -467,7 +468,7 @@ class RecordDisplayFragment : Fragment() {
         dataObject.customersiganature = byteArrayMaker()
 
         val transaction = TransactionModel(
-            0, currentDate.trim(),
+            UUID.randomUUID().toString(), currentDate.trim(),
             dataObject.customername,
             dataObject.customerpin,
             dataObject.customerphone,

@@ -59,8 +59,6 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-
-
             mAuth = FirebaseAuth.getInstance()
             _binding = FragmentRegisterBinding.inflate(inflater, container, false)
             rootView = binding.root
@@ -78,11 +76,11 @@ class RegisterFragment : Fragment() {
             passwordInputLayout.setEndIconOnClickListener {
                 passwordEndIconChangeHelper = if (passwordEndIconChangeHelper) {
                     passwordInputLayout.setEndIconDrawable(R.drawable.password_icon)
-                    passwordInputLayout.endIconMode = END_ICON_PASSWORD_TOGGLE
+                   // passwordInputLayout.endIconMode = END_ICON_PASSWORD_TOGGLE
                     false
                 } else {
                     passwordInputLayout.setEndIconDrawable(R.drawable.password_icon_visibility_off)
-                    passwordInputLayout.endIconMode = END_ICON_PASSWORD_TOGGLE
+                   // passwordInputLayout.endIconMode = END_ICON_PASSWORD_TOGGLE
                     true
                 }
             }
@@ -147,6 +145,7 @@ class RegisterFragment : Fragment() {
 
 
     private fun moveUserToOtpConfirmed(view: View) {
+        Toast.makeText(requireContext(),"first One Works Otp ", Toast.LENGTH_SHORT).show()
         val mainLooperHandler = Handler(Looper.getMainLooper())
         mainLooperHandler.postDelayed(Runnable{
         view.findNavController().navigate(R.id.action_registerFragment_to_otpConfirmFragment,mBundle)}
@@ -154,6 +153,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun moveToUserAccountsFragment(view: View) {
+        Toast.makeText(requireContext(),"first One Works  Accounts ", Toast.LENGTH_SHORT).show()
         val mainLooperHandler = Handler(Looper.getMainLooper())
         mainLooperHandler.postDelayed(Runnable {
             view.findNavController().navigate(R.id.action_registerFragment_to_userAccountsFragment)
