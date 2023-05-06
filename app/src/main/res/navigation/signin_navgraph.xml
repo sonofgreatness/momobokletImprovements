@@ -6,7 +6,7 @@
     app:startDestination="@id/registerFragment2">
     <fragment
         android:id="@+id/registerFragment2"
-        android:name="com.example.momobooklet_by_sm.manageuser.RegisterFragment2"
+        android:name="com.example.momobooklet_by_sm.presentation.manageuser.RegisterFragment2"
         android:label="RegisterFragment2" >
         <action
             android:id="@+id/action_registerFragment2_to_otpConfirmFragment2"
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/otpConfirmFragment2"
-        android:name="com.example.momobooklet_by_sm.manageuser.OtpConfirmFragment2"
+        android:name="com.example.momobooklet_by_sm.presentation.manageuser.OtpConfirmFragment2"
         android:label="OtpConfirmFragment2">
         <action
             android:id="@+id/action_otpConfirmFragment2_to_registerFragment2"

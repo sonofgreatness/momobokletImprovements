@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    tools:context=".managefiles.ManagePDFsLandingFragment">
+    tools:context="com.example.momobooklet_by_sm.presentation.managefiles.ManagePDFsLandingFragment">
 
 
     <!--LinearLayout

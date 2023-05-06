@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".recordingtransanctions.RecordDisplayFragment"
+    tools:context=".presentation.recordingtransanctions.RecordDisplayFragment"
     android:id="@+id/parent_recordTransacts"
     android:background="@color/white">
 

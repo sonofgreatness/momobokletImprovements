@@ -1,6 +1,7 @@
 package com.example.momobooklet_by_sm
 
 
+//import com.mixpanel.android.mpmetrics.MixpanelAPI
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
@@ -15,31 +16,30 @@ import android.preference.PreferenceManager
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.momobooklet_by_sm.ui.viewmodelProviderFactories.CommissionViewModelProviderFactory
-import com.example.momobooklet_by_sm.ui.viewmodelProviderFactories.TransactionViewModelProviderFactory
-import com.example.momobooklet_by_sm.ui.viewmodels.CommissionViewModel
-import com.example.momobooklet_by_sm.ui.viewmodels.TransactionViewModel
-import com.example.momobooklet_by_sm.ui.viewmodels.UserViewModel
-import com.example.momobooklet_by_sm.util.Constants.Companion.DEFAULT_START_DATE
-import com.example.momobooklet_by_sm.util.Constants.Companion.MONTHLY_STARTDATE_FILENAME
-import com.example.momobooklet_by_sm.util.Constants.Companion.REQUEST_FILE_PERMISSION
-import com.example.momobooklet_by_sm.util.classes.Events.networkEvent
-import com.example.momobooklet_by_sm.util.classes.NetworkChangeListener
+import com.example.momobooklet_by_sm.common.util.Constants.Companion.DEFAULT_START_DATE
+import com.example.momobooklet_by_sm.common.util.Constants.Companion.MONTHLY_STARTDATE_FILENAME
+import com.example.momobooklet_by_sm.common.util.Constants.Companion.REQUEST_FILE_PERMISSION
+import com.example.momobooklet_by_sm.common.util.classes.Events.networkEvent
+import com.example.momobooklet_by_sm.common.util.classes.NetworkChangeListener
+import com.example.momobooklet_by_sm.presentation.ui.viewmodelProviderFactories.TransactionViewModelProviderFactory
+import com.example.momobooklet_by_sm.presentation.ui.viewmodels.CommissionViewModel
+import com.example.momobooklet_by_sm.presentation.ui.viewmodels.TransactionViewModel
+import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
-//import com.mixpanel.android.mpmetrics.MixpanelAPI
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -49,15 +49,14 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 
-
-//@AndroidEntryPoint
+@AndroidEntryPoint
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     //lateinit var mMixpanel: MixpanelAPI
     lateinit var mUserViewModel: UserViewModel
     lateinit var mTransactionViewModel: TransactionViewModel
-    lateinit var mCommissionViewModel: CommissionViewModel
+    val mCommissionViewModel: CommissionViewModel by viewModels()
     var myIsConnected: Boolean = false
 
 
@@ -70,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(NetworkChangeListener(), intentFilter)
     }
 
-
     override fun onResume() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(
             baseContext
@@ -82,9 +80,9 @@ class MainActivity : AppCompatActivity() {
             edit.commit()
             moveToMainActivity2()
         }
-
         super.onResume()
     }
+
 
     private fun moveToMainActivity2() {
         val i = Intent(baseContext, MainActivity2::class.java)
@@ -99,19 +97,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val trackAutomaticEvents = true
-      //  mMixpanel =
-       //     MixpanelAPI.getInstance(this, "a34dd4774bd7d4f78b8285e889ebdab6", trackAutomaticEvents)
+        //  mMixpanel =
+        //     MixpanelAPI.getInstance(this, "a34dd4774bd7d4f78b8285e889ebdab6", trackAutomaticEvents)
+
         determineifToregisterUser()
     }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun determineifToregisterUser()
-    {
+    private fun determineifToregisterUser() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(
             baseContext
         )
-        val randomInt:Int = (0..9000).random()
         val previouslyStarted = prefs.getBoolean("previously started", false)
         if (!previouslyStarted) { // user needs to register
             val edit = prefs.edit()
@@ -119,8 +116,7 @@ class MainActivity : AppCompatActivity() {
             edit.commit()
             //mMixpanel.identify(randomInt.toString())
             moveToMainActivity2()
-        }
-        else
+        } else
             normalFlow()// user is registered
     }
 
@@ -131,18 +127,12 @@ class MainActivity : AppCompatActivity() {
         checkIfMonthlyStartDateFileMustBeCreated()
         setUpViewModels()
 
-
-
-         setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)
         setUpBottomNav()
         firebasePlayIntegrityInitialize()
         setUpExternalMemoryFileDirectories()
         getFileManagementPermissions()
-
-
-
     }
-
 
     /****************************************************
      * setUpViewModels ->  initiates the variables
@@ -154,18 +144,20 @@ class MainActivity : AppCompatActivity() {
     private fun setUpViewModels() {
         val TransactionViewModelProviderFactory =
             TransactionViewModelProviderFactory(application, this)
-        val CommissionViewModelProviderFactory =
-            CommissionViewModelProviderFactory(application, this)
+
+
+
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
 
         mTransactionViewModel = ViewModelProvider(
             this,
             TransactionViewModelProviderFactory
         )[TransactionViewModel::class.java]
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-        mCommissionViewModel = ViewModelProvider(
-            this,
-            CommissionViewModelProviderFactory
-        )[CommissionViewModel::class.java]
+
+
+
+
     }
 
     @Throws(JSONException::class)
@@ -183,20 +175,20 @@ class MainActivity : AppCompatActivity() {
      ***************************************************************************/
     private fun setUpExternalMemoryFileDirectories() {
         val hostPath = Environment.getExternalStorageDirectory().path
-        val rootDirectory  = File( hostPath+"/"+getString(R.string.app_name))
+        val rootDirectory = File(hostPath + "/" + getString(R.string.app_name))
 
 
         if (!rootDirectory.exists())
             rootDirectory.mkdir()
 
 
-        val pdfDirectory = File(hostPath+"/"+getString(R.string.app_name)+"/"+"PDF")
-        val csvDirectory = File(hostPath+"/"+getString(R.string.app_name)+"/"+"CSV")
+        val pdfDirectory = File(hostPath + "/" + getString(R.string.app_name) + "/" + "PDF")
+        val csvDirectory = File(hostPath + "/" + getString(R.string.app_name) + "/" + "CSV")
 
         if (!pdfDirectory.exists())
-                 pdfDirectory.mkdir()
+            pdfDirectory.mkdir()
         if (!csvDirectory.exists())
-                  csvDirectory.mkdir()
+            csvDirectory.mkdir()
 
 
     }
@@ -211,11 +203,9 @@ class MainActivity : AppCompatActivity() {
     fun getFileManagementPermissions() {
         if (Build.VERSION.SDK_INT >= 30) {
             if (!Environment.isExternalStorageManager()) {
-               requestManageFilesPermissions()
+                requestManageFilesPermissions()
             }
-        }
-        else
-        {
+        } else {
             requestREADANDWRITE()
         }
     }
@@ -227,10 +217,10 @@ class MainActivity : AppCompatActivity() {
      *          request Manifest.permission.WRITE_EXTERNAL_STORAGE
      *
      *****************************************************************/
-    private fun requestREADANDWRITE()
-    {
+    private fun requestREADANDWRITE() {
 
-        if (ContextCompat.checkSelfPermission(this.applicationContext,
+        if (ContextCompat.checkSelfPermission(
+                this.applicationContext,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
             != PackageManager.PERMISSION_GRANTED
@@ -245,26 +235,33 @@ class MainActivity : AppCompatActivity() {
                     this,
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 )
-            )
-
-            {
+            ) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
-                Toast.makeText(this, "I Need To See Your Files , Let Me",
-                                                        Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this, "I Need To See Your Files , Let Me",
+                    Toast.LENGTH_SHORT
+                ).show()
 
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE),
-                    REQUEST_FILE_PERMISSION)
-            }
-            else {
+                    arrayOf(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ),
+                    REQUEST_FILE_PERMISSION
+                )
+            } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE),
-                REQUEST_FILE_PERMISSION)
+                    arrayOf(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ),
+                    REQUEST_FILE_PERMISSION
+                )
             }
         } else {
             // Permission has already been granted
@@ -280,16 +277,16 @@ class MainActivity : AppCompatActivity() {
      *
      *****************************************************************/
     @RequiresApi(Build.VERSION_CODES.R)
-    private fun requestManageFilesPermissions()
-    {
+    private fun requestManageFilesPermissions() {
         // Show Dialogue Explaining To User
         // That you are about to Request FileManager Permission
 
-        AlertDialog.
-        Builder(this)
+        AlertDialog.Builder(this)
             .setTitle("FILEMANAGER \n PERMISSION REQUEST")
-            .setMessage("This App needs permission To Manage Files \n " +
-                    "it will not work without it , Please grant it")
+            .setMessage(
+                "This App needs permission To Manage Files \n " +
+                        "it will not work without it , Please grant it"
+            )
             .setPositiveButton("OK") { dialog, which ->
                 val getpermission = Intent()
                 getpermission.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
@@ -300,6 +297,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
     @Subscribe
     fun setConnectivityState(networkEvent: networkEvent) {
 
@@ -332,7 +330,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     /**********************************************************************************************************
      *checkIfMonthlyStartDateFileMustBeCreated() -> checks if file of the name
      *                                      MonthlyDataStartDate.txt exists  in the files Directory (filesDir)
@@ -341,8 +338,8 @@ class MainActivity : AppCompatActivity() {
      *************************************************************************************************/
     private fun checkIfMonthlyStartDateFileMustBeCreated() {
         val FileToCheck = File(application.filesDir.path.plus("/").plus(MONTHLY_STARTDATE_FILENAME))
-        if(!FileToCheck.exists())
-           createFileAndWriteDefaultData(FileToCheck)
+        if (!FileToCheck.exists())
+            createFileAndWriteDefaultData(FileToCheck)
 
     }
 
@@ -376,6 +373,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
@@ -387,6 +385,7 @@ class MainActivity : AppCompatActivity() {
         }
         //check if reciever is registered before doing this ****************
     }
+
     /**************************************************************
      * prevents moving to registration Activity by pressing back
      ***************************************************************/

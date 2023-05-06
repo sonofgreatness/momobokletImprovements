@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        tools:context=".managefiles.GenerateReportFile">
+        tools:context="com.example.momobooklet_by_sm.presentation.managefiles.GenerateReportFile">
 
         <ImageView
             android:id="@+id/custom_upicon"

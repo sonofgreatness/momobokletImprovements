@@ -1,6 +1,7 @@
 package com.example.momobooklet_by_sm.api
 
-import com.example.momobooklet_by_sm.util.Constants.Companion.BASE_URL
+import com.example.momobooklet_by_sm.common.util.Constants.Companion.BASE_URL
+import com.example.momobooklet_by_sm.data.remote.repositories.SheetsDbApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import okhttp3.logging.HttpLoggingInterceptor
