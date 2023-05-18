@@ -3,7 +3,7 @@ package com.example.momobooklet_by_sm.common.util.classes
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.example.momobooklet_by_sm.common.util.classes.Events.networkEvent
+import com.example.momobooklet_by_sm.common.util.classes.events.networkEvent
 import org.greenrobot.eventbus.EventBus
 
 /**

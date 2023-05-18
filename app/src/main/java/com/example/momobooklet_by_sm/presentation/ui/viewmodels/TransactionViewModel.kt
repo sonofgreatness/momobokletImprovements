@@ -1,26 +1,29 @@
 package com.example.momobooklet_by_sm.presentation.ui.viewmodels
 
-import android.app.Activity
-import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.*
-import com.example.momobooklet_by_sm.data.local.Database
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.momobooklet_by_sm.common.util.classes.operationalStates.ExportState
 import com.example.momobooklet_by_sm.data.local.models.TransactionModel
-import com.example.momobooklet_by_sm.data.local.repositories.TransactionRepositoryImpl
-import com.example.momobooklet_by_sm.domain.services.ExportService
-import com.example.momobooklet_by_sm.common.util.CommisionDatesManager
-import com.example.momobooklet_by_sm.common.util.classes.viewState.ExportState
+import com.example.momobooklet_by_sm.domain.repositories.CommissionDatesManagerRepository
+import com.example.momobooklet_by_sm.domain.repositories.TransactionRepository
+import com.example.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.ExportService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-
-class TransactionViewModel(
-  val  application: Application,
-val activity: Activity
+@RequiresApi(Build.VERSION_CODES.O)
+@HiltViewModel
+class TransactionViewModel @Inject constructor (
+    val transactionRepository: TransactionRepository,
+    val datesManager: CommissionDatesManagerRepository
 ) : ViewModel() {
 
     // state for export csv status
@@ -29,56 +32,51 @@ val activity: Activity
 
     private val exportService: ExportService = ExportService
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private val datesManager:CommisionDatesManager = CommisionDatesManager(activity)
-
     val _searchResults = MutableLiveData<List<TransactionModel>>()
     val searchResults: LiveData<List<TransactionModel>>
         get() = _searchResults
 
 
-    private val repository: TransactionRepositoryImpl
+
     val _triggerNoResultsToast = MutableLiveData<Boolean>()
     val triggerNoResultsToast : LiveData<Boolean> get() = _triggerNoResultsToast
 
 
 
     init {
-        val userDao = Database.getDatabase(application).getDao()
-        repository = userDao.let { TransactionRepositoryImpl(it) }
         _triggerNoResultsToast.postValue(false)
 
 
         viewModelScope.launch {
 
-            repository.readAllTransactiondata().collect{
+            transactionRepository.readAllTransactiondata().collect{
                 _searchResults.postValue(it)
             }
-            Timber.e("t_viewM->${repository.readAllTransactiondata()}")
+            Timber.e("t_viewM->${transactionRepository.readAllTransactiondata()}")
         }
     }
 
     fun getAllTransaction() = viewModelScope.launch {
-        repository.readAllTransactiondata().collect(){
+        transactionRepository.readAllTransactiondata().collect(){
             _searchResults.postValue(it)
         }
     }
 
     fun addTransaction(transaction: TransactionModel) {
         viewModelScope.launch(IO) {
-            repository.addTransaction(transaction)
+            transactionRepository.addTransaction(transaction)
             Timber.e("add_transaction called in viewmodel")
         }
 
     }
     fun removeTransaction(transaction: TransactionModel) {
         viewModelScope.launch(IO) {
-            repository.removeTransaction(transaction)
+            transactionRepository.removeTransaction(transaction)
         }
     }
     fun deleteAll() {
         viewModelScope.launch(IO) {
-            repository.deleteAll()
+            transactionRepository.deleteAll()
         }
     }
 
@@ -121,7 +119,7 @@ val activity: Activity
     private suspend fun  postSellTransactions()
     {
         _triggerNoResultsToast.postValue(false)
-        repository.getSellTransactions().collect(){
+        transactionRepository.getSellTransactions().collect(){
             _searchResults.postValue(it)
         }
     }
@@ -131,7 +129,7 @@ val activity: Activity
     private suspend fun  postBuyTransactions()
     {
         _triggerNoResultsToast.postValue(false)
-        repository.getBuyTransactions().collect{
+        transactionRepository.getBuyTransactions().collect{
             _searchResults.postValue(it)
         }
     }
@@ -145,10 +143,10 @@ val activity: Activity
     private suspend fun performFTS(cleanQuery:String)
     {
         _triggerNoResultsToast.postValue(false)
-        repository.searchTransactions(cleanQuery).collect{ searchList ->
+        transactionRepository.searchTransactions(cleanQuery).collect{ searchList ->
             if(searchList.isEmpty()) {
                 _triggerNoResultsToast.postValue(true)
-                repository.readAllTransactiondata().collect {
+                transactionRepository.readAllTransactiondata().collect {
                     _searchResults.postValue(it)
                 }
             }

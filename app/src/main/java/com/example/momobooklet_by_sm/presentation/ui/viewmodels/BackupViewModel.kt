@@ -11,8 +11,13 @@ import com.example.momobooklet_by_sm.domain.workers.remote.ImportToRoomWorker
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.AGENT_PHONENUMBER_KEY
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.TAG_OUTPUT
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.TRANSACTIONDATA_IMPORT_WORK_NAME
-
-class BackupViewModel(val application: Application):ViewModel()  {
+import com.example.momobooklet_by_sm.domain.repositories.RemoteTransactionsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+@HiltViewModel
+class BackupViewModel @Inject constructor(val application: Application,
+                                          val remoteTransactionsRepository: RemoteTransactionsRepository
+                                          ):ViewModel()  {
 
     /********************************************************************************************
      * Handles Import/ Export  data  from and to Remote DB
@@ -44,7 +49,7 @@ class BackupViewModel(val application: Application):ViewModel()  {
      *==============================================================
      ****************************************************************/
 
-    internal fun importDataSet(){
+    internal fun importDataSet() {
 
         // Add WorkRequest to Cleanup temporary images
         var continuation = workManager
@@ -54,10 +59,18 @@ class BackupViewModel(val application: Application):ViewModel()  {
                 OneTimeWorkRequest.from(CleanupWorker::class.java)
             )
         val downloadBuilder = OneTimeWorkRequestBuilder<DownloadWorker>()
-        downloadBuilder.setInputData( workDataOf(AGENT_PHONENUMBER_KEY to "76911464"))
-       val importToRoomBuilder = OneTimeWorkRequestBuilder<ImportToRoomWorker>()
+        downloadBuilder.setInputData(workDataOf(AGENT_PHONENUMBER_KEY to "76911464"))
+        val importToRoomBuilder = OneTimeWorkRequestBuilder<ImportToRoomWorker>()
         continuation = continuation.then(downloadBuilder.build())
         continuation = continuation.then(importToRoomBuilder.build())
         continuation.enqueue()
-    }
+
+
+
+       /*val myWorkRequest: WorkRequest =
+            OneTimeWorkRequestBuilder<CleanupWorker>()
+                .setInputData(workDataOf(AGENT_PHONENUMBER_KEY to "76911464"))
+                .build()
+            workManager.enqueue(myWorkRequest)*/
+       }
 }

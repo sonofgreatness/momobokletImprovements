@@ -18,6 +18,9 @@ import com.example.momobooklet_by_sm.data.local.models.TransactionModel
 import com.example.momobooklet_by_sm.databinding.FragmentUserAccountsBinding
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.BASE_URL2
 import android.os.StrictMode
+import androidx.navigation.findNavController
+import com.example.momobooklet_by_sm.MainActivity
+import com.example.momobooklet_by_sm.R
 import com.example.momobooklet_by_sm.presentation.ui.viewmodelProviderFactories.BackupViewModelProviderFactory
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.BackupViewModel
 import java.util.*
@@ -27,7 +30,7 @@ class UserAccountsFragment : Fragment() {
     val policy: StrictMode.ThreadPolicy  = StrictMode.ThreadPolicy.Builder().permitAll().build()
 
     private val mUserViewModel: UserViewModel by lazy{
-        ViewModelProvider(this)[UserViewModel::class.java]
+        (activity as MainActivity).mUserViewModel
     }
     private   lateinit var mBackUpViewModel: BackupViewModel
     private lateinit var _binding: FragmentUserAccountsBinding
@@ -43,10 +46,7 @@ class UserAccountsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        mBackUpViewModel = ViewModelProvider(
-            this,
-            BackupViewModelProviderFactory(requireActivity().application)
-        )[BackupViewModel::class.java]
+        mBackUpViewModel = (activity as MainActivity).mBackupViewModel
         _binding = FragmentUserAccountsBinding.inflate(inflater, container, false)
         adapter = UserProfileRecyclerViewAdapter(mUserViewModel)
 
@@ -63,9 +63,7 @@ class UserAccountsFragment : Fragment() {
      ************************************/
     private fun setAddAccountListener() {
         binding.addAccBtn.setOnClickListener {
-             //ReadFromTransactionsDriveSheet()
-            //writeToTransactionsDriveSheet()
-            //readFromGoogleSheetTheRightWay()
+            it.findNavController().navigate(R.id.action_userAccountsFragment_to_registerFragment)
         }
     }
 
@@ -107,10 +105,6 @@ class UserAccountsFragment : Fragment() {
 
 
 
-    @SuppressLint("LogNotTimber")
-    private fun readFromGoogleSheetTheRightWay() {
-        mBackUpViewModel.importDataSet()
-    }
 
     /*****************************************************************
      * Adds A record to `Transactions`  sheet in Google Drive Sheet

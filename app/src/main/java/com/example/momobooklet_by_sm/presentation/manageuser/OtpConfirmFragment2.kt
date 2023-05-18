@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.momobooklet_by_sm.MainActivity
+import com.example.momobooklet_by_sm.MainActivity2
 import com.example.momobooklet_by_sm.R
 import com.example.momobooklet_by_sm.databinding.FragmentOtpConfirmBinding
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
@@ -53,7 +54,7 @@ class OtpConfirmFragment2 : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentOtpConfirmBinding.inflate(inflater, container,false)
-        mUserViewModel = ViewModelProvider(this )[UserViewModel::class.java]
+        mUserViewModel = (activity as MainActivity2).mUserViewModel
         binding.otpSubtitleUsermobile.text = requireArguments().getString(Constants.PHONE_NUMBER_KEY)
         rootView = binding.root
         RegForReal = AddUserAcc(requireArguments().getString(Constants.PHONE_NUMBER_KEY)!!,requireActivity(),auth)

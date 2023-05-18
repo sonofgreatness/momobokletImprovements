@@ -1,17 +1,19 @@
 package com.example.momobooklet_by_sm.presentation.ui.viewmodels
 
-import android.app.Application
 import androidx.lifecycle.*
-import com.example.momobooklet_by_sm.data.local.Database
 import com.example.momobooklet_by_sm.data.local.models.UserModel
 import com.example.momobooklet_by_sm.data.local.repositories.UserRepositoryImpl
+import com.example.momobooklet_by_sm.domain.repositories.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class UserViewModel(
-    application: Application
-) : AndroidViewModel(application) {
+@HiltViewModel
+class UserViewModel @Inject constructor(
+     val userRepository: UserRepository
+) : ViewModel() {
 
     val _userInControl =MutableLiveData<List<UserModel>>()
     val userInControl  : LiveData<List<UserModel>>
@@ -24,16 +26,11 @@ class UserViewModel(
     val _registrationSmSBody = MutableLiveData<String>()
     val registrationSmSBody :LiveData<String> get () = _registrationSmSBody
 
-    private val repository: UserRepositoryImpl
 
     init {
-        val userDao = Database.getDatabase(
-            application
-        ).getUserAccountsDao()
-        repository = userDao.let { UserRepositoryImpl(it) }!!
         getPsuedoActiveUser()
         viewModelScope.launch {
-              repository.readAllData().collect {
+              userRepository.readAllData().collect {
                   _readAllData.postValue(it)
               }
         }
@@ -41,29 +38,29 @@ class UserViewModel(
 
     fun addUser(user: UserModel) {
         viewModelScope.launch {
-            repository.addUser(user)
+            userRepository.addUser(user)
         }
     }
     fun deleteUser(user: UserModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteUser(user)
+            userRepository.deleteUser(user)
         }
     }
     fun updateUser(user: UserModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateUser(user)
+            userRepository.updateUser(user)
         }
     }
 
     fun deleteAllUsers() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllUsers()
+            userRepository.deleteAllUsers()
         }
     }
 
     fun getActiveUsers() {
         viewModelScope.launch {
-            repository.readActiveuser().collect {
+            userRepository.readActiveuser().collect {
                 _userInControl.postValue(it)
                 Timber.e("viewMgetAll->$it")
             }
@@ -78,11 +75,11 @@ class UserViewModel(
     private fun getPsuedoActiveUser()
     {
         viewModelScope.launch {
-            var activeUsers  = repository.getActiveUser()
+            var activeUsers  = userRepository.getActiveUser()
             if (activeUsers == null)
                 _userInControl.postValue(activeUsers)
                 else {
-                activeUsers = repository.getAllUserAccounts()
+                activeUsers = userRepository.getAllUserAccounts()
                   _userInControl.postValue(activeUsers)
             }
         }

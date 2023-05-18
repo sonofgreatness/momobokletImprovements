@@ -37,7 +37,7 @@ class CleanupWorker(context:Context, workerParameters: WorkerParameters):Worker(
             }
             Result.success()
         } catch (exception: Exception) {
-            exception.printStackTrace()
+            Log.d("CleanUpWorker ::", " errorMessage : ${exception}")
             Result.failure()
         }
     }}

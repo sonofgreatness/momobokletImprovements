@@ -11,6 +11,7 @@
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/remove.xml" value="0.1" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/sm_vd.xml" value="0.1" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/splashscreenbackground.xml" value="0.1" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/drawable/swap_icon.xml" value="0.1" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/activity_main.xml" value="0.18854166666666666" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/activity_main2.xml" value="0.2226007950028393" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/content_main2.xml" value="0.2" />
@@ -28,6 +29,7 @@
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/staggered_reportcard_third.xml" value="0.14814814814814814" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/tablefields_card.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/layout/user_profile_card.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Magagula/AndroidStudioProjects/DiGiBooklet/app/src/main/res/menu/show_transactions_menu.xml" value="0.11020408163265306" />
       </map>
     </option>
   </component>

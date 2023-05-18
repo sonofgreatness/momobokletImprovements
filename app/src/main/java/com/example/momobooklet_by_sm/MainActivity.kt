@@ -22,16 +22,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.DEFAULT_START_DATE
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.MONTHLY_STARTDATE_FILENAME
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.REQUEST_FILE_PERMISSION
-import com.example.momobooklet_by_sm.common.util.classes.Events.networkEvent
+import com.example.momobooklet_by_sm.common.util.classes.events.networkEvent
 import com.example.momobooklet_by_sm.common.util.classes.NetworkChangeListener
-import com.example.momobooklet_by_sm.presentation.ui.viewmodelProviderFactories.TransactionViewModelProviderFactory
+import com.example.momobooklet_by_sm.presentation.ui.viewmodels.BackupViewModel
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.CommissionViewModel
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.TransactionViewModel
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
@@ -54,11 +53,11 @@ import java.io.FileOutputStream
 class MainActivity : AppCompatActivity() {
 
     //lateinit var mMixpanel: MixpanelAPI
-    lateinit var mUserViewModel: UserViewModel
-    lateinit var mTransactionViewModel: TransactionViewModel
+    val mUserViewModel: UserViewModel by viewModels()
+    val mTransactionViewModel: TransactionViewModel by viewModels()
     val mCommissionViewModel: CommissionViewModel by viewModels()
+    val mBackupViewModel : BackupViewModel by viewModels()
     var myIsConnected: Boolean = false
-
 
     override fun onStart() {
         super.onStart()
@@ -142,22 +141,7 @@ class MainActivity : AppCompatActivity() {
      *******************************************************/
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpViewModels() {
-        val TransactionViewModelProviderFactory =
-            TransactionViewModelProviderFactory(application, this)
-
-
-
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-
-
-        mTransactionViewModel = ViewModelProvider(
-            this,
-            TransactionViewModelProviderFactory
-        )[TransactionViewModel::class.java]
-
-
-
-
+        print("does nothing for now")
     }
 
     @Throws(JSONException::class)

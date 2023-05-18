@@ -57,7 +57,7 @@ class OtpConfirmFragment  : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentOtpConfirmBinding.inflate(inflater, container,false)
-        mUserViewModel = ViewModelProvider(this )[UserViewModel::class.java]
+        mUserViewModel = (activity as MainActivity).mUserViewModel
         binding.otpSubtitleUsermobile.text = requireArguments().getString(Constants.PHONE_NUMBER_KEY)
         rootView = binding.root
         RegForReal = AddUserAcc(requireArguments().getString(Constants.PHONE_NUMBER_KEY)!!,requireActivity(),auth)

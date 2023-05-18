@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.momobooklet_by_sm.MainActivity
@@ -22,7 +21,7 @@ import com.example.momobooklet_by_sm.common.util.Constants
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.COUNTRY_CODE
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.PHONE_NUMBER_KEY
 import com.example.momobooklet_by_sm.common.util.classes.DrawableSpan
-import com.example.momobooklet_by_sm.common.util.classes.Events.networkEvent
+import com.example.momobooklet_by_sm.common.util.classes.events.networkEvent
 import com.google.firebase.auth.FirebaseAuth
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -62,7 +61,7 @@ class RegisterFragment : Fragment() {
             _binding = FragmentRegisterBinding.inflate(inflater, container, false)
             rootView = binding.root
             setupPasswordTextinput()
-            mUserViewModel = ViewModelProvider(this )[UserViewModel::class.java]
+            mUserViewModel = (activity as MainActivity).mUserViewModel
             setUpController()
       drawableSpan= DrawableSpan(binding.submitBtn, marginStart = 20, progressDrawable = CircularProgressDrawable(binding.submitBtn.context))
       binding.submitBtn.setOnClickListener {
@@ -152,7 +151,6 @@ class RegisterFragment : Fragment() {
     }
 
     private fun moveToUserAccountsFragment(view: View) {
-        Toast.makeText(requireContext(),"first One Works  Accounts ", Toast.LENGTH_SHORT).show()
         val mainLooperHandler = Handler(Looper.getMainLooper())
         mainLooperHandler.postDelayed(Runnable {
             view.findNavController().navigate(R.id.action_registerFragment_to_userAccountsFragment)

@@ -3,13 +3,13 @@ package com.example.momobooklet_by_sm
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import com.example.momobooklet_by_sm.common.util.classes.DrawableSpan
+import com.example.momobooklet_by_sm.common.util.classes.events.networkEvent
+import com.example.momobooklet_by_sm.common.util.classes.NetworkChangeListener
 import com.example.momobooklet_by_sm.databinding.ActivityMain2Binding
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
-import com.example.momobooklet_by_sm.common.util.classes.DrawableSpan
-import com.example.momobooklet_by_sm.common.util.classes.Events.networkEvent
-import com.example.momobooklet_by_sm.common.util.classes.NetworkChangeListener
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
@@ -20,7 +20,7 @@ class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
     private var passwordEndIconChangeHelper = true
     private var mBundle: Bundle = Bundle()
-    lateinit var mUserViewModel: UserViewModel
+    val  mUserViewModel: UserViewModel by viewModels()
     var myIsConnected: Boolean = false
 
     override fun onStart() {
@@ -33,7 +33,6 @@ class MainActivity2 : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         setContentView(R.layout.activity_main2)
     }
     @Subscribe

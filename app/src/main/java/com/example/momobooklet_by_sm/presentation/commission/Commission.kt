@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +24,7 @@ import com.example.momobooklet_by_sm.databinding.FragmentCommissionBinding
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.CommissionViewModel
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.TransactionViewModel
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
-import com.example.momobooklet_by_sm.common.util.CommisionDatesManager
+
 import com.example.momobooklet_by_sm.common.util.Constants
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.delay
@@ -43,8 +45,7 @@ class Commission : Fragment() {
     private lateinit var  mUserViewModel: UserViewModel
     private lateinit var  mCommissionViewModel:CommissionViewModel
     private var mainUser: UserModel? = null
-    @RequiresApi(Build.VERSION_CODES.O)
-    private lateinit var datesManager :CommisionDatesManager
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -59,12 +60,18 @@ class Commission : Fragment() {
         mTransactionViewModel = (activity as MainActivity).mTransactionViewModel
         mUserViewModel = (activity as MainActivity).mUserViewModel
         mCommissionViewModel = (activity as MainActivity).mCommissionViewModel
-        datesManager = CommisionDatesManager(activity as MainActivity)
+
 
         mUserViewModel.readAllData.observe(viewLifecycleOwner){
-                if (it.isEmpty())
-                       findNavController().navigate(R.id.action_commission_to_registerFragment)
-                else
+                if (it.isEmpty()) {
+                    val mainLooperHandler = Handler(Looper.getMainLooper())
+                    Toast.makeText(requireContext(), "Register an Account to enable \n Analytics feature",
+                                   Toast.LENGTH_SHORT).show()
+                    mainLooperHandler.postDelayed(Runnable{
+                    findNavController().navigate(R.id.action_commission_to_registerFragment)},900)
+
+
+                }else
                     setUpAllViews()
         }
 
@@ -95,7 +102,7 @@ class Commission : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupLastMonthView() {
-        val strings = datesManager.getLastMonthDates_()
+        val strings = mCommissionViewModel.datesManager.getLastMonthDates_()
         val size = strings.size
         val numberofTransactionsView =binding.monthlyCommissionCardEditable
                                              .monthlyNumberofTransactionsCard.root
@@ -228,7 +235,7 @@ class Commission : Fragment() {
         DatePickerDialog (requireContext(),
             { view, year, month, dayOfMonth ->
 
-                if (datesManager.checkifDateIsBeforeToday(dayOfMonth,month,year)) {
+                if (mCommissionViewModel.datesManager.checkifDateIsBeforeToday(dayOfMonth,month,year)) {
                      setCustomDailyCommission(dayOfMonth,month,year)
                     assignCommissionModelToCardView(getDatePicked(dayOfMonth, month, year))
                 }else
@@ -287,7 +294,7 @@ class Commission : Fragment() {
     }
 
     private fun getDatePicked(dayOfMonth: Int, month: Int, year: Int):String {
-            return datesManager.convertDatePickerIntToMyDate(dayOfMonth,month,year)
+            return mCommissionViewModel.datesManager.convertDatePickerIntToMyDate(dayOfMonth,month,year)
     }
 
     private fun setupbottomsheet_change_startdate_button() {
@@ -305,7 +312,7 @@ class Commission : Fragment() {
 
         binding.dailyCommissionCardBottomsheetYesterday
             .commissionAnalysisTitleText
-            .text = datesManager.getYesterdayStringUltimate()
+            .text = mCommissionViewModel.datesManager.getYesterdayStringUltimate()
 
         binding.dailyCommissionCardBottomsheetYesterday
                         .commissionAnalysisTitleTextBig.text = getString(R.string.yesterdays_commission)
@@ -344,7 +351,7 @@ class Commission : Fragment() {
 
         binding.dailyCommissionCardBottomsheetToday
                 .commissionAnalysisTitleText
-                    .text = datesManager.generateTodayDate()
+                    .text = mCommissionViewModel.datesManager.generateTodayDate()
 
         mCommissionViewModel
             .dailyCommission
@@ -373,7 +380,7 @@ class Commission : Fragment() {
     private fun setupbottomsheetThisMonthView() {
             /* This is Last Month Commission*/
 
-        val strings = datesManager.getLastMonthDates_()
+        val strings = mCommissionViewModel.datesManager.getLastMonthDates_()
         val size = strings.size
 
         val numberofTransactionsView =binding.bottomSheetThismonthCommission
@@ -409,7 +416,7 @@ class Commission : Fragment() {
 
     private fun setupbottomsheetLastMonthView() {
         /*This Month*/
-        val strings = datesManager.getThisMonthDates_()
+        val strings = mCommissionViewModel.datesManager.getThisMonthDates_()
         Log.d("Fuckery","${strings}")
         val size = strings.size
 
@@ -455,7 +462,7 @@ class Commission : Fragment() {
 
 
         var numberofTransactions = 0
-        binding.dailyCommissionCard.commissionAnalysisTitleText.text = datesManager.generateTodayDate()
+        binding.dailyCommissionCard.commissionAnalysisTitleText.text = mCommissionViewModel.datesManager.generateTodayDate()
 
         mCommissionViewModel.dailyCommission.observe(viewLifecycleOwner) {
             if(it!= null) {

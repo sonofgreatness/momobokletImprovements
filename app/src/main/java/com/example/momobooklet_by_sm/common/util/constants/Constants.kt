@@ -45,14 +45,7 @@ class Constants {
       const val NOTIFICATION_ID = 1
       const val OUTPUT_PATH = "json_outputs"
       const val TAG_OUTPUT = "OUTPUT"
-
-
       const val  AGENT_PHONENUMBER_KEY = "agentPhoneNumber"
-
-
-
-
-
 
   }
 

@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.momobooklet_by_sm.MainActivity
@@ -23,7 +22,7 @@ import com.example.momobooklet_by_sm.databinding.FragmentRegister2Binding
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import com.example.momobooklet_by_sm.common.util.Constants
 import com.example.momobooklet_by_sm.common.util.classes.DrawableSpan
-import com.example.momobooklet_by_sm.common.util.classes.Events.networkEvent
+import com.example.momobooklet_by_sm.common.util.classes.events.networkEvent
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import org.greenrobot.eventbus.EventBus
@@ -67,7 +66,7 @@ class RegisterFragment2 : Fragment() {
         _binding = FragmentRegister2Binding.inflate(inflater, container, false)
         rootView = binding.root
         setupPasswordTextinput()
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        mUserViewModel = (activity as MainActivity2).mUserViewModel
         drawableSpan = DrawableSpan(
             binding.submitBtn,
             marginStart = 20,

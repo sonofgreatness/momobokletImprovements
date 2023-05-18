@@ -5,7 +5,7 @@ package com.example.momobooklet_by_sm.data.local.models
 
 import android.os.Parcelable
 import androidx.room.*
-import com.example.momobooklet_by_sm.domain.services.csv.Exportable
+import com.example.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.util.csv.Exportable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -35,4 +35,4 @@ data class TransactionModel(
     val Time :String,
     @ColumnInfo(name = "AgentPhoneNumber", index = true)
     val AgentPhoneNumber: String,
-) : Parcelable,Exportable
+) : Parcelable, Exportable

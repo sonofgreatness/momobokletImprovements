@@ -9,31 +9,33 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.momobooklet_by_sm.common.util.Constants
 import com.example.momobooklet_by_sm.common.util.classes.ReportType
+import com.example.momobooklet_by_sm.common.util.classes.operationalStates.ExportState
 import com.example.momobooklet_by_sm.data.local.models.CommissionModel
 import com.example.momobooklet_by_sm.data.local.models.DailyCommissionModel
 import com.example.momobooklet_by_sm.data.local.models.PeriodicCommissionModel
 import com.example.momobooklet_by_sm.data.local.models.TransactionModel
+import com.example.momobooklet_by_sm.domain.managefiles.csv.models.DailyCommissionModelCSV
+import com.example.momobooklet_by_sm.domain.managefiles.csv.models.TransactionModelCSV
+import com.example.momobooklet_by_sm.domain.managefiles.csv.models.dailyCommissiontoCsv
+import com.example.momobooklet_by_sm.domain.managefiles.csv.models.toCsv
 import com.example.momobooklet_by_sm.domain.repositories.CommissionDatesManagerRepository
 import com.example.momobooklet_by_sm.domain.repositories.CommissionRepository
 import com.example.momobooklet_by_sm.domain.repositories.TransactionRepository
-import com.example.momobooklet_by_sm.domain.services.ExportService
-import com.example.momobooklet_by_sm.domain.services.csv.CsvConfigImpl
-import com.example.momobooklet_by_sm.domain.services.csv.Exports
-import com.example.momobooklet_by_sm.domain.services.csv.adapters.DailyCommissionModelCSV
-import com.example.momobooklet_by_sm.domain.services.csv.adapters.TransactionModelCSV
-import com.example.momobooklet_by_sm.domain.services.csv.adapters.dailyCommissiontoCsv
-import com.example.momobooklet_by_sm.domain.services.csv.adapters.toCsv
-import com.example.momobooklet_by_sm.domain.services.pdf.DailyCommissionModelPDFManager
-import com.example.momobooklet_by_sm.domain.services.pdf.PdfConfigImpl
-import com.example.momobooklet_by_sm.domain.services.pdf.TransactionTablePDFManager
+import com.example.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.ExportService
+import com.example.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.util.csv.CsvConfigImpl
+import com.example.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.util.csv.Exports
+
+import com.example.momobooklet_by_sm.domain.managefiles.pdf.models.DailyCommissionModelPDFManager
+import com.example.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.util.pdf.PdfConfigImpl
+import com.example.momobooklet_by_sm.domain.managefiles.pdf.models.TransactionTablePDFManager
+import com.example.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.WriteReportUseCase
 import com.wwdablu.soumya.simplypdf.composers.Composer
 import com.wwdablu.soumya.simplypdf.composers.properties.ImageProperties
 import com.wwdablu.soumya.simplypdf.composers.properties.TextProperties
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.math.RoundingMode
@@ -50,9 +52,8 @@ import javax.inject.Inject
 class CommissionViewModel @Inject constructor(
     val commission_repository: CommissionRepository,
     val repository: TransactionRepository,
-    val datesManager: CommissionDatesManagerRepository
-
-
+    val datesManager: CommissionDatesManagerRepository,
+    private val writeReportUseCase: WriteReportUseCase
 ) : ViewModel(),Observable {
 
     private lateinit var commissionChart: List<CommissionModel>
@@ -148,7 +149,7 @@ class CommissionViewModel @Inject constructor(
             _monthlyCommission.postValue(it)
         }
     }
-    //USE_ CASE CANDIDATE
+    //USE_CASE CANDIDATE
     /*********************************************************************************
      *Reads Database (RECORD_SHEET) table  and calculates
      *         each transaction commission Using Commission Chart table
@@ -283,7 +284,7 @@ class CommissionViewModel @Inject constructor(
      *                                      a string , formatted  look like
      *                                      currency
      *@param toBeConverted Double , the value to be converted
-     * @return : Returns string version of parameter in format #.##
+     *@return : Returns string version of parameter in format #.##
      **************************************************************************/
     fun makeADouble_ACurrency_String(toBeConverted: Double?): String {
 
@@ -296,18 +297,7 @@ class CommissionViewModel @Inject constructor(
     }
 
 
-    /********************************************************************
-     * getLastMonthStartAndEndDates -> gives the start and
-     *                              end dates used to calculate this month's
-     *                              commission
-     * @return : Returns an array of size 2  [startDate, endDate]
-     ********************************************************************/
-    fun getThisMonthStartAndEndDates(): Array<String> {
-        val listofDates = datesManager.getThisMonthDates_()
-        val size = listofDates.size
-        return arrayOf(listofDates[0], listofDates[size - 1])
 
-    }
 
 
     fun setCustomDaysCommissionModel(date: String) {
@@ -319,179 +309,40 @@ class CommissionViewModel @Inject constructor(
     }
 
 
-    /***************************************************************************
-     * getWeeksDailyCommissionModels - reads database to find all
-     *              DailyCommissionModels with DailyCommissionModel.date  = date
-     *@param weekdays , a list of dates that are used to perform the comparison
-     *@return Returns a List of DailyCommissionModels
-     ****************************************************************************/
-    private suspend fun getWeeksDailyCommissionModels(weekdays: List<String>): List<DailyCommissionModel> {
-        val weekCommission: MutableList<DailyCommissionModel> = ArrayList()
 
-        for (date in weekdays)
-            commission_repository.getDailyCommissionModel(date.trim())?.let {
-                weekCommission.add(it)
-            }
-        return weekCommission
-    }
-
-
-    /**************************************************************
-     * getWeeksTransactions - gets Transactions  by comparing  Transaction dates
-     *                      with set of strings , The set can be longer the 7 elements
-     *                       i.e it can get A week's Transactions or : 2weeks, A month (30days)
-     *                        or 3 months (90days)
-     * @param weekdays: List of Strings , the set of strings to compare to Transaction dates
-     *@return Returns a  list of TransactionModels
-     *****************************************************/
-    private suspend fun getWeeksTransactions(weekdays: List<String>): List<TransactionModel> {
-        var weekTransactions: List<TransactionModel> = ArrayList()
-
-        for (date in weekdays)
-            repository.getDailyTransactions(date).let {
-                weekTransactions = weekTransactions + it
-            }
-        return weekTransactions
-    }
-
-    /*****************************************************************************************
-     * writeReportTransactions -> writes a CSV or PDF  Report of Selected data
-     *                              The files are store in internal memory in fileDir folder and
-     *                              in external memory  in a folder "MoMoBooklet"
-     *                                      with subfolders "PDF" and " CSV"
-     ************************************************************************************/
-    fun writeReport(startDate:String,type:ReportType)
-    {
-       /*
-        val dates: List<String> = dateMaker(type, startDate)
-
-          if (type.ordinal > 3)
-              writeCSVReport(dates, CsvConfigImpl(application,type.name,datesManager,WRITETO.EXTERNAL))
-
-          else
-                  writePDFReportTransactions(
-                      dates,
-                      PdfConfigImpl(application, type.name, datesManager, WRITETO.EXTERNAL))
-
-    */
-        print("WROTE  REPORT")
-    }
-
-
-
-
-
-    private fun writeCSVReport(dates:List<String>,csvConfig: CsvConfigImpl) {
-        exportTransactionsAndCommissionsToCsv(dates,csvConfig)
-    }
-
-    /***********************************************************************
-     * exportTransactionsToCsv -> exports Transaction and Commission Data
-     *                              of chosen dates into one file
-     *@param dates,   List of Dates which are strings of the form
-     *                                          dd-MM-YYYY
-     *@param CsvConfig , The configurations class for creating CSVs
-     ***********************************************************************/
-    private fun exportTransactionsAndCommissionsToCsv(dates: List<String>, csvConfig: CsvConfigImpl) =
-        viewModelScope.launch(Dispatchers.IO) {
-            // 👇 state manager for loading | error | success
-            // _exportCsvState.value = ViewState.LoadingSuccess
-
-            // 👇 get all transaction detail from repository
-            val transactions = getWeeksTransactions(dates)
-            val commissions = getWeeksDailyCommissionModels(dates)
-            // 👇 call export function from Export serivce
-            ExportService.export<TransactionModelCSV,DailyCommissionModelCSV>(
-                type = Exports.CSV(csvConfig), // 👈 apply config + type of export
-                content = transactions.toCsv(),// 👈 send transformed data of exportable type
-                content2 = commissions.dailyCommissiontoCsv()
-            ).catch { error ->
-                // 👇 handle error here
-                //  _exportCsvState.value = ViewState.Error(error)
-                Timber.d("Write Transactions to CSV a FAILURE->${error}")
-            }.collect { _ ->
-                // 👇 do anything on success
-                Timber.d("Write Transactions to CSV a SUCCESS")
-            }
-        }
-
-
-
-
-    /**************************************************************
-     * writePDFReportTransactions -> writes a Full report
-     *                TransactionModels  + DailyCommissionModels
-     ***********************************************************/
-   private fun writePDFReportTransactions(dates: List<String>,pdfConfig:PdfConfigImpl)
-    {
-        exportTransactionsAndCommissionsToPdf(dates, pdfConfig)
-    }
-
-    private fun exportTransactionsAndCommissionsToPdf(dates: List<String>, pdfConfig: PdfConfigImpl) = viewModelScope.launch(IO) {
-        // 👇 state manager for loading | error | success
-        // _exportCsvState.value = ViewState.LoadingSuccess
-
-        val transactions = getWeeksTransactions(dates)
-        val commissions  = getWeeksDailyCommissionModels(dates)
-        val myTextProperties = TextProperties().apply{
-            textSize = Constants.PDF_TABLE_TEXT_SIZE
-            textColor = Constants.PDF_TABLE_TEXT_COLOR
-        }
-
-        val myImageProperties = ImageProperties().apply {
-            alignment = Composer.Alignment.START
-        }
-
-        val commissionspdftableManager =   DailyCommissionModelPDFManager(commissions,myTextProperties)
-        val pdftableManager=
-            TransactionTablePDFManager(transactions,myTextProperties, myImageProperties)
-
-        // 👇 call export function from Export serivce
-        ExportService.exportPdf(
-            type = pdfConfig, // 👈 apply config + type of export
-            content = pdftableManager,
-            content2= commissionspdftableManager // 👈 send transformed data of exportable type
-        ).catch { error ->
-            // 👇 handle error here
-            //  _exportCsvState.value = ViewState.Error(error)
-            Timber.d("Write  Transactions to PDF a FAILURE->${error}")
-        }.collect { _ ->
-            // 👇 do anything on success
-            // _exportCsvState.value = ViewState.Success(emptyList())
-            // Let User Know You are done.
-            Timber.d("Write Transactions to PDF a SUCCESS")
-        }
-    }
-
-
-    private fun dateMaker(
-        type: ReportType,
-        startDate: String
-    ): List<String> {
-        val TypeOrdinal = type.ordinal % 4
-        lateinit var dates: List<String>
-
-        when (TypeOrdinal) {
-            0 -> {
-                dates = datesManager.getWeekDates_(startDate)
-            }
-            1 -> {
-                dates = datesManager.getBiWeeklyDates_(startDate)
-            }
-            2 -> {
-                dates = datesManager.getMonthDates_(startDate)
-            }
-            3 -> {
-                dates = datesManager.getTriMonthDates(startDate)
-            }
-        }
-        Log.d("testMyDate ", "${type.name} =   ${dates.size}::: \n ${dates.toString()}")
-        return dates
-    }
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
     }
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
 
+    }
+
+    fun writeReport(startDate: String, type: ReportType) {
+
+    viewModelScope.launch {
+        Timber.d("ExportState 0.0 -> EmptyMadeIt")
+            writeReportUseCase(startDate, type).collect{
+                 when(it){
+                is ExportState.Empty ->{
+                Timber.d("ExportState 1 -> EmptyMadeIt")}
+                is  ExportState.Loading -> {
+                Timber.d("ExportState 2 -> LoadingMadeIt")
+            }
+                is ExportState.Success ->{
+                Timber.d("ExportState 3 -> SuccessMadeIt")
+                    Timber.d("ExportState 3... --> ${it.fileUri}")
+            }
+                is ExportState.Error ->{
+
+                    if(it.exception_message?.contains("Operation not permitted") == true) {
+                     // Request Permission  FiLeManageMent Permission Here
+                        Timber.d("ExportState 4 -> ErrorMadeIt  ${it.exception_message}")
+                    }
+                    else
+                        Timber.d("ExportState 4 -> ErrorMadeIt doesn't contain expected IO ${it.exception_message}")
+                   }
+                 }
+            }
+        }
     }
 }

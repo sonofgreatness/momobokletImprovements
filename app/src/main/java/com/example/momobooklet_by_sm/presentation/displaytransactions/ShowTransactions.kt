@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.R
 import com.example.momobooklet_by_sm.databinding.FragmentShowTransactionsBinding
+import com.example.momobooklet_by_sm.presentation.ui.viewmodels.BackupViewModel
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.TransactionViewModel
 import java.io.File
 import java.io.IOException
@@ -27,6 +28,7 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
     private lateinit var _binding: FragmentShowTransactionsBinding
     private val binding get() = _binding
     private lateinit var mTransactionViewModel: TransactionViewModel
+    private lateinit var  mBackupViewModel: BackupViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +38,8 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
         _binding = FragmentShowTransactionsBinding.inflate(inflater, container, false)
         //inflate menu
         mTransactionViewModel = (activity as MainActivity).mTransactionViewModel
+        mBackupViewModel  = (activity as MainActivity).mBackupViewModel
+
         setupToolbar()
         setupRecyclerView()
         getAllTransaction()
@@ -83,6 +87,11 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
         toolbar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.search->{TODO()}
+                R.id.sync->{
+                    Toast.makeText(requireContext(),"Sync", Toast.LENGTH_SHORT).show()
+                    mBackupViewModel.importDataSet()
+                return@setOnMenuItemClickListener true
+                }
                 else -> {
                     return@setOnMenuItemClickListener true}
             }
