@@ -99,6 +99,7 @@ class OtpConfirmFragment  : Fragment() {
     }
 
     private fun setupUpNavigationOnClick() {
+
         binding.appBarOtp.setOnClickListener {
             it.findNavController().navigate(R.id.action_otpConfirmFragment_to_registerFragment)
         }

@@ -65,16 +65,15 @@ class Commission : Fragment() {
         mUserViewModel.readAllData.observe(viewLifecycleOwner){
                 if (it.isEmpty()) {
                     val mainLooperHandler = Handler(Looper.getMainLooper())
+                    val mBundle:Bundle = Bundle()
+                    mBundle.putString(Constants.REGISTRATION_HOME_KEY, "commission")
                     Toast.makeText(requireContext(), "Register an Account to enable \n Analytics feature",
                                    Toast.LENGTH_SHORT).show()
                     mainLooperHandler.postDelayed(Runnable{
-                    findNavController().navigate(R.id.action_commission_to_registerFragment)},900)
-
-
+                    findNavController().navigate(R.id.action_commission_to_registerFragment, mBundle)},900)
                 }else
                     setUpAllViews()
         }
-
             return rootView
         }
 
@@ -84,16 +83,12 @@ class Commission : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpAllViews()
     {
-
-
             setupdailyCommissionView()
             setupLastMonthView()
             setupCompanyNameView()
             setupBottomSheet()
             binding.bottomsheetCustomdailyCommissionCard
                 .root.visibility = View.GONE
-
-
     }
 
 
@@ -486,7 +481,7 @@ class Commission : Fragment() {
     }
 
    private fun setupCompanyNameView() {
-        mUserViewModel._userInControl.observe(viewLifecycleOwner){
+        mUserViewModel.userInControl.observe(viewLifecycleOwner){
             binding.companyName.companyPhoneText.text = it[0].MoMoNumber
             binding.companyName.companyNameText.text = it[0].MoMoName
         }

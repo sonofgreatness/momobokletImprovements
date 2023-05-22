@@ -339,8 +339,8 @@ class RecordDisplayFragment : Fragment() {
 
     private fun setmainUser() {
 
-         if (mUserViewModel._readAllData.value?.size!= 0)
-             mainUser = mUserViewModel._readAllData.value?.get(0)
+         if (mUserViewModel.readAllData.value?.size!= 0)
+             mainUser = mUserViewModel.readAllData.value?.get(0)
 
     }
 

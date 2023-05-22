@@ -14,17 +14,14 @@ import androidx.navigation.findNavController
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.R
-import com.example.momobooklet_by_sm.data.local.models.UserModel
-import com.example.momobooklet_by_sm.databinding.FragmentRegisterBinding
-import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import com.example.momobooklet_by_sm.common.util.Constants
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.COUNTRY_CODE
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.PHONE_NUMBER_KEY
 import com.example.momobooklet_by_sm.common.util.classes.DrawableSpan
-import com.example.momobooklet_by_sm.common.util.classes.events.networkEvent
+import com.example.momobooklet_by_sm.data.local.models.UserModel
+import com.example.momobooklet_by_sm.databinding.FragmentRegisterBinding
+import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 
 
 class RegisterFragment : Fragment() {
@@ -40,17 +37,6 @@ class RegisterFragment : Fragment() {
     private var mBundle:Bundle = Bundle()
 
 
-
-   /* override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-// Listen to Network Broadcast
-    }*/
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        EventBus.getDefault().register(this)
-    }
 
   override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,7 +73,10 @@ class RegisterFragment : Fragment() {
     /* Handles back Navigation by top arrow*/
     private fun setUpController() {
         binding.toolbarShowTransactions.setNavigationOnClickListener {
+            if (requireArguments().getString(Constants.REGISTRATION_HOME_KEY)!! == "commission")
             it!!.findNavController().navigate(R.id.action_registerFragment_to_commission)
+            else
+                moveToUserAccountsFragment(it)
         }
     }
 
@@ -104,7 +93,7 @@ class RegisterFragment : Fragment() {
                     mUserViewModel.addUser(user)
                     changeTextToProgressbar(view)
                     mBundle.putString(PHONE_NUMBER_KEY, COUNTRY_CODE.plus(regphone))
-                    if((activity as MainActivity).myIsConnected)
+                    if(true)//(activity as MainActivity).myIsConnected)
                         moveUserToOtpConfirmed(view)
                     else
                         moveToUserAccountsFragment(view)
@@ -143,7 +132,6 @@ class RegisterFragment : Fragment() {
 
 
     private fun moveUserToOtpConfirmed(view: View) {
-        Toast.makeText(requireContext(),"first One Works Otp ", Toast.LENGTH_SHORT).show()
         val mainLooperHandler = Handler(Looper.getMainLooper())
         mainLooperHandler.postDelayed(Runnable{
         view.findNavController().navigate(R.id.action_registerFragment_to_otpConfirmFragment,mBundle)}
@@ -158,20 +146,14 @@ class RegisterFragment : Fragment() {
 
     }
 
-    @Subscribe
-    fun makeToast(networkEvent: networkEvent)
-    {
-
-    }
 
     override fun onStop() {
         super.onStop()
         drawableSpan.stopProgress()
-        EventBus.getDefault().unregister(this)
+
     }
     override fun onDestroy() {
         super.onDestroy()
         drawableSpan.stopProgress()
-        EventBus.getDefault().unregister(this)
     }
 }

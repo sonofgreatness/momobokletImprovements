@@ -6,9 +6,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -28,8 +26,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.DEFAULT_START_DATE
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.MONTHLY_STARTDATE_FILENAME
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.REQUEST_FILE_PERMISSION
-import com.example.momobooklet_by_sm.common.util.classes.events.networkEvent
-import com.example.momobooklet_by_sm.common.util.classes.NetworkChangeListener
+import com.example.momobooklet_by_sm.domain.repositories.ConnectivityObserver
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.BackupViewModel
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.CommissionViewModel
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.TransactionViewModel
@@ -39,14 +36,14 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 import org.json.JSONException
 import org.json.JSONObject
-import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
+import javax.inject.Inject
 
 @AndroidEntryPoint
 @Suppress("DEPRECATION")
@@ -57,16 +54,10 @@ class MainActivity : AppCompatActivity() {
     val mTransactionViewModel: TransactionViewModel by viewModels()
     val mCommissionViewModel: CommissionViewModel by viewModels()
     val mBackupViewModel : BackupViewModel by viewModels()
-    var myIsConnected: Boolean = false
+    @Inject
+    lateinit var  connectivityObserver: ConnectivityObserver
 
-    override fun onStart() {
-        super.onStart()
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this)
 
-        val intentFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        registerReceiver(NetworkChangeListener(), intentFilter)
-    }
 
     override fun onResume() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(
@@ -83,11 +74,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun moveToMainActivity2() {
-        val i = Intent(baseContext, MainActivity2::class.java)
-        startActivity(i)
 
-    }
 
 
     //   @SuppressLint("ResourceType")
@@ -95,6 +82,8 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("LogNotTimber")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         val trackAutomaticEvents = true
         //  mMixpanel =
         //     MixpanelAPI.getInstance(this, "a34dd4774bd7d4f78b8285e889ebdab6", trackAutomaticEvents)
@@ -118,6 +107,11 @@ class MainActivity : AppCompatActivity() {
         } else
             normalFlow()// user is registered
     }
+    private fun moveToMainActivity2() {
+        val i = Intent(baseContext, MainActivity2::class.java)
+        startActivity(i)
+
+    }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -130,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         setUpBottomNav()
         firebasePlayIntegrityInitialize()
         setUpExternalMemoryFileDirectories()
-        getFileManagementPermissions()
+        //getFileManagementPermissions()
     }
 
     /****************************************************
@@ -224,7 +218,8 @@ class MainActivity : AppCompatActivity() {
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
                 Toast.makeText(
-                    this, "I Need To See Your Files , Let Me",
+                    this, "This App needs file-access permission \n  " +
+                            "to create and store your report files",
                     Toast.LENGTH_SHORT
                 ).show()
 
@@ -268,10 +263,13 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle("FILEMANAGER \n PERMISSION REQUEST")
             .setMessage(
-                "This App needs permission To Manage Files \n " +
-                        "it will not work without it , Please grant it"
+                getString(R.string.request_manage_file_permission)
             )
-            .setPositiveButton("OK") { dialog, which ->
+
+            .setNegativeButton("CANCEL"){dialog, which ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("GRANT") { dialog, which ->
                 val getpermission = Intent()
                 getpermission.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
                 dialog.dismiss()
@@ -282,11 +280,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @Subscribe
-    fun setConnectivityState(networkEvent: networkEvent) {
-
-        myIsConnected = networkEvent.isnetworkConnected
-    }
     /*
     private fun getAppSignature() {
         val  appSigner=
@@ -356,20 +349,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        EventBus.getDefault().unregister(this)
-        //de register from broadcast
-        try {
-            unregisterReceiver(NetworkChangeListener())
-        } catch (e: Exception) {
-            Timber.d("Couldn't Unregister NetworkReciever , ${e}")
-        }
-        //check if reciever is registered before doing this ****************
-    }
-
     /**************************************************************
      * prevents moving to registration Activity by pressing back
      ***************************************************************/

@@ -6,6 +6,7 @@ class Constants {
       const  val CHARACTER_COUNT_PHONE = 8
       const val COUNTRY_CODE = "+268"
       const val PHONE_NUMBER_KEY = "phone_key"
+      const val REGISTRATION_HOME_KEY = "home_fragment_key"
       const val  REQUEST_FILE_PERMISSION = 43
       const val  PDF_TABLE_TEXT_COLOR = "#000000"
       const val PDF_TABLE_TEXT_SIZE = 8

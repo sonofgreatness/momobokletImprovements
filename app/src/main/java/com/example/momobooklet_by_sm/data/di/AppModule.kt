@@ -2,14 +2,10 @@ package com.example.momobooklet_by_sm.data.di
 
 import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.os.Build
-import android.os.Environment
 import androidx.annotation.RequiresApi
 import com.example.momobooklet_by_sm.MainActivity
-import com.example.momobooklet_by_sm.R
 import com.example.momobooklet_by_sm.common.util.Constants
-import com.example.momobooklet_by_sm.common.util.classes.WRITETO
 import com.example.momobooklet_by_sm.data.local.Database
 import com.example.momobooklet_by_sm.data.local.daos.CommissionDao
 import com.example.momobooklet_by_sm.data.local.daos.TransactionDao
@@ -18,6 +14,7 @@ import com.example.momobooklet_by_sm.data.local.repositories.*
 import com.example.momobooklet_by_sm.data.remote.SheetsDbApi
 import com.example.momobooklet_by_sm.data.remote.repositories.RemoteTransactionsRepositoryImpl
 import com.example.momobooklet_by_sm.domain.repositories.*
+import com.example.momobooklet_by_sm.domain.repositories.ConnectivityObserver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +24,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
-import java.io.FileOutputStream
 import javax.inject.Singleton
 
 @Module
@@ -117,5 +113,13 @@ object AppModule {
         return  ReportConfigRepositoryImpl(app)
     }
 
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @Provides
+    @Singleton
+    fun providesConnectivityObserver(app:Application) : ConnectivityObserver {
+        return  NetworkConnectivityObserver(app.applicationContext)
+    }
 
 }

@@ -21,6 +21,7 @@ import android.os.StrictMode
 import androidx.navigation.findNavController
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.R
+import com.example.momobooklet_by_sm.common.util.Constants.Companion.REGISTRATION_HOME_KEY
 import com.example.momobooklet_by_sm.presentation.ui.viewmodelProviderFactories.BackupViewModelProviderFactory
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.BackupViewModel
 import java.util.*
@@ -63,7 +64,10 @@ class UserAccountsFragment : Fragment() {
      ************************************/
     private fun setAddAccountListener() {
         binding.addAccBtn.setOnClickListener {
-            it.findNavController().navigate(R.id.action_userAccountsFragment_to_registerFragment)
+            val mBundle:Bundle = Bundle()
+            mBundle.putString(REGISTRATION_HOME_KEY, "add_accounts")
+
+            it.findNavController().navigate(R.id.action_userAccountsFragment_to_registerFragment,mBundle)
         }
     }
 

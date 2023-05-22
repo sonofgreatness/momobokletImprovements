@@ -3,6 +3,7 @@ buildscript {
 
         kotlin_version = "1.6.21"
         lottieVersion = "3.4.0"
+        lifecycle_version = "2.4.0"
         }
 
 

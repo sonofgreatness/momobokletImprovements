@@ -4,33 +4,26 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.MainActivity2
 import com.example.momobooklet_by_sm.R
-import com.example.momobooklet_by_sm.data.local.models.UserModel
-import com.example.momobooklet_by_sm.databinding.FragmentRegister2Binding
-import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import com.example.momobooklet_by_sm.common.util.Constants
 import com.example.momobooklet_by_sm.common.util.classes.DrawableSpan
-import com.example.momobooklet_by_sm.common.util.classes.events.networkEvent
+import com.example.momobooklet_by_sm.data.local.models.UserModel
+import com.example.momobooklet_by_sm.databinding.FragmentRegister2Binding
+import com.example.momobooklet_by_sm.domain.repositories.ConnectivityObserver
+import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-
-
-
-
 
 class RegisterFragment2 : Fragment() {
 
@@ -43,20 +36,8 @@ class RegisterFragment2 : Fragment() {
     private val binding get() = _binding
     private var passwordEndIconChangeHelper = true
     private var mBundle: Bundle = Bundle()
-
-
-
-/* override fun onStart() {
-     super.onStart()
-     EventBus.getDefault().register(this)
-// Listen to Network Broadcast
- }*/
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        EventBus.getDefault().register(this)
-    }
-
+    private lateinit var  connectivityObserver: ConnectivityObserver
+    private lateinit var currentConnectivityStatus:ConnectivityObserver.Status
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,13 +48,17 @@ class RegisterFragment2 : Fragment() {
         rootView = binding.root
         setupPasswordTextinput()
         mUserViewModel = (activity as MainActivity2).mUserViewModel
-        drawableSpan = DrawableSpan(
+        connectivityObserver = (activity as MainActivity2).connectivityObserver
+        binding.submitBtn.isEnabled = true
+
+       drawableSpan = DrawableSpan(
             binding.submitBtn,
             marginStart = 20,
             progressDrawable = CircularProgressDrawable(binding.submitBtn.context)
         )
         binding.submitBtn.setOnClickListener {
             addUser(it)
+
         }
         return rootView
     }
@@ -97,6 +82,8 @@ class RegisterFragment2 : Fragment() {
 
 
     private fun addUser(view: View) {
+
+
         //Get values in EditTexts
         val regMoMoName = binding.registrationMomoName.text.toString()
         val regphone = binding.registrationMomoPhone.text.toString()
@@ -105,20 +92,35 @@ class RegisterFragment2 : Fragment() {
         // Use values to create UserModel Object
         if (!(validator(regMoMoName, regEmail, regPass, regphone))) {
             if (checkifPhoneisValid()) {
-                val user = UserModel(regMoMoName, regphone, regEmail, regPass, true, false)
+                val user = UserModel(regMoMoName, regphone, regEmail, regPass,
+                    IsIncontrol = true,
+                    IsRemoteRegistered = false
+                )
                 mUserViewModel.addUser(user)
-                changeTextToProgressbar(view)
+                changeTextToProgressbar(view)// Heavy On  MAIN THREAD
                 mBundle.putString(Constants.PHONE_NUMBER_KEY, Constants.COUNTRY_CODE.plus(regphone))
-
-                if ((activity as MainActivity2).myIsConnected)
-                    moveUserToOtpConfirmed(view)
-                else
-                    moveToUserAccountsFragment(view)
-
+                handleMoveToNextFragment(view)
             }
         } else {
             Toast.makeText(requireContext(), "Please fill out required fields.", Toast.LENGTH_LONG)
                 .show()
+        }
+    }
+
+    private fun handleMoveToNextFragment(view: View) {
+        mUserViewModel.state.observe(viewLifecycleOwner) {
+
+            when(it){
+                UserViewModel.MyState.Error->
+                {
+                    moveToUserAccountsFragment(view)
+                }
+
+                UserViewModel.MyState.Fetched ->
+                {
+                        moveUserToOtpConfirmed(view)
+                }
+            }
         }
     }
 
@@ -151,8 +153,7 @@ class RegisterFragment2 : Fragment() {
 
     private fun moveUserToOtpConfirmed(view: View) {
         val mainLooperHandler = Handler(Looper.getMainLooper())
-        mainLooperHandler.postDelayed(Runnable {
-            view.findNavController()
+        mainLooperHandler.postDelayed({ view.findNavController()
                 .navigate(R.id.action_registerFragment2_to_otpConfirmFragment2, mBundle)
         }, 1500)
     }
@@ -166,20 +167,14 @@ class RegisterFragment2 : Fragment() {
         startActivity(i)
     }
 
-    @Subscribe
-    fun makeToast(networkEvent: networkEvent) {
-
-    }
-
     override fun onStop() {
         super.onStop()
         drawableSpan.stopProgress()
-        EventBus.getDefault().unregister(this)
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
         drawableSpan.stopProgress()
-        EventBus.getDefault().unregister(this)
     }
 }

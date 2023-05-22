@@ -65,12 +65,5 @@ class BackupViewModel @Inject constructor(val application: Application,
         continuation = continuation.then(importToRoomBuilder.build())
         continuation.enqueue()
 
-
-
-       /*val myWorkRequest: WorkRequest =
-            OneTimeWorkRequestBuilder<CleanupWorker>()
-                .setInputData(workDataOf(AGENT_PHONENUMBER_KEY to "76911464"))
-                .build()
-            workManager.enqueue(myWorkRequest)*/
        }
 }
