@@ -2,6 +2,13 @@ package com.example.momobooklet_by_sm.common.util
 
 class Constants {
   companion object {
+
+
+
+      const val  BUY_IDENTIFIER = "buy"
+      const val  SELL_IDENTIFIER = "sell"
+      const val  DATE_DATE_PATTERN = "dd-MM-yyyy"
+      const val  TIME_DATE_PATTERN = "dd-MM-yyyy hh:mm:ss a"
       const val CHARACTER_COUNT_PIN = 13
       const  val CHARACTER_COUNT_PHONE = 8
       const val COUNTRY_CODE = "+268"

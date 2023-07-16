@@ -1,7 +1,9 @@
 package com.example.momobooklet_by_sm.data.remote.dto
 
+import com.example.momobooklet_by_sm.common.util.Constants
 import com.example.momobooklet_by_sm.data.local.models.TransactionModel
 import com.google.gson.annotations.SerializedName
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -10,6 +12,7 @@ import java.util.*
 class Transactions (
     @SerializedName("transactionId")
     private var TransactionId: String? = null,
+    @SerializedName("date")
     private var Date: String? = null,
     private var customerName: String? = null,
     private var customerPin: String? = null,
@@ -27,7 +30,17 @@ class Transactions (
 
     private fun convertDate():String
     {
-        return Date ?: "dd-mm-yyyy"
+
+
+         return    makeDateStringFromISO8601String(Date!!)!!.trim()
+
+    }
+    private  fun makeDateStringFromISO8601String(testString: String): String? {
+        val formatter = SimpleDateFormat("yyyy-MM-dd")
+        val currentDate = formatter.parse(testString)
+        val finalformaterr = SimpleDateFormat("dd-MM-yyyy")
+        val testDateString = finalformaterr.format(currentDate)
+        return testDateString
     }
 
     private fun convertCustomerName():String
@@ -49,12 +62,18 @@ class Transactions (
     }
     private fun convertAmount(amount: String?):Float
     {
-       // return amount?.toFloat() ?:0F
-        return 100.9F
+        return amount?.toFloat() ?:0F
     }
     private fun convertTime(): String
     {
-        return time ?:"NO_TIME"
+        return makeTimeStringFromISO8601String(Date!!)!!.trim()
+    }
+    private fun makeTimeStringFromISO8601String(testString: String): String? {
+
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val currentDate = formatter.parse(testString)
+        val finalformaterr = SimpleDateFormat(Constants.TIME_DATE_PATTERN)
+        return finalformaterr.format(currentDate)
     }
     private fun convertAgentPhoneNumber(): String
     {
@@ -80,6 +99,4 @@ class Transactions (
         return "Transaction   ".plus(this.TransactionId)
             .plus(this.agentPhoneNumber).plus(this.amount)
     }
-
-
 }

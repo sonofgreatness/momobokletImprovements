@@ -25,6 +25,7 @@ import androidx.navigation.findNavController
 import androidx.transition.TransitionManager
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.R
+import com.example.momobooklet_by_sm.common.util.Constants
 import com.example.momobooklet_by_sm.data.local.models.TransactionModel
 import com.example.momobooklet_by_sm.data.local.models.UserModel
 import com.example.momobooklet_by_sm.databinding.FragmentRecordDisplayBinding
@@ -448,10 +449,10 @@ class RecordDisplayFragment : Fragment() {
 
         val transactiontype: String = binding.typeCheck.textfieldCardText.text.toString()
         val dbtransactiontype: Boolean
-        val sdf = SimpleDateFormat("dd-MM-yyyy ")
+        val sdf = SimpleDateFormat(Constants.DATE_DATE_PATTERN)
         val currentDate = sdf.format(Date())
 
-        val sd1f = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a")
+        val sd1f = SimpleDateFormat(Constants.TIME_DATE_PATTERN)
         val currentTime = sd1f.format(Date())
 
 

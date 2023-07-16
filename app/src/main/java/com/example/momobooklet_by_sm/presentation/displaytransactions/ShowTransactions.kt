@@ -24,7 +24,7 @@ import java.io.IOException
 
 
 class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
-    private val adapter = ListAdapter()
+    private lateinit var adapter: ListAdapter
     private lateinit var _binding: FragmentShowTransactionsBinding
     private val binding get() = _binding
     private lateinit var mTransactionViewModel: TransactionViewModel
@@ -41,6 +41,7 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
         mBackupViewModel  = (activity as MainActivity).mBackupViewModel
 
         setupToolbar()
+        adapter =  ListAdapter(null,requireActivity().application)
         setupRecyclerView()
         getAllTransaction()
         /*
@@ -55,12 +56,6 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
         val view = binding.root
         return view
     }
-
-
-
-
-
-
 
 
     @Throws(IOException::class)
@@ -137,6 +132,8 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
       *****************************************************************************/
     override fun onQueryTextSubmit(query: String?): Boolean {
     mTransactionViewModel.searchTransactions(query!!)
+         adapter = ListAdapter(query,requireActivity().application)
+         setupRecyclerView()
        mTransactionViewModel._triggerNoResultsToast.observe(viewLifecycleOwner)
        {
            if(it)

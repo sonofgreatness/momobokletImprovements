@@ -1,7 +1,13 @@
 package com.example.momobooklet_by_sm.presentation.displaytransactions
 
+import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextUtils
+import android.text.style.BackgroundColorSpan
 import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +17,15 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.momobooklet_by_sm.R
+import com.example.momobooklet_by_sm.common.util.Constants
 import com.example.momobooklet_by_sm.data.local.models.TransactionModel
+import javax.inject.Inject
 
 
-class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter(val queryText: String?, val app:Application) : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+
+    val backgroundColorSpan = app.getColor(R.color.Secondary)
+
 
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -54,28 +65,18 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = differ.currentList[position]
-        holder.itemView.findViewById<TextView>(R.id.date_id).text = currentItem.Date
-        holder.itemView.findViewById<TextView>(R.id.name_id).text = currentItem.C_Name
-        holder.itemView.findViewById<TextView>(R.id.pin_id).text = currentItem.C_ID
-        if (currentItem.Transaction_type == true)
-            holder.itemView.findViewById<TextView>(R.id.s_t_transactiont_type_id).text = "Buys MoMo"
-        if (currentItem.Transaction_type == false)
-            holder.itemView.findViewById<TextView>(R.id.s_t_transactiont_type_id).text =
-                "Sells MoMo"
-        holder.itemView.findViewById<TextView>(R.id.s_t_amount_id).text =
-            currentItem.Amount.toString()
-        // Get ByteArray from transaction Transaction Model obect convert to Bitmap
+        setBackgroundSpanForDateNameAndPIN(holder, currentItem)
+        setBackgroundSpanForTransactionType(currentItem, holder)
+        setBackgroundSpanForDatePhoneAndAmount(holder, currentItem)
 
         if (currentItem.Signature.size > 2)
         {
-
         val bitmap: Bitmap =
         BitmapFactory.decodeByteArray(currentItem.Signature, 0, currentItem.Signature.size)
         holder.itemView.findViewById<ImageView>(R.id.s_t_imageview_id).setImageBitmap(bitmap)
         }
         else
             holder.itemView.findViewById<ImageView>(R.id.s_t_imageview_id).setImageResource(R.drawable.remove)
-
         holder.itemView.findViewById<ImageView>(R.id.s_t_button_id).setOnClickListener(View.OnClickListener {
 
             if (holder.itemView.findViewById<LinearLayout>(R.id.layout_change).visibility==View.VISIBLE){
@@ -95,20 +96,178 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             }
 
         })
-        holder.itemView.findViewById<TextView>(R.id.s_t_date).text=currentItem.Time.toString()
-        holder.itemView.findViewById<TextView>(R.id.s_t_phone).text=currentItem.C_PHONE
 
-/*
-        holder.itemView.id_txt.text = currentItem.id.toString()
-        holder.itemView.firstName_txt.text = currentItem.firstName
-        holder.itemView.lastName_txt.text = currentItem.lastName
-        holder.itemView.age_txt.text = currentItem.age.toString()
 
-        holder.itemView.rowLayout.setOnClickListener {
-            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)
-            holder.itemView.findNavController().navigate(action)
+    }
+
+    private fun setBackgroundSpanForDateNameAndPIN(
+        holder: MyViewHolder,
+        currentItem: TransactionModel
+    ) {
+        if (queryText.isNullOrEmpty()) {
+            populateDateNameAndPin(holder, currentItem)
         }
-        */
+        else
+        {
+            populateDateNameAndPin(holder, currentItem)
+            applyBackgroundSpan(holder.itemView.findViewById(R.id.date_id))
+            applyBackgroundSpan(holder.itemView.findViewById(R.id.name_id))
+            applyBackgroundSpan(holder.itemView.findViewById(R.id.pin_id))
+        }
+    }
+
+    private fun populateDateNameAndPin(
+        holder: MyViewHolder,
+        currentItem: TransactionModel
+    ) {
+        holder.itemView.findViewById<TextView>(R.id.date_id).text = currentItem.Date
+        holder.itemView.findViewById<TextView>(R.id.name_id).text = currentItem.C_Name
+        holder.itemView.findViewById<TextView>(R.id.pin_id).text = currentItem.C_ID
+    }
+
+
+    private fun setBackgroundSpanForTransactionType(
+        currentItem: TransactionModel,
+        holder: MyViewHolder
+    ) {
+        if (queryText.isNullOrEmpty())
+        populateTransactionType(currentItem, holder)
+        else
+        {
+            populateTransactionType(currentItem,holder)
+            if(queryText.lowercase().contains(Constants.BUY_IDENTIFIER))
+                highlightSellTransactions(currentItem, holder)
+            if(queryText.lowercase().contains(Constants.SELL_IDENTIFIER))
+                highlightBuyTransactions(currentItem, holder)
+
+        }
+    }
+
+
+
+    private fun populateTransactionType(
+        currentItem: TransactionModel,
+        holder: MyViewHolder
+    ) {
+        if (currentItem.Transaction_type)
+            holder.itemView.findViewById<TextView>(R.id.s_t_transactiont_type_id).text =
+                app.getText(R.string.buy)
+        if (!currentItem.Transaction_type)
+            holder.itemView.findViewById<TextView>(R.id.s_t_transactiont_type_id).text =
+                app.getString(R.string.sell)
+    }
+
+    private fun highlightSellTransactions(currentItem: TransactionModel, holder: MyViewHolder, ) {
+        if (!currentItem.Transaction_type)
+            applyBackgroundSpanForBuy(holder.itemView.findViewById<TextView>(R.id.s_t_transactiont_type_id))
+    }
+
+    private fun applyBackgroundSpanForBuy(prose: TextView?) {
+
+        val queryText = app.getText(R.string.buy)
+        val raw: Spannable = SpannableString(app.getText(R.string.buy))
+        val spans = raw.getSpans(
+            0,
+            raw.length,
+            BackgroundColorSpan::class.java
+        )
+        for (span in spans) {
+            raw.removeSpan(span)
+        }
+        var index = TextUtils.indexOf(raw, queryText)
+        while (index >= 0) {
+            raw.setSpan(
+                BackgroundColorSpan(backgroundColorSpan), index, index
+                        + queryText!!.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            index = TextUtils.indexOf(raw, queryText, index + queryText.length)
+        }
+        prose!!.text = raw
+    }
+
+
+
+
+    private fun highlightBuyTransactions(currentItem: TransactionModel, holder: ListAdapter.MyViewHolder) {
+        if (currentItem.Transaction_type)
+            applyBackgroundSpanForSell(holder.itemView.findViewById<TextView>(R.id.s_t_transactiont_type_id))
+    }
+
+    private fun applyBackgroundSpanForSell(prose: TextView) {
+
+
+        val raw: Spannable = SpannableString(prose.text)
+        val queryText = app.getText(R.string.buy)
+        val spans = raw.getSpans(
+            0,
+            raw.length,
+            BackgroundColorSpan::class.java
+        )
+        for (span in spans) {
+            raw.removeSpan(span)
+        }
+
+
+        var index = TextUtils.indexOf(raw, queryText)
+        while (index >= 0) {
+            raw.setSpan(
+                BackgroundColorSpan(backgroundColorSpan), index, index
+                        + queryText!!.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            index = TextUtils.indexOf(raw, queryText, index + queryText.length)
+        }
+        prose.text = raw
+    }
+
+
+
+    private fun setBackgroundSpanForDatePhoneAndAmount(
+        holder: MyViewHolder,
+        currentItem: TransactionModel
+    ) {
+        if(queryText.isNullOrEmpty())
+        populateDatePhoneAndAmount(holder, currentItem)
+        else
+        {
+            populateDatePhoneAndAmount(holder,currentItem)
+            applyBackgroundSpan(holder.itemView.findViewById<TextView>(R.id.s_t_date))
+            applyBackgroundSpan(holder.itemView.findViewById<TextView>(R.id.s_t_amount_id))
+            applyBackgroundSpan(holder.itemView.findViewById<TextView>(R.id.s_t_phone))
+        }
+    }
+
+    private fun populateDatePhoneAndAmount(
+        holder: MyViewHolder,
+        currentItem: TransactionModel
+    ) {
+        holder.itemView.findViewById<TextView>(R.id.s_t_date).text = currentItem.Time
+        holder.itemView.findViewById<TextView>(R.id.s_t_phone).text = currentItem.C_PHONE
+        holder.itemView.findViewById<TextView>(R.id.s_t_amount_id).text =
+            currentItem.Amount.toString()
+    }
+
+    private fun applyBackgroundSpan(prose: TextView) {
+
+        val raw: Spannable = SpannableString(prose.text)
+        val spans = raw.getSpans(
+            0,
+            raw.length,
+            BackgroundColorSpan::class.java
+        )
+        for (span in spans) {
+            raw.removeSpan(span)
+        }
+
+
+        var index = TextUtils.indexOf(raw, queryText)
+        while (index >= 0) {
+            raw.setSpan(
+                BackgroundColorSpan(backgroundColorSpan), index, index
+                        + queryText!!.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            index = TextUtils.indexOf(raw, queryText, index + queryText.length)
+        }
+        prose.text = raw
     }
 
 }

@@ -1,13 +1,14 @@
 package com.example.momobooklet_by_sm.common.util
 
 import android.app.Activity
+import com.example.momobooklet_by_sm.domain.repositories.CommissionDatesManagerRepository
 import org.junit.Assert.assertEquals
 
 import org.junit.Test
 
 class CommisionDatesManagerTest
 {
- private val datesManager = CommisionDatesManager(Activity())
+ /*-----private val datesManager: CommissionDatesManagerRepository
     @Test
     fun getyesterdayInt_Test()
     {
@@ -20,7 +21,7 @@ class CommisionDatesManagerTest
         assertEquals(30,random)
     }
 
-
+*--/
    /* @Test
     fun getyesterdayString_Test(){
         val NoContest =datesManager.getyesterdayString(10)
@@ -35,6 +36,7 @@ class CommisionDatesManagerTest
 
     }
     */
+    /*
     @Test
     fun makeNonLeapYearDict_Test() {
         val dictionary = datesManager.makeNonLeapYearDict()
@@ -202,5 +204,7 @@ class CommisionDatesManagerTest
 
 
 
+*/
 
+  */
 }

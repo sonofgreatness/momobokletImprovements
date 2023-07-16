@@ -23,7 +23,7 @@ import kotlinx.android.parcel.Parcelize
 data class TransactionModel(
     @PrimaryKey
     val Transaction_ID:String,
-    val Date: String,
+    val Date: String,//dd-mm-yyyy
     val C_Name:String,
     val C_ID: String,
     val C_PHONE:String,
