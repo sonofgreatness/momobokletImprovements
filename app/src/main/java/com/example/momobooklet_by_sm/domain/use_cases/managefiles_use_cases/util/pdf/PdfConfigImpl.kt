@@ -9,20 +9,21 @@ import com.example.momobooklet_by_sm.R
 import com.example.momobooklet_by_sm.common.util.classes.WRITETO
 import com.example.momobooklet_by_sm.domain.repositories.CommissionDatesManagerRepository
 import com.example.momobooklet_by_sm.domain.repositories.ReportConfigRepository
+import com.example.momobooklet_by_sm.domain.repositories.UserRepository
 import com.wwdablu.soumya.simplypdf.composers.properties.TableProperties
 import java.io.FileOutputStream
 import javax.inject.Inject
 
 data class PdfConfigImpl @RequiresApi(Build.VERSION_CODES.O) @Inject constructor(
     val app: Application,
-    private val prefix: String,
+     val prefix: String,
     private val datesManager: CommissionDatesManagerRepository,
-    val location: WRITETO = WRITETO.EXTERNAL
+    val location: WRITETO = WRITETO.EXTERNAL,
     /*--..
      REFERS TO LOCATION IN OS's storage
-    --..*/,
+    --..*/
     val reportConfigRepository: ReportConfigRepository,
-    private val suffix: String = datesManager.generateTodayDate(),
+    val suffix: String = datesManager.generateTodayDate(),
 
     val tableProperties: TableProperties =TableProperties().apply{
         borderColor = "#000000"
@@ -37,5 +38,6 @@ data class PdfConfigImpl @RequiresApi(Build.VERSION_CODES.O) @Inject constructor
     ,
     val internalhostPath:String = app.filesDir.path,
     val otherHostPath: FileOutputStream? = app.openFileOutput(fileName, Context.MODE_APPEND),
-
+    val userRepository: UserRepository,
+    val dates : List<String>
     )

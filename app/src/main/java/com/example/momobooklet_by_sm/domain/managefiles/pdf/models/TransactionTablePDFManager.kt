@@ -48,7 +48,7 @@ class TransactionTablePDFManager(
         val transactions: List<TransactionModel> = transactions
 
         val titleRow =  LinkedList<Cell>().apply {
-            add(TextCell(Constants.TRANSACTIONCOLUMNTITLE_1, textProperties, column1_width))
+            //add(TextCell(Constants.TRANSACTIONCOLUMNTITLE_1, textProperties, column1_width))
             add(TextCell(Constants.TRANSACTIONCOLUMNTITLE_2, textProperties, column2_width))
             add(TextCell(Constants.TRANSACTIONCOLUMNTITLE_3, textProperties, column3_width))
             add(TextCell(Constants.TRANSACTIONCOLUMNTITLE_4, textProperties, column4_width))
@@ -78,7 +78,7 @@ class TransactionTablePDFManager(
         transaction_type = "Sells MoMo"
 
        val row = LinkedList<Cell>().apply{
-            add(TextCell(transaction.Transaction_ID.toString(),textProperties,column1_width))
+           // add(TextCell(transaction.Transaction_ID.toString(),textProperties,column1_width))
            add(TextCell(transaction.Date,textProperties,column2_width))
            add(TextCell(transaction.C_Name,textProperties,column3_width))
            add(TextCell(transaction.C_PHONE,textProperties,column4_width))
@@ -117,5 +117,6 @@ class TransactionTablePDFManager(
     fun setColumn8Width(width : Int) {
         column8_width = width
     }
+
 }
 

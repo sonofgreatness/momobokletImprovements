@@ -12,10 +12,7 @@ import com.example.momobooklet_by_sm.domain.managefiles.csv.models.dailyCommissi
 import com.example.momobooklet_by_sm.domain.managefiles.csv.models.toCsv
 import com.example.momobooklet_by_sm.domain.managefiles.pdf.models.DailyCommissionModelPDFManager
 import com.example.momobooklet_by_sm.domain.managefiles.pdf.models.TransactionTablePDFManager
-import com.example.momobooklet_by_sm.domain.repositories.CommissionDatesManagerRepository
-import com.example.momobooklet_by_sm.domain.repositories.CommissionRepository
-import com.example.momobooklet_by_sm.domain.repositories.ReportConfigRepository
-import com.example.momobooklet_by_sm.domain.repositories.TransactionRepository
+import com.example.momobooklet_by_sm.domain.repositories.*
 import com.example.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.util.csv.CsvConfigImpl
 import com.example.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.util.csv.Exports
 import com.example.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.util.pdf.PdfConfigImpl
@@ -31,6 +28,7 @@ class WriteReportUseCase @Inject constructor(
     private val repository: TransactionRepository,
     private val datesManager: CommissionDatesManagerRepository,
     private val reportConfigRepository: ReportConfigRepository,
+    private val  userRepository: UserRepository,
     private  val application: Application
 
 ) {
@@ -58,7 +56,8 @@ class WriteReportUseCase @Inject constructor(
                     writePDFReportTransactions(
                                             dates,PdfConfigImpl(
                                             application, type.name,datesManager,
-                                            WRITETO.EXTERNAL, reportConfigRepository
+                                            WRITETO.EXTERNAL, reportConfigRepository, userRepository =userRepository,
+                                            dates = dates
                                             )
                                         )
                     )
@@ -256,9 +255,6 @@ class WriteReportUseCase @Inject constructor(
 
     }
 
-
-
-
-    }
+}
 
 

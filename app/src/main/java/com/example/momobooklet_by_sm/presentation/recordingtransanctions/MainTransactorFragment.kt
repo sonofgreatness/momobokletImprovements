@@ -33,8 +33,8 @@ class MainTransactorFragment : Fragment() {
     private var binding: FragmentMainTransactorBinding? = null
     private var popupWindow: PopupWindow? = null
     private var signatureCaptured = false
-    val positionAnim : ValueAnimator = ObjectAnimator.ofInt(this, "wordPosition", 0, 4)
-    private var strings:Array<String> = arrayOf("submitting","submitting.", "submitting..", "submitting...")
+    val positionAnim : ValueAnimator = ObjectAnimator.ofInt(this, "wordPosition", 0, 3)
+    private var strings:Array<String> = arrayOf("submitting   ","submitting.  ", "submitting.. ", "submitting...")
     var position : Int = 0
     lateinit var  view_to_animate : View
 
@@ -58,11 +58,13 @@ class MainTransactorFragment : Fragment() {
 
         view_to_animate = binding!!.recordtransactBtn
 
-
         positionAnim.duration = 1500
         positionAnim.repeatCount = ValueAnimator.INFINITE
         positionAnim.repeatMode = ValueAnimator.RESTART
         positionAnim.start()
+
+
+
 
         // back arrow in the appbar OnclickListener
         val customView = inflater.inflate(R.layout.signaturepad_home, null)

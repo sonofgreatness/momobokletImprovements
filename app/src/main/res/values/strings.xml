@@ -81,7 +81,7 @@
     <string name="last_month_s_commission">Last Month\'s Commission</string>
     <string name="dd_mm_yy">dd-MM-yy</string>
     <string name="search_hint">Search Transactions</string>
-    <string name="no_results">No Results  Found …</string>
+    <string name="no_results">No results found \n showing ALL records </string>
     <string name="this_months_commission">This Month\'s Commission</string>
     <string name="yesterdays_commission">Yesterday\'s Commission</string>
     <string name="visual_clue_to_pull_up">visual clue to pull up</string>

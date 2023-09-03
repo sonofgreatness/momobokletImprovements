@@ -3,8 +3,6 @@ package com.example.momobooklet_by_sm.common.util
 class Constants {
   companion object {
 
-
-
       const val  BUY_IDENTIFIER = "buy"
       const val  SELL_IDENTIFIER = "sell"
       const val  DATE_DATE_PATTERN = "dd-MM-yyyy"
@@ -13,6 +11,7 @@ class Constants {
       const  val CHARACTER_COUNT_PHONE = 8
       const val COUNTRY_CODE = "+268"
       const val PHONE_NUMBER_KEY = "phone_key"
+
       const val REGISTRATION_HOME_KEY = "home_fragment_key"
       const val  REQUEST_FILE_PERMISSION = 43
       const val  PDF_TABLE_TEXT_COLOR = "#000000"

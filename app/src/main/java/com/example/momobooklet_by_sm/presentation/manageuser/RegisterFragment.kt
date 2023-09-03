@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.R
@@ -76,7 +77,7 @@ class RegisterFragment : Fragment() {
             if (requireArguments().getString(Constants.REGISTRATION_HOME_KEY)!! == "commission")
             it!!.findNavController().navigate(R.id.action_registerFragment_to_commission)
             else
-                moveToUserAccountsFragment(it)
+                moveToUserAccountsFragment()
         }
     }
 
@@ -94,9 +95,9 @@ class RegisterFragment : Fragment() {
                     changeTextToProgressbar(view)
                     mBundle.putString(PHONE_NUMBER_KEY, COUNTRY_CODE.plus(regphone))
                     if(true)//(activity as MainActivity).myIsConnected)
-                        moveUserToOtpConfirmed(view)
+                        moveUserToOtpConfirmed()
                     else
-                        moveToUserAccountsFragment(view)
+                        moveToUserAccountsFragment()
 
                 }
         }
@@ -131,17 +132,17 @@ class RegisterFragment : Fragment() {
     }
 
 
-    private fun moveUserToOtpConfirmed(view: View) {
+    private fun moveUserToOtpConfirmed() {
         val mainLooperHandler = Handler(Looper.getMainLooper())
         mainLooperHandler.postDelayed(Runnable{
-        view.findNavController().navigate(R.id.action_registerFragment_to_otpConfirmFragment,mBundle)}
+        findNavController().navigate(R.id.action_registerFragment_to_otpConfirmFragment,mBundle)}
         ,1500)
     }
 
-    private fun moveToUserAccountsFragment(view: View) {
+    private fun moveToUserAccountsFragment() {
         val mainLooperHandler = Handler(Looper.getMainLooper())
-        mainLooperHandler.postDelayed(Runnable {
-            view.findNavController().navigate(R.id.action_registerFragment_to_userAccountsFragment)
+        mainLooperHandler.postDelayed({
+            findNavController().navigate(R.id.action_registerFragment_to_userAccountsFragment)
         }, 1500)
 
     }
