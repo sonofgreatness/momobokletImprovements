@@ -7,4 +7,5 @@ package com.example.momobooklet_by_sm.domain.repositories
 interface ReportConfigRepository{
 
     fun setUpExternalDirectories()
+    fun setUpInternalDirectories()
 }

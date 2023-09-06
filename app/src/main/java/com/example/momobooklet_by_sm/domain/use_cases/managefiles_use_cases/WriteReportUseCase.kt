@@ -47,7 +47,8 @@ class WriteReportUseCase @Inject constructor(
                    writeCSVReport(
                                  dates, CsvConfigImpl(
                                  application, type.name, datesManager,
-                                  WRITETO.EXTERNAL, reportConfigRepository
+                                  WRITETO.INTERNAL, reportConfigRepository
+
                                    )
                                  )
                   )
@@ -56,7 +57,7 @@ class WriteReportUseCase @Inject constructor(
                     writePDFReportTransactions(
                                             dates,PdfConfigImpl(
                                             application, type.name,datesManager,
-                                            WRITETO.EXTERNAL, reportConfigRepository, userRepository =userRepository,
+                                            WRITETO.INTERNAL, reportConfigRepository, userRepository =userRepository,
                                             dates = dates
                                             )
                                         )
@@ -137,7 +138,7 @@ class WriteReportUseCase @Inject constructor(
 
     private   fun exportTransactionsAndCommissionsToPdf(dates: List<String>, pdfConfig: PdfConfigImpl) =
 
-    flow<ExportState>{
+    flow {
         // 👇 state manager for loading | error | success
 
         emit(ExportState.Empty)

@@ -33,20 +33,21 @@ class WritePDF (val pdfConfig: PdfConfigImpl, val content: TransactionTablePDFMa
                 else
                     internalhostPath
 
+                reportConfigRepository.setUpInternalDirectories()
                 Log.d("HostPath Value : ", myhostPath)
 
                 myhostPath.ifEmpty {
-                    Log.d("Shouldn't Exist ", "Shouldn't Exist")
                     throw IllegalStateException("Wrong Path") }
                 val hostDirectory = File(myhostPath)
                 if (!hostDirectory.exists()) {
                     reportConfigRepository.setUpExternalDirectories()
+
                     // hostDirectory.mkdir() // 👈 create directory
                     //hostDirectory.mkdir() // 👈 create directory
                 }
                 emit(ExportState.Loading)
                 // 👇 create csv file
-                val pdfFile = File("${hostDirectory.path}/${fileName}")
+                val pdfFile = File("${hostDirectory.path}/files/${fileName}")
                 try {
                     pdfFile.createNewFile()
                     // 👇 emit success

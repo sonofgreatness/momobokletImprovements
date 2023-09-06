@@ -1,5 +1,6 @@
 package com.example.momobooklet_by_sm.domain.managefiles.pdf.models
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import com.example.momobooklet_by_sm.data.local.models.TransactionModel
 import com.example.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.util.csv.Exportable
@@ -76,8 +77,10 @@ class TransactionTablePDFManager(
             transaction_type = "Buys MoMo"
         else
         transaction_type = "Sells MoMo"
-
-       val row = LinkedList<Cell>().apply{
+        var bitmap = BitmapFactory.decodeByteArray(transaction.Signature,0,transaction.Signature.size)
+        var row : LinkedList<Cell>
+        if (bitmap != null){
+        row = LinkedList<Cell>().apply{
            // add(TextCell(transaction.Transaction_ID.toString(),textProperties,column1_width))
            add(TextCell(transaction.Date,textProperties,column2_width))
            add(TextCell(transaction.C_Name,textProperties,column3_width))
@@ -85,8 +88,23 @@ class TransactionTablePDFManager(
            add(TextCell(transaction.C_ID,textProperties,column5_width))
            add(TextCell(transaction_type,textProperties,column6_width))
            add(TextCell(transaction.Amount.toString(),textProperties,column7_width))
-           add(ImageCell(BitmapFactory.decodeByteArray(transaction.Signature,0,transaction.Signature.size),imageProperties,column8_width))
+           add(ImageCell(bitmap,imageProperties,column8_width))
        }
+        }
+        else{
+
+            row = LinkedList<Cell>().apply{
+                // add(TextCell(transaction.Transaction_ID.toString(),textProperties,column1_width))
+                add(TextCell(transaction.Date,textProperties,column2_width))
+                add(TextCell(transaction.C_Name,textProperties,column3_width))
+                add(TextCell(transaction.C_PHONE,textProperties,column4_width))
+                add(TextCell(transaction.C_ID,textProperties,column5_width))
+                add(TextCell(transaction_type,textProperties,column6_width))
+                add(TextCell(transaction.Amount.toString(),textProperties,column7_width))
+                add(TextCell("",textProperties,column8_width))
+            }
+
+        }
         returnList.add(row)
     }
 

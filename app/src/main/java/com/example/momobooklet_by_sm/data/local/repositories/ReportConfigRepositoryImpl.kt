@@ -34,4 +34,30 @@ class ReportConfigRepositoryImpl @Inject constructor(val app: Application) : Rep
         if (!csvDirectory.exists())
             csvDirectory.mkdir()
     }
+    /***************************************************************************
+     * setUpExternalMemoryFileDirectories() -> creates in External Storage
+     *                                  the directory  "MoMoBooklet"
+     *                                  subdirectories : PDF
+     *                                                 : CSV
+     ***************************************************************************/
+    override fun setUpInternalDirectories() {
+        val hostPath = app.filesDir.absolutePath
+        val rootDirectory = File("$hostPath/files")
+
+        if (!rootDirectory.exists())
+            rootDirectory.mkdir()
+
+        /* val pdfDirectory =
+            File(hostPath + "/" + app.getString(R.string.app_name) + "/" + "PDF")
+        val csvDirectory =
+            File(hostPath + "/" + app.getString(R.string.app_name) + "/" + "CSV")
+
+        if (!pdfDirectory.exists())
+            pdfDirectory.mkdir()
+        if (!csvDirectory.exists())
+            csvDirectory.mkdir()
+    }
+    */
+
+    }
 }

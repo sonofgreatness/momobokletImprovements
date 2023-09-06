@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.R
 import com.example.momobooklet_by_sm.databinding.FragmentGenerateReportFileBinding
@@ -56,6 +59,8 @@ class GenerateReportFile : Fragment() {
         binding.createBtn.setOnClickListener{
             trackGenerateReport()
             createReportFromInputs()
+
+
          }
 
         binding.radioGroup.pickDateBtnCustomradiogroup.setOnClickListener{
@@ -95,11 +100,7 @@ class GenerateReportFile : Fragment() {
                         discriminateReportTypesByFileFormat()
                         for (type in listOfReportTypes)
                             mCommissionViewModel.writeReport(startDate!!, type)
-                        Toast.makeText(
-                            requireContext(),
-                            "File Write SuccessFul",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        moveTomanagePDFsLandingPage()
                     } else {
                         Toast.makeText(
                             requireContext(),
@@ -123,6 +124,23 @@ class GenerateReportFile : Fragment() {
             }
     }
 
+    /***********************************************************
+     *Notifies user of successful file(s) write
+     *  then navigates to ManagePDFSLanding page
+     *            fragment
+     **********************************************************/
+    private fun moveTomanagePDFsLandingPage() {
+        Toast.makeText(
+            requireContext(),
+            "File Write SuccessFul",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        val mainLooperHandler = Handler(Looper.getMainLooper())
+        mainLooperHandler.postDelayed(Runnable{
+            findNavController().navigate(R.id.action_generateReportFile_to_managePDFsLandingFragment2)}
+            ,600)
+    }
     /*************************************************************************************
      * collectReportTypeDateFromChips - translates  choice made by user into list
      *                                of ReportType, i.e

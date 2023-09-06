@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
@@ -59,10 +60,10 @@ class ReportsAdapter internal constructor(val activity: Activity) : RecyclerView
 
             holder.reportImage.setOnClickListener{
                 var ext: String
-                if (file.contains(".csv"))
-                    ext = "csv"
+                ext = if (file.contains(".csv"))
+                    "csv"
                 else
-                    ext = "pdf"
+                    "pdf"
 
                 openfile(ext,file)
             }
@@ -86,6 +87,7 @@ class ReportsAdapter internal constructor(val activity: Activity) : RecyclerView
             "com.example.momobooklet_by_sm.fileprovider",
             newFile
         )
+
 
         val intentShareFile = Intent(Intent.ACTION_SEND)
         intentShareFile.setDataAndType(
@@ -121,7 +123,7 @@ class ReportsAdapter internal constructor(val activity: Activity) : RecyclerView
     private fun openfile(ext:String,fileName: String) {
 
 
-        val filePath: File = File(activity.application.filesDir, "files")
+        val filePath = File(activity.application.filesDir, "files")
         val newFile = File(filePath, fileName)
 
         val uri = FileProvider.getUriForFile(
@@ -135,7 +137,13 @@ class ReportsAdapter internal constructor(val activity: Activity) : RecyclerView
         val mimeType = myMime.getMimeTypeFromExtension(ext)
 
         newIntent.setDataAndType(uri, mimeType)
-        newIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+        newIntent.addFlags(
+            (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        )
+
+        Log.d("CheckFile", "$uri")
+        Log.d("CheckFile", "${newFile.absolutePath}")
         try {
             activity.startActivity(newIntent)
         } catch (e: ActivityNotFoundException) {
@@ -150,7 +158,10 @@ class ReportsAdapter internal constructor(val activity: Activity) : RecyclerView
      *                file in external memory
      *****************************************************/
     private fun deleteFile(fileName: String, position: Int){
+
         activity.applicationContext.deleteFile(fileName)
+        val deletemeFile = File(activity.application.filesDir.absolutePath.plus("/files/").plus(fileName))
+        deletemeFile.delete()
     }
 
     override fun getItemCount(): Int {
