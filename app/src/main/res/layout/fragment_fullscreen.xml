@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/ThemeOverlay.DigiBooklet.FullscreenContainer"
+    tools:context=".presentation.manageuser.FullscreenFragment">
+    <include
+        android:id="@+id/main_help_intro"
+        android:layout_height="wrap_content"
+        layout="@layout/help_page_intro_section"
+        android:layout_width="match_parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/main_help_intro"
+        app:layout_constraintBottom_toTopOf="@+id/main_help_quit"
+        android:background="@color/colorPrimary"
+        >
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/main_help_how_toLL"
+        android:orientation="vertical">
+        <include
+            android:id="@+id/main_help_transactions"
+            layout="@layout/help_page_subsection"/>
+        <include
+            android:id="@+id/main_help_reports"
+            layout="@layout/help_page_subsection"
+            />
+
+        <include
+            android:id="@+id/main_help_commission"
+            layout="@layout/help_page_subsection"
+            />
+        <include
+            android:id="@+id/main_help_accounts"
+            layout="@layout/help_page_subsection"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/help_contact_us"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingStart="24dp"
+                android:text="@string/contact_us"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_phone_24"
+                    android:layout_marginStart="24dp"
+                    android:layout_below="@id/help_contact_us"
+                    android:layout_alignParentStart="true"
+                     />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/help_contact_us"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:src="@drawable/ic_baseline_phone_24" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/main_help_quit"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/quit_help"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginBottom="29dp"
+        android:textSize="30sp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

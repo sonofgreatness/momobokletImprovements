@@ -41,8 +41,6 @@
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="change_to">Change To:</string>
-
-
     <string name="error_pin">must contain 13 characters</string>
     <string name="error_phone">must contain 8 characters</string>
 
@@ -130,7 +128,41 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="pref_previously_started">previously started</string>
     <string name="polo_is_not_a_good">Polo Is Not A Good</string>
-    <string name = "request_manage_file_permission">This App Needs  The Permission To Manage Files.\nGrant  It To Create and Save Report(s)"
+    <string name="request_manage_file_permission">This App Needs  The Permission To Manage Files.\nGrant  It To Create and Save Report(s)"
     </string>
+    <string name="icon_to_familiarize_user_with_feature">icon to familiarize user with feature</string>
+    <string name="help_page">Help Page</string>
+    <string name="welcome_to_our_app">Welcome to our app!</string>
+    <string name="glad_to_have_you">We are glad you chose our app to manage your mobile money business. Our app is designed to be simple, fast and user-friendly.Whether you want to record transactions,view pre-recorded ones or keep up with your commission ,our app does it all.</string>
+    <string name="how_to_use_our_app">How to use our app ?</string>
+    <string name="quit_help">QUIT HELP</string>
+    <string name="transactions">Transactions</string>
+    <string name="record_transaction_help">You can record a transaction by filling out the form with the necessary transaction details ,
+        hitting the submit button , then record customer\'s signature in the signature pad, confirm/edit transaction details in the following page and hit the record button to finish.</string>
+    <string name="contact_us">Contact Us ( +268 ) 76911464</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name = "commission"> Commission</string>
+    <string name = "commmission_help">
+        You can keep up to date with commission earned from  recorded transactions.
+        The monthly commission is  calculated starting from the 3rd of each month
+        to the the 2nd of the following month, you can override this start date
+        and  choose one between  the 3rd  , 4th , 5th , 6th or 7th  of each month.\n
+        The commission is calculated using the commission table  below , it  is subject to change
+        when MTN releases a new one.
+    </string>
+    <string name = "reports"> Reports</string>
 
+    <string name = "reports_help">
+     You can generate reports on  recorded transaction data , the reports include  transaction details and summarised commission data for
+        a selected period. Periods to choose from are WEEKLY, BIWEEKLY ( 2 WEEKS ),
+        MONTHLY, TRIMONTHLY ( 3 MONTHS).\n Generated reports are stored in  your phone\'s  internal memory in a folder
+        labeled MOMOBOOKLET.
+    </string>
+    <string name = "accounts">UserAccounts</string>
+
+    <string name = "account_help">
+        Transaction data is associated with a registered account  , if you wish
+        to record transaction data  for a different account, simply register a new account and
+        make sure it is active . an active account has a green circular icon next to it.
+    </string>
 </resources>

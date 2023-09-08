@@ -10,6 +10,7 @@ class Constants {
       const val CHARACTER_COUNT_PIN = 13
       const  val CHARACTER_COUNT_PHONE = 8
       const val COUNTRY_CODE = "+268"
+      const val MYNUMBER = "+26876911464"
       const val PHONE_NUMBER_KEY = "phone_key"
 
       const val REGISTRATION_HOME_KEY = "home_fragment_key"

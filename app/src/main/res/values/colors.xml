@@ -9,34 +9,38 @@
     <color name="colorPrimary">#E0E0E0</color>
     <color name="colorPrimaryDark">#009688</color>
     <color name="colorAccent">#4DD0E1</color>
-    <color name="blueliketwitter" >#4DD0E1</color>
+    <color name="blueliketwitter">#4DD0E1</color>
     <color name="textColorPrimary">#442C2E</color>
     <color name="toolbarIconColor">@color/textColorPrimary</color>
     <color name="loginPageBackgroundColor">#FFFFFF</color>
     <color name="productGridBackgroundColor">#FFFBFA</color>
     <color name="textInputOutlineColor">@color/Main</color>
     <color name="white">#FFFFFFFF</color>
-<color name = "muesli_green" >#298b28</color>
+    <color name="muesli_green">#298b28</color>
 
     <!--  color pallete-->
-    <color name ="Main">#009688</color>
-    <color name ="optional">#00897B</color>
-    <color name ="Secondary">#4DD0E1</color>
+    <color name="Main">#009688</color>
+    <color name="optional">#00897B</color>
+    <color name="Secondary">#4DD0E1</color>
     <color name="redWarning">#F81302</color>
-    <color name ="boxOutlineStartColor">#87ceeb</color>
-    <color name = "boxOutlineCenterColor" >#00bfff</color>
-    <color name = "boxOutlineEndColor">#1e90ff</color>
+    <color name="boxOutlineStartColor">#87ceeb</color>
+    <color name="boxOutlineCenterColor">#00bfff</color>
+    <color name="boxOutlineEndColor">#1e90ff</color>
 
-    <color name = "yellow">#FEDF00</color>
-    <color name = "middle_yellow">#FFEB00</color>
+    <color name="yellow">#FEDF00</color>
+    <color name="middle_yellow">#FFEB00</color>
 
 
+    <color name="hotpink">#FFBEDE</color>
+    <color name="cardinal">#C41e3a</color>
+    <color name="cerise">#DE3163</color>
+    <color name="Pearl">#E7ACCF</color>
+    <color name="lightGray">#e4e4e4ff</color>
 
-    <color name = "hotpink">#FFBEDE</color>
-    <color name = "cardinal">#C41e3a</color>
-    <color name = "cerise">#DE3163</color>
-    <color name = "Pearl">#E7ACCF</color>
-    <color name = "lightGray">#e4e4e4ff</color>
-
-    <color name= "DarkGray">#5A5A5A</color>
+    <color name="DarkGray">#5A5A5A</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
 </resources>

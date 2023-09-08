@@ -94,6 +94,9 @@
         android:label="fragment_show_transactions"
         tools:layout="@layout/fragment_show_transactions" >
 
+        <action
+            android:id="@+id/action_showTransactions_to_fullscreenFragment"
+            app:destination="@id/fullscreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/userAccountsFragment"
@@ -156,5 +159,14 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/fullscreenFragment"
+        android:name="com.example.momobooklet_by_sm.presentation.manageuser.FullscreenFragment"
+        android:label="fragment_fullscreen"
+        tools:layout="@layout/fragment_fullscreen" >
+        <action
+            android:id="@+id/action_fullscreenFragment_to_showTransactions"
+            app:destination="@id/showTransactions" />
     </fragment>
 </navigation>
