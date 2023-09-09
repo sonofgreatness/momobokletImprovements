@@ -100,8 +100,10 @@ class OtpConfirmFragment  : Fragment() {
 
     private fun setupUpNavigationOnClick() {
 
+        val mBundle:Bundle = Bundle()
+        mBundle.putString(Constants.REGISTRATION_HOME_KEY, "otpconfirm_fragment")
         binding.appBarOtp.setOnClickListener {
-            it.findNavController().navigate(R.id.action_otpConfirmFragment_to_registerFragment)
+            it.findNavController().navigate(R.id.action_otpConfirmFragment_to_registerFragment,mBundle)
         }
     }
 }

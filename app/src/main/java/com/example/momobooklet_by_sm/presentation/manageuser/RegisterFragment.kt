@@ -22,6 +22,7 @@ import com.example.momobooklet_by_sm.common.util.classes.DrawableSpan
 import com.example.momobooklet_by_sm.data.local.models.UserModel
 import com.example.momobooklet_by_sm.databinding.FragmentRegisterBinding
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
+import com.google.android.material.textfield.TextInputLayout.END_ICON_PASSWORD_TOGGLE
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -61,11 +62,11 @@ class RegisterFragment : Fragment() {
             passwordInputLayout.setEndIconOnClickListener {
                 passwordEndIconChangeHelper = if (passwordEndIconChangeHelper) {
                     passwordInputLayout.setEndIconDrawable(R.drawable.password_icon)
-                   // passwordInputLayout.endIconMode = END_ICON_PASSWORD_TOGGLE
+                   passwordInputLayout.endIconMode = END_ICON_PASSWORD_TOGGLE
                     false
                 } else {
                     passwordInputLayout.setEndIconDrawable(R.drawable.password_icon_visibility_off)
-                   // passwordInputLayout.endIconMode = END_ICON_PASSWORD_TOGGLE
+                    passwordInputLayout.endIconMode = END_ICON_PASSWORD_TOGGLE
                     true
                 }
             }
@@ -90,7 +91,7 @@ class RegisterFragment : Fragment() {
         // Use values to create UserModel Object
         if(!(validator(regMoMoName,regEmail,regPass,regphone))){
                 if(checkifPhoneisValid()){
-                    val user = UserModel(regMoMoName, regphone, regEmail, regPass, true,false)
+                    val user = UserModel(regMoMoName, regphone, regEmail, regPass, false,false)
                     mUserViewModel.addUser(user)
                     changeTextToProgressbar(view)
                     mBundle.putString(PHONE_NUMBER_KEY, COUNTRY_CODE.plus(regphone))
