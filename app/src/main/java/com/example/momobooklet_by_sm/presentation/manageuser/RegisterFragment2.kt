@@ -1,6 +1,5 @@
 package com.example.momobooklet_by_sm.presentation.manageuser
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,7 +12,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.MainActivity2
 import com.example.momobooklet_by_sm.R
 import com.example.momobooklet_by_sm.common.util.Constants
@@ -37,7 +35,6 @@ class RegisterFragment2 : Fragment() {
     private var passwordEndIconChangeHelper = true
     private var mBundle: Bundle = Bundle()
     private lateinit var  connectivityObserver: ConnectivityObserver
-    private lateinit var currentConnectivityStatus:ConnectivityObserver.Status
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -90,15 +87,16 @@ class RegisterFragment2 : Fragment() {
         val regEmail = binding.registrationEmailAddress.text.toString()
         val regPass = binding.registrationPassword.text.toString()
         // Use values to create UserModel Object
-        if (!(validator(regMoMoName, regEmail, regPass, regphone))) {
+        if (!(validator(regMoMoName, regPass, regphone))) {
             if (checkifPhoneisValid()) {
                 val user = UserModel(regMoMoName, regphone, regEmail, regPass,
                     IsIncontrol = true,
-                    IsRemoteRegistered = false
+                    IsRemoteRegistered = false,
+                    FireBaseVerificationId = null
                 )
                 mUserViewModel.addUser(user)
                 changeTextToProgressbar(view)// Heavy On  MAIN THREAD
-                mBundle.putString(Constants.PHONE_NUMBER_KEY, Constants.COUNTRY_CODE.plus(regphone))
+                mBundle.putString(Constants.PHONE_NUMBER_KEY, regphone)
                 handleMoveToNextFragment(view)
             }
         } else {
@@ -108,25 +106,12 @@ class RegisterFragment2 : Fragment() {
     }
 
     private fun handleMoveToNextFragment(view: View) {
-        mUserViewModel.state.observe(viewLifecycleOwner) {
-
-            when(it){
-                UserViewModel.MyState.Error->
-                {
-                    moveToUserAccountsFragment(view)
-                }
-
-                UserViewModel.MyState.Fetched ->
-                {
-                        moveUserToOtpConfirmed(view)
-                }
-            }
-        }
+                moveUserToOtpConfirmed(view)
     }
 
     private fun validator(
         momoname: String,
-        email: String, password: String, momophone: String
+        password: String, momophone: String
     ): Boolean {
         val firstCondition: Boolean = !(TextUtils.isEmpty(momoname) && TextUtils.isEmpty(password))
         val secondCondition: Boolean = !TextUtils.isEmpty(momophone)
@@ -158,21 +143,10 @@ class RegisterFragment2 : Fragment() {
         }, 1500)
     }
 
-    /**
-     * move To MAinActivity
-     */
-    private fun moveToUserAccountsFragment(view: View) {
-
-        val i = Intent(requireContext(), MainActivity::class.java)
-        startActivity(i)
-    }
-
     override fun onStop() {
         super.onStop()
         drawableSpan.stopProgress()
-
     }
-
     override fun onDestroy() {
         super.onDestroy()
         drawableSpan.stopProgress()

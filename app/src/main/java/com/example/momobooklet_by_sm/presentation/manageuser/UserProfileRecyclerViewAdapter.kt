@@ -1,20 +1,23 @@
 package com.example.momobooklet_by_sm.presentation.manageuser
 
-import com.example.momobooklet_by_sm.data.local.models.UserModel
-import androidx.recyclerview.widget.RecyclerView
-import android.view.ViewGroup
-import android.view.View
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.SnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.momobooklet_by_sm.R
+import com.example.momobooklet_by_sm.common.util.Constants
+import com.example.momobooklet_by_sm.data.local.models.UserModel
 import com.example.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class UserProfileRecyclerViewAdapter(val mUserViewModel:UserViewModel) :
+class UserProfileRecyclerViewAdapter(val mUserViewModel:UserViewModel, val fragment: Fragment) :
     RecyclerView.Adapter<UserProfileRecyclerViewAdapter.MyViewHolderr>() {
 
 
@@ -50,9 +53,21 @@ class UserProfileRecyclerViewAdapter(val mUserViewModel:UserViewModel) :
             if (!curretItem.IsIncontrol) holder.itemView.findViewById<ImageView>(R.id.Incontrol_status).setImageResource(R.drawable.circle_darkgray_fill)
             if (curretItem.IsIncontrol) holder.itemView.findViewById<ImageView>(R.id.Incontrol_status).setImageResource(R.drawable.beeping_radio_btn)
 
+            holder.itemView.setOnClickListener {
+                setUpItemOnClick(curretItem)
+            }
+
         }
     }
 
+     /****************************************************************************
+      *removeItem -> removes a UserModel user    from  RecyclerView list
+      *            on swipe (Right or Left),
+      *              reverses this action   if user  clicks on snackbar that appears
+      *
+      *              The user is also  added /removed from the database
+      *                                respectively
+      *********************************************************************************/
     fun removeItem(viewHolder: MyViewHolderr) {
 
         val newList = ArrayList<UserModel>()
@@ -63,19 +78,37 @@ class UserProfileRecyclerViewAdapter(val mUserViewModel:UserViewModel) :
         differ.submitList(newList)
         mUserViewModel.deleteUser(removeUserModel)
 
-
         Snackbar.make(viewHolder.itemView,"${removeUserModel.MoMoName} : ${removeUserModel.MoMoNumber}  deleted", Snackbar.LENGTH_LONG).setAction("UNDO"){
             newList.add(removePosition,removeUserModel)
             differ.submitList(newList)
             mUserViewModel.addUser(removeUserModel)
-          notifyItemInserted(removePosition)
+
         }.show()
     }
 
 
 
-    private fun deleteUser(user: UserModel)
+    /*************************************************************************
+     ***********************************************************************/
+
+    private fun setUpItemOnClick(user: UserModel)
     {
-        mUserViewModel.deleteUser(user)
+        val mBundle = convertUserModelToBundle(user)
+        fragment.findNavController().navigate(R.id.action_userAccountsFragment_to_editUserAccountFragment,mBundle)
     }
+    private fun convertUserModelToBundle(user : UserModel): Bundle {
+
+        val mBundle  = Bundle()
+
+        mBundle.putString(Constants.PHONE_NUMBER_KEY, user.MoMoNumber)
+        mBundle.putString(Constants.MOMO_NAME_KEY, user.MoMoName)
+        mBundle.putString(Constants.MOMO_EMAIL_KEY, user.AgentEmail)
+        mBundle.putString(Constants.MOMO_PASSWORD_KEY, user.AgentPassword)
+        mBundle.putBoolean(Constants.MOMO_CONTROL_STATUS_KEY, user.IsIncontrol)
+        mBundle.putBoolean(Constants.MOMO_REGISTRATION_STATUS_KEY, user.IsRemoteRegistered)
+        mBundle.putString(Constants.MOMO_FIREBASEVERIFICATION_KEY, user.FireBaseVerificationId)
+        return  mBundle
+
+    }
+
 }

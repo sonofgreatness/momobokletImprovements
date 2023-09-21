@@ -16,7 +16,6 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.momobooklet_by_sm.MainActivity
 import com.example.momobooklet_by_sm.R
 import com.example.momobooklet_by_sm.common.util.Constants
-import com.example.momobooklet_by_sm.common.util.Constants.Companion.COUNTRY_CODE
 import com.example.momobooklet_by_sm.common.util.Constants.Companion.PHONE_NUMBER_KEY
 import com.example.momobooklet_by_sm.common.util.classes.DrawableSpan
 import com.example.momobooklet_by_sm.data.local.models.UserModel
@@ -91,14 +90,15 @@ class RegisterFragment : Fragment() {
         // Use values to create UserModel Object
         if(!(validator(regMoMoName,regEmail,regPass,regphone))){
                 if(checkifPhoneisValid()){
-                    val user = UserModel(regMoMoName, regphone, regEmail, regPass, false,false)
+                    val user = UserModel(regMoMoName, regphone, regEmail, regPass,
+                        IsIncontrol = false,
+                        IsRemoteRegistered = false,
+                        FireBaseVerificationId = null
+                    )
                     mUserViewModel.addUser(user)
                     changeTextToProgressbar(view)
-                    mBundle.putString(PHONE_NUMBER_KEY, COUNTRY_CODE.plus(regphone))
-                    if(true)//(activity as MainActivity).myIsConnected)
-                        moveUserToOtpConfirmed()
-                    else
-                        moveToUserAccountsFragment()
+                    mBundle.putString(PHONE_NUMBER_KEY, regphone)
+                    moveUserToOtpConfirmed()
 
                 }
         }
@@ -123,10 +123,10 @@ class RegisterFragment : Fragment() {
         binding.registrationMomoPhone.requestFocus()
             return false
     }
-    /**
+    /**********************************************
      * change Submit button text to progress bar
      *      for Feedback on button click
-    * */
+     **********************************************/
     private fun changeTextToProgressbar(view: View) {
             drawableSpan.startProgress()
             (view as Button).isEnabled = false
@@ -135,7 +135,7 @@ class RegisterFragment : Fragment() {
 
     private fun moveUserToOtpConfirmed() {
         val mainLooperHandler = Handler(Looper.getMainLooper())
-        mainLooperHandler.postDelayed(Runnable{
+        mainLooperHandler.postDelayed({
         findNavController().navigate(R.id.action_registerFragment_to_otpConfirmFragment,mBundle)}
         ,1500)
     }
