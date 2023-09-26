@@ -86,18 +86,13 @@ class OtpConfirmFragment  : Fragment() {
         {
            mUserViewModel.registerUserWithPhoneNumber(userPhoneNumber, activity as MainActivity)
             updateUIafterRegistration()
-
         }
         else
         {
             notifyUserNoConnection()
             Log.d("upL1", "noNetworkFromRegister")
         }
-
-
     }
-
-
     /*************************************************
      * gets the status of registration process
      *
@@ -208,15 +203,11 @@ class OtpConfirmFragment  : Fragment() {
             submitButtonClicked = true
             setUpObserveactions(collectOTP())
             sigInUser(collectOTP())
-
         }
         else
             submitButtonClicked = false
         }
     }
-
-
-
 
     private fun checkOTPLength() : Boolean{
         return if (binding.otpEditText1.text?.length ==Constants.CHARACTER_COUNT_OTP)
