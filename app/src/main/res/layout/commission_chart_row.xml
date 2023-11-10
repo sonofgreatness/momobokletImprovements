@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="*">
+
+    <TableRow>
+        <TextView
+            android:id="@+id/commission_row_min"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:text="@string/min"
+            android:gravity="center"
+            android:layout_column = "1"
+            />
+        <TextView
+            android:id="@+id/commission_row_max"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            android:text="@string/max"
+            android:gravity="center"
+            android:layout_column = "1"
+            />
+        <TextView
+            android:id="@+id/commission_row_type"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:padding="10dp"
+            android:text="@string/type"
+            android:gravity="center"
+            android:layout_column = "1"
+            />
+        <TextView
+            android:id="@+id/commission_row_amount"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:text="@string/amount"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_column = "1"
+            />
+    </TableRow>
+</TableLayout>
