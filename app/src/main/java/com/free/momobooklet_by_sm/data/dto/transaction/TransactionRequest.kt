@@ -1,5 +1,16 @@
-package com.free.momobooklet_by_sm.data.remote.repositories
+package com.free.momobooklet_by_sm.data.dto.transaction
 
-class TransactionRequest {
+import java.sql.Timestamp
 
-}
+data class TransactionRequest
+    (
+    private  val  transactionId :String,
+    private val  timestamp : Timestamp?,
+    private val  customerName :String,
+    private val  customerId :String,
+    private val  customerPhone :String,
+    private val   transactionType :Boolean,
+    private val   amount :Float,
+    private val   username : String,
+    private val   signature : ArrayList<Int>,
+)

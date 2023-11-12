@@ -1,6 +1,6 @@
 package com.example.momobooklet_by_sm.presentation.data.remote.dto
 
-import com.example.momobooklet_by_sm.common.util.Constants
+import com.free.momobooklet_by_sm.common.util.Constants
 import org.junit.Assert
 import org.junit.Test
 import java.text.SimpleDateFormat

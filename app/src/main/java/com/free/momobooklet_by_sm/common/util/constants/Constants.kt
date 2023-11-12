@@ -30,6 +30,8 @@ class Constants {
       const val  PDF_TABLE_HEADER_TEXT_COLOR = "#009688"
       const val PDF_TABLE_TEXT_HEADER_SIZE = 11
       const val  BASE_URL ="https://script.google.com/macros/s/AKfycbw9kMBVQD6xWXpSEvy6S9jU-GRPkoZHzTakoL2stByXp5Va6aZaJWeqPGXoHOON59IYeQ/"
+      const val  BASE_URL3 ="http://192.168.84.27:8080/"
+
       const val  BASE_URL2 ="https://script.google.com/macros/s/AKfycbyALy6Zn2Co8zr5eyVGoKpAIXRLxhCkG6s5ZH8MVI40wk--C6nWrVyAmpFFMaRNzavnwQ/exec"
       const val  MIXPANEL_TOKEN = "a34dd4774bd7d4f78b8285e889ebdab6"
 

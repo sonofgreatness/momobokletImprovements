@@ -41,6 +41,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823164563202:android:d6ccc8e81ec6bf096b5c1b",
+        "android_client_info": {
+          "package_name": "com.free.momobooklet_by_sm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823164563202-o85buli5mhs4hq0mhhhf0je5i2814ot9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYoSYFuBZGwOu4EbfEkHsJQf8q1S3fhQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823164563202-o85buli5mhs4hq0mhhhf0je5i2814ot9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

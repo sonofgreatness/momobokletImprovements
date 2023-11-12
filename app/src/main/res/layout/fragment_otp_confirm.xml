@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.manageuser.OtpConfirmFragment2">
+    tools:context=".presentation.manageuser.OtpConfirmFragment">
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="48dp"
                     android:layout_marginBottom="16dp"
-                    android:contentDescription="logo"
+                    android:contentDescription="@string/logo"
                     app:srcCompat="@drawable/ic_drawing2" />
                 <TextView
                     android:id="@+id/otp_title"
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginTop="40dp"
-                    android:text="Enter OTP"
+                    android:text="@string/enter_otp"
                     android:fontFamily="@font/artifika"
                     android:textAppearance="@style/TextAppearance.Shrine.Title" />
 
@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="40dp"
-                    android:text="************"
+                    android:text="@string/stars"
                     android:textColor="@color/textColorPrimary"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_height="wrap_content"
@@ -78,121 +78,32 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintHorizontal_weight="1"
                         app:errorEnabled="true"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="6"
+                        app:counterTextColor="@color/textColorPrimary"
+                        app:helperTextEnabled="true"
+                        app:helperText="must contain 6 characters"
+                        app:helperTextTextColor="@color/textColorPrimary"
+                        android:textColorHint="@color/textColorPrimary"
                         tools:ignore="MissingConstraints">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/otp_edit_text1"
                             android:textColorHint="@color/black"
                             android:textColor="@color/black"
-                            android:hint="Enter OTP here"
+                            android:hint="@string/enter_otp_here"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="numberDecimal" />
                     </com.google.android.material.textfield.TextInputLayout>
-                    <!--
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/otp_text_input2"
-                        style="@style/Widget.MoMoBooklet.TextInputLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@id/otp_text_input1"
-                        app:layout_constraintHorizontal_weight="1"
-                        app:errorEnabled="true"
-                        tools:ignore="MissingConstraints">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/otp_edit_text2"
-                            android:textColorHint="@color/black"
-                            android:textColor="@color/black"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="numberDecimal" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/otp_text_input3"
-                        style="@style/Widget.MoMoBooklet.TextInputLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@id/otp_text_input2"
-                        app:layout_constraintHorizontal_weight="1"
-                        app:errorEnabled="true"
-                        tools:ignore="MissingConstraints">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/otp_edit_text3"
-                            android:textColorHint="@color/black"
-                            android:textColor="@color/black"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="numberDecimal" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/otp_text_input4"
-                        style="@style/Widget.MoMoBooklet.TextInputLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@id/otp_text_input3"
-                        app:layout_constraintHorizontal_weight="1"
-                        app:errorEnabled="true"
-                        tools:ignore="MissingConstraints">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/otp_edit_text4"
-                            android:textColorHint="@color/black"
-                            android:textColor="@color/black"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="numberDecimal" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/otp_text_input5"
-                        style="@style/Widget.MoMoBooklet.TextInputLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@id/otp_text_input4"
-                        app:layout_constraintHorizontal_weight="1"
-                        app:errorEnabled="true"
-                        tools:ignore="MissingConstraints"
-                        >
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/otp_edit_text5"
-                            android:textColorHint="@color/black"
-                            android:textColor="@color/black"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="numberDecimal" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/otp_text_input6"
-                        style="@style/Widget.MoMoBooklet.TextInputLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@id/otp_text_input5"
-                        app:layout_constraintHorizontal_weight="1"
-                        app:errorEnabled="true"
-                        tools:ignore="MissingConstraints">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/otp_edit_text6"
-                            android:textColorHint="@color/black"
-                            android:textColor="@color/black"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="numberDecimal" />
-                    </com.google.android.material.textfield.TextInputLayout>-->
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/otp_enter_btn"
                     style="@style/Widget.Shrine.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:text="@string/submit" />
 
             </LinearLayout>

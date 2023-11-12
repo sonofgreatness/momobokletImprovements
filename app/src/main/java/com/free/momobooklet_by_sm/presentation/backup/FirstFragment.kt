@@ -1,4 +1,4 @@
-package com.free.momobooklet_by_sm.presentation.help
+package com.free.momobooklet_by_sm.presentation.backup
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.free.momobooklet_by_sm.BackUpActivity
 import com.free.momobooklet_by_sm.R
 import com.free.momobooklet_by_sm.common.util.classes.RecoveryActionType
@@ -44,6 +45,7 @@ class FirstFragment : Fragment() {
         setUpDefaultRecoverButtonOnClick()
         setUpCustomRecoverButtonOnClick()
         setUpBackupButtonOnClick()
+        setUpRecoverFromServerBtn()
     }
 
     private fun setUpRecoverImageOnClick() {
@@ -51,6 +53,9 @@ class FirstFragment : Fragment() {
             binding.recoverButtonsLL.visibility = View.VISIBLE
             binding.backupButtonsLL.visibility = View.GONE
             binding.backupBtnDefault.isEnabled = false
+            binding.backupBtnServer.isEnabled = false
+
+            binding.recoverBtnServer.isEnabled = true
             binding.recoverBtnCustom.isEnabled = true
             binding.recoverBtnDefault.isEnabled = true
         }
@@ -61,10 +66,13 @@ class FirstFragment : Fragment() {
             binding.recoverButtonsLL.visibility = View.GONE
             binding.backupButtonsLL.visibility = View.VISIBLE
             binding.backupBtnDefault.isEnabled = true
+            binding.backupBtnServer.isEnabled = true
+            binding.recoverBtnServer.isEnabled = false
             binding.recoverBtnCustom.isEnabled = false
             binding.recoverBtnDefault.isEnabled = false
         }
     }
+
 
     private fun setUpDefaultRecoverButtonOnClick(){
         binding.recoverBtnDefault.setOnClickListener{
@@ -73,7 +81,6 @@ class FirstFragment : Fragment() {
 
     }
 
-
     private fun setUpCustomRecoverButtonOnClick(){
         binding.recoverBtnCustom.setOnClickListener{
             showWarningMessage(RecoveryActionType.CUSTOM_RECOVER)
@@ -81,8 +88,20 @@ class FirstFragment : Fragment() {
 
     }
 
+    private fun setUpRecoverFromServerBtn()
+    {
 
+        binding.recoverBtnServer.setOnClickListener{
+            Toast.makeText(requireContext(),"moved to backup", Toast.LENGTH_SHORT).show()
+            moveToBackupsFragment()
+        }
 
+    }
+
+    private fun moveToBackupsFragment() {
+        findNavController().navigate(R.id.action_FirstFragment_to_backUpFilesFragment)
+
+    }
 
     private fun setUpBackupButtonOnClick(){
         binding.backupBtnDefault.setOnClickListener{

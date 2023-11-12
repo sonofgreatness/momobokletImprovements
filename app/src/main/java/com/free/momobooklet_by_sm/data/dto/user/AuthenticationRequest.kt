@@ -1,5 +1,5 @@
-package com.free.momobooklet_by_sm.data.remote.repositories
+package com.free.momobooklet_by_sm.data.dto.user
 
-class AuthenticationRequest {
-
-}
+data class AuthenticationRequest
+    (private  val  username: String,
+     private   val  password: String)

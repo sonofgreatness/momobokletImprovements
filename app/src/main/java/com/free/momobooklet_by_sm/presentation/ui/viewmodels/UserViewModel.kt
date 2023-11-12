@@ -7,9 +7,12 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.FireBaseRegistrationState
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.Resource
+import com.free.momobooklet_by_sm.data.dto.user.AuthenticationRequest
+import com.free.momobooklet_by_sm.data.dto.user.UserRegistrationRequest
 import com.free.momobooklet_by_sm.data.local.models.UserModel
 import com.free.momobooklet_by_sm.domain.repositories.ConnectivityObserver
 import com.free.momobooklet_by_sm.domain.repositories.UserRepository
+import com.free.momobooklet_by_sm.domain.repositories.user.BackEndUserRepository
 import com.free.momobooklet_by_sm.domain.use_cases.manage_users.RegisterUserInFirebaseUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.manage_users.SignInUserInFirebaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +28,8 @@ class UserViewModel @Inject constructor(
     val userRepository: UserRepository,
     val connectivityObserver: ConnectivityObserver,
     private val registerUserInFirebaseUseCase: RegisterUserInFirebaseUseCase,
-    private val signInUserInFirebaseUseCase: SignInUserInFirebaseUseCase
+    private val signInUserInFirebaseUseCase: SignInUserInFirebaseUseCase,
+    private val backEndUserRepositoryImpl: BackEndUserRepository
 ) : ViewModel() {
 
 
@@ -247,8 +251,25 @@ class UserViewModel @Inject constructor(
 
     }
 
+    fun registerUserInBackEndDB(request: UserRegistrationRequest?, activity: Activity) {
+    viewModelScope.launch {
 
-    @SuppressLint("LogNotTimber")
+        val response = backEndUserRepositoryImpl.addUser(request)
+        Toast.makeText(activity.applicationContext,response.body().toString(), Toast.LENGTH_LONG).show()
+        Timber.d("add User To  Local DB -> ${response.code()}")
+    }
+    }
+
+
+    fun authenticateUserInBackEndDB(request:AuthenticationRequest, activity: Activity) {
+        viewModelScope.launch {
+            val response = backEndUserRepositoryImpl.authenticateUser(request)
+            Toast.makeText(activity.applicationContext,response.message(), Toast.LENGTH_LONG).show()
+        }
+    }
+
+
+        @SuppressLint("LogNotTimber")
     private suspend fun registerUserInFireBase(user: UserModel, activity: Activity)  {
         registerUserInFirebaseUseCase(user, activity).collect {
 

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainTransactorFragment"
-        android:name="com.example.momobooklet_by_sm.presentation.recordingtransanctions.MainTransactorFragment"
+        android:name="com.free.momobooklet_by_sm.presentation.recordingtransanctions.MainTransactorFragment"
         android:label="fragment_main_transactor"
         tools:layout="@layout/fragment_main_transactor" >
         <action
@@ -23,12 +23,12 @@
     </fragment>
     <fragment
         android:id="@+id/displayTransactionsLandingFragment"
-        android:name="com.example.momobooklet_by_sm.presentation.displaytransactions.DisplayTransactionsLandingFragment"
+        android:name="com.free.momobooklet_by_sm.presentation.displaytransactions.DisplayTransactionsLandingFragment"
         android:label="fragment_display_transactions_landing"
         tools:layout="@layout/fragment_display_transactions_landing" />
     <fragment
         android:id="@+id/recordDisplayFragment"
-        android:name="com.example.momobooklet_by_sm.presentation.recordingtransanctions.RecordDisplayFragment"
+        android:name="com.free.momobooklet_by_sm.presentation.recordingtransanctions.RecordDisplayFragment"
         android:label="fragment_record_display"
         tools:layout="@layout/fragment_record_display" >
         <action
@@ -43,17 +43,17 @@
         <action
             android:id="@+id/action_recordDisplayFragment_to_userAccountsFragment"
             app:destination="@id/userAccountsFragment"
-            app:popUpTo="@id/mainTransactorFragment" />
+            app:popUpTo="@id/registerFragment" />
 
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.momobooklet_by_sm.presentation.manageuser.LoginFragment"
+        android:name="com.free.momobooklet_by_sm.presentation.manageuser.LoginFragment"
         android:label="fragment_blank"
         tools:layout="@layout/fragment_blank" />
     <fragment
         android:id="@+id/managePDFsLandingFragment2"
-        android:name="com.example.momobooklet_by_sm.presentation.managefiles.ManagePDFsLandingFragment"
+        android:name="com.free.momobooklet_by_sm.presentation.managefiles.ManagePDFsLandingFragment"
         android:label="fragment_manage_p_d_fs_landing"
         tools:layout="@layout/fragment_manage_p_d_fs_landing" >
         <action
@@ -69,7 +69,7 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.momobooklet_by_sm.presentation.manageuser.RegisterFragment"
+        android:name="com.free.momobooklet_by_sm.presentation.manageuser.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -83,24 +83,22 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_registerFragment_to_otpConfirmFragment"
-            app:destination="@id/otpConfirmFragment" />
+            app:destination="@id/otpConfirmFragment"
+            app:popUpTo="@id/registerFragment" />
         <action
             android:id="@+id/action_registerFragment_to_commission"
             app:destination="@id/commission" />
     </fragment>
     <fragment
         android:id="@+id/showTransactions"
-        android:name="com.example.momobooklet_by_sm.presentation.displaytransactions.ShowTransactions"
+        android:name="com.free.momobooklet_by_sm.presentation.displaytransactions.ShowTransactions"
         android:label="fragment_show_transactions"
         tools:layout="@layout/fragment_show_transactions" >
 
-        <action
-            android:id="@+id/action_showTransactions_to_fullscreenFragment"
-            app:destination="@id/fullscreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/userAccountsFragment"
-        android:name="com.example.momobooklet_by_sm.presentation.manageuser.UserAccountsFragment"
+        android:name="com.free.momobooklet_by_sm.presentation.manageuser.UserAccountsFragment"
         android:label="fragment_user_accounts"
         tools:layout="@layout/fragment_user_accounts" >
         <action
@@ -110,14 +108,19 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_userAccountsFragment_to_editUserAccountFragment"
+            app:destination="@id/editUserAccountFragment"
+            app:popUpTo="@id/userAccountsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.example.momobooklet_by_sm.MainActivity"
+        android:name="com.free.momobooklet_by_sm.MainActivity"
         android:label="MainActivity" />
     <fragment
         android:id="@+id/otpConfirmFragment"
-        android:name="com.example.momobooklet_by_sm.presentation.manageuser.OtpConfirmFragment"
+        android:name="com.free.momobooklet_by_sm.presentation.manageuser.OtpConfirmFragment"
         android:label="fragment_otp_confirm"
         tools:layout="@layout/fragment_otp_confirm" >
         <action
@@ -136,10 +139,13 @@
         <action
             android:id="@+id/action_otpConfirmFragment_to_userAccountsFragment"
             app:destination="@id/userAccountsFragment" />
+        <action
+            android:id="@+id/action_otpConfirmFragment_to_dialogueFragment"
+            app:destination="@id/dialogueFragment" />
     </fragment>
     <fragment
         android:id="@+id/commission"
-        android:name="com.example.momobooklet_by_sm.presentation.commission.Commission"
+        android:name="com.free.momobooklet_by_sm.presentation.commission.Commission"
         android:label="fragment_commission"
         tools:layout="@layout/fragment_commission" >
         <action
@@ -149,7 +155,7 @@
     </fragment>
     <fragment
         android:id="@+id/generateReportFile"
-        android:name="com.example.momobooklet_by_sm.presentation.managefiles.GenerateReportFile"
+        android:name="com.free.momobooklet_by_sm.presentation.managefiles.GenerateReportFile"
         android:label="GenerateReportFile" >
         <action
             android:id="@+id/action_generateReportFile_to_managePDFsLandingFragment2"
@@ -160,13 +166,29 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_left"/>
     </fragment>
-    <fragment
-        android:id="@+id/fullscreenFragment"
-        android:name="com.example.momobooklet_by_sm.presentation.manageuser.FullscreenFragment"
-        android:label="fragment_fullscreen"
-        tools:layout="@layout/fragment_fullscreen" >
+    <dialog
+        android:id="@+id/dialogueFragment"
+        android:name="com.free.momobooklet_by_sm.presentation.manageuser.DialogueFragment"
+        android:label="fragment_dialogue"
+        tools:layout="@layout/fragment_dialogue" >
         <action
-            android:id="@+id/action_fullscreenFragment_to_showTransactions"
-            app:destination="@id/showTransactions" />
+            android:id="@+id/action_dialogueFragment_to_otpConfirmFragment"
+            app:destination="@id/otpConfirmFragment" />
+        <action
+            android:id="@+id/action_dialogueFragment_to_userAccountsFragment"
+            app:destination="@id/userAccountsFragment"
+            app:popUpTo="@id/userAccountsFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/editUserAccountFragment"
+        android:name="com.free.momobooklet_by_sm.presentation.manageuser.EditUserAccountFragment"
+        android:label="fragment_edit_user_account"
+        tools:layout="@layout/fragment_edit_user_account" >
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_editUserAccountFragment_to_userAccountsFragment"
+            app:destination="@id/userAccountsFragment" />
     </fragment>
 </navigation>

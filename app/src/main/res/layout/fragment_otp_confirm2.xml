@@ -1,6 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.manageuser.OtpConfirmFragment2">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/app_bar_otp"
+            style="@style/Widget.MoMoBooklet.Toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/back_arrow_black" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:paddingTop="16dp">
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/logo"
+                app:srcCompat="@drawable/ic_drawing2" />
+            <TextView
+                android:id="@+id/otp_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="40dp"
+                android:text="@string/enter_otp"
+                android:fontFamily="@font/artifika"
+                android:textAppearance="@style/TextAppearance.Shrine.Title" />
+
+            <TextView
+                android:id="@+id/otp_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:text="@string/otp_prompt"
+                android:textColor="@color/textColorPrimary"/>
+
+            <TextView
+                android:id="@+id/otp_subtitle_usermobile"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="40dp"
+                android:text="@string/stars"
+                android:textColor="@color/textColorPrimary"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/sms_intaker"
+                android:layout_gravity="center">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/otp_text_input1"
+                    style="@style/Widget.MoMoBooklet.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:errorEnabled="true"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="6"
+                    app:counterTextColor="@color/textColorPrimary"
+                    app:helperTextEnabled="true"
+                    app:helperText="must contain 6 characters"
+                    app:helperTextTextColor="@color/textColorPrimary"
+                    android:textColorHint="@color/textColorPrimary"
+                    tools:ignore="MissingConstraints">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/otp_edit_text1"
+                        android:textColorHint="@color/black"
+                        android:textColor="@color/black"
+                        android:hint="@string/enter_otp_here"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/otp_enter_btn"
+                style="@style/Widget.Shrine.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/submit" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

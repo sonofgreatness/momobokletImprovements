@@ -2,11 +2,12 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/signin_navgraph"
     app:startDestination="@id/registerFragment2">
     <fragment
         android:id="@+id/registerFragment2"
-        android:name="com.example.momobooklet_by_sm.presentation.manageuser.RegisterFragment2"
+        android:name="com.free.momobooklet_by_sm.presentation.manageuser.RegisterFragment2"
         android:label="RegisterFragment2" >
         <action
             android:id="@+id/action_registerFragment2_to_otpConfirmFragment2"
@@ -15,11 +16,23 @@
     </fragment>
     <fragment
         android:id="@+id/otpConfirmFragment2"
-        android:name="com.example.momobooklet_by_sm.presentation.manageuser.OtpConfirmFragment2"
+        android:name="com.free.momobooklet_by_sm.presentation.manageuser.OtpConfirmFragment2"
         android:label="OtpConfirmFragment2">
         <action
             android:id="@+id/action_otpConfirmFragment2_to_registerFragment2"
             app:destination="@id/registerFragment2"
             app:popUpTo="@id/registerFragment2" />
+        <action
+            android:id="@+id/action_otpConfirmFragment2_to_dialogueFragment2"
+            app:destination="@id/dialogueFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/dialogueFragment2"
+        android:name="com.free.momobooklet_by_sm.presentation.manageuser.DialogueFragment2"
+        android:label="fragment_dialogue2"
+        tools:layout="@layout/fragment_dialogue2" >
+        <action
+            android:id="@+id/action_dialogueFragment2_to_otpConfirmFragment2"
+            app:destination="@id/otpConfirmFragment2" />
     </fragment>
 </navigation>

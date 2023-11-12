@@ -4,25 +4,150 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    android:background="@color/white"
+    tools:context=".presentation.backup.FirstFragment">
 
     <TextView
-        android:id="@+id/textview_first"
-        android:layout_width="wrap_content"
+        android:id="@+id/backup_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_first_fragment"
-        app:layout_constraintBottom_toTopOf="@id/button_first"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="32dp"
+        android:text="@string/application_back_up"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textAppearance="?attr/textAppearanceHeadline4"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
 
-    <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
+    <LinearLayout
+          android:id="@+id/images_LL"
+          android:layout_height="wrap_content"
+          android:layout_width="match_parent"
+          app:layout_constraintTop_toBottomOf="@+id/backup_title"
+          app:layout_constraintStart_toStartOf="parent"
+          android:orientation="horizontal"
+          android:layout_marginTop="64dp"
+          android:layout_marginBottom="24dp"
+          >
+          <RelativeLayout
+              android:id="@+id/backup_recover_RL"
+              android:layout_height="wrap_content"
+              android:layout_width="wrap_content">
+              <ImageView
+                  android:id="@+id/backup_recover_img"
+                  android:layout_height="128dp"
+                  android:layout_width="128dp"
+                  android:src="@drawable/recover_vd"
+                  android:layout_centerHorizontal="true"
+                  android:layout_marginStart="34dp"
+                  />
+              <TextView
+                  android:id="@+id/backup_recover_txt"
+                  android:layout_height="wrap_content"
+                  android:layout_width="wrap_content"
+                  android:text="@string/recover_data"
+                  android:layout_below="@+id/backup_recover_img"
+                  android:padding="24dp"
+                  android:layout_marginStart="34dp"
+                  android:textColor="@color/black"
+                  />
+          </RelativeLayout>
+          <RelativeLayout
+              android:id="@+id/backup_RL"
+              android:layout_height="wrap_content"
+              android:layout_width="wrap_content">
+              <ImageView
+                  android:id="@+id/backup_img"
+                  android:layout_height="128dp"
+                  android:layout_width="128dp"
+                  android:src="@drawable/backup_vd"
+                  android:layout_centerHorizontal="true"
+                  android:layout_alignParentEnd="true"
+                  android:layout_marginEnd="34dp"
+                  />
+
+              <TextView
+                  android:id="@+id/backup_txt"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@+id/backup_img"
+                  android:layout_alignParentEnd="true"
+                  android:layout_marginEnd="34dp"
+                  android:padding="24dp"
+                  android:text="@string/back_up_data"
+                  android:textColor="@color/black" />
+          </RelativeLayout>
+      </LinearLayout>
+    <LinearLayout
+        android:id="@+id/recover_buttons_LL"
         android:layout_height="wrap_content"
-        android:text="@string/next"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/images_LL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_first" />
+        android:visibility="gone"
+        android:orientation="vertical"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/recover_btn_default"
+            style="@style/Widget.Shrine.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/use_default_file"
+            android:enabled="false"
+            android:layout_marginStart="34dp"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/recover_btn_custom"
+            style="@style/Widget.Shrine.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/provide_custom_zip_file"
+            android:enabled="false"
+            android:layout_marginStart="34dp"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/recover_btn_server"
+            style="@style/Widget.Shrine.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/server_zip_file"
+            android:enabled="false"
+            android:layout_marginStart="34dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/backup_buttons_LL"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/images_LL"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="34dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/backup_btn_default"
+            style="@style/Widget.Shrine.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/back_up_data_now"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/backup_btn_server"
+            style="@style/Widget.Shrine.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/back_up_data_server"
+            />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

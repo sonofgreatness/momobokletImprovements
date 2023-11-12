@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-</selector>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval" >
+    <!-- This is the stroke you want to define -->
+    <stroke android:width="3dp"
+        android:color="@color/optional"/>
+    <!-- Optional, fill the rest of your background with a color or gradient, use transparent if you only want the border to be displayed-->
+</shape>

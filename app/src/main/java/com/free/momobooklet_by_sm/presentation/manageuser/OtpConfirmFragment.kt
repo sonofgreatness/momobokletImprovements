@@ -18,7 +18,9 @@ import androidx.navigation.fragment.findNavController
 import com.free.momobooklet_by_sm.MainActivity
 import com.free.momobooklet_by_sm.R
 import com.free.momobooklet_by_sm.common.util.Constants
+import com.free.momobooklet_by_sm.common.util.classes.Role
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.FireBaseRegistrationState
+import com.free.momobooklet_by_sm.data.dto.user.UserRegistrationRequest
 import com.free.momobooklet_by_sm.databinding.FragmentOtpConfirmBinding
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import kotlinx.coroutines.delay
@@ -84,7 +86,18 @@ class OtpConfirmFragment  : Fragment() {
         if(mUserViewModel.usableState.value == UserViewModel.MyState.Fetched) // internet available
 
         {
-           mUserViewModel.registerUserWithPhoneNumber(userPhoneNumber, activity as MainActivity)
+           //mUserViewModel.registerUserWithPhoneNumber(userPhoneNumber, activity as MainActivity)
+
+
+            val randomUser = UserRegistrationRequest(
+                "+26876911464",
+                "momo pay",
+                "password",
+                "email.js",
+                Role.USER
+            )
+            mUserViewModel.registerUserInBackEndDB(randomUser, requireActivity())
+
             updateUIafterRegistration()
         }
         else

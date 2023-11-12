@@ -22,9 +22,9 @@
     <string name="profile">Profile</string>
     <string name="transactiondata">TransactionData</string>
     <string name="convertdatatopdfs">convertDataToPdfs</string>
-    <string name="customer_name">Cust_Name</string>
-    <string name="customer_pin">Cust_PIN</string>
-    <string name="customer_phone">Cust_Phone</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="customer_pin">Customer PIN</string>
+    <string name="customer_phone">Customer Phone</string>
     <string name="amount">Amount</string>
     <string name="buy">Buys MOMO</string>
     <string name="sell">Sells MOMO</string>
@@ -130,6 +130,11 @@
     <string name="polo_is_not_a_good">Polo Is Not A Good</string>
     <string name="request_manage_file_permission">This App Needs  The Permission To Manage Files.\nGrant  It To Create and Save Report(s)"
     </string>
+
+    <string name="request_manage_file_permission_back_up">This App Needs  The Permission To Manage Files.\nGrant  It To Access Backup Files in Memory"
+    </string>
+
+
     <string name="icon_to_familiarize_user_with_feature">icon to familiarize user with feature</string>
     <string name="help_page">Help Page</string>
     <string name="welcome_to_our_app">Welcome to our app!</string>
@@ -141,8 +146,8 @@
         hitting the submit button , then record customer\'s signature in the signature pad, confirm/edit transaction details in the following page and hit the record button to finish.</string>
     <string name="contact_us">Contact Us ( +268 ) 76911464</string>
     <string name="title_activity_help">HelpActivity</string>
-    <string name = "commission"> Commission</string>
-    <string name = "commmission_help">
+    <string name="commission"> Commission</string>
+    <string name="commmission_help">
         You can keep up to date with commission earned from  recorded transactions.
         The monthly commission is  calculated starting from the 3rd of each month
         to the the 2nd of the following month, you can override this start date
@@ -150,19 +155,64 @@
         The commission is calculated using the commission table  below , it  is subject to change
         when MTN releases a new one.
     </string>
-    <string name = "reports"> Reports</string>
+    <string name="reports"> Reports</string>
 
-    <string name = "reports_help">
+    <string name="reports_help">
      You can generate reports on  recorded transaction data , the reports include  transaction details and summarised commission data for
         a selected period. Periods to choose from are WEEKLY, BIWEEKLY ( 2 WEEKS ),
         MONTHLY, TRIMONTHLY ( 3 MONTHS).\n Generated reports are stored in  your phone\'s  internal memory in a folder
         labeled MOMOBOOKLET.
     </string>
-    <string name = "accounts">UserAccounts</string>
+    <string name="accounts">UserAccounts</string>
 
-    <string name = "account_help">
+    <string name="account_help">
         Transaction data is associated with a registered account  , if you wish
         to record transaction data  for a different account, simply register a new account and
         make sure it is active . an active account has a green circular icon next to it.
     </string>
+    <string name="logo">logo</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="stars">************</string>
+    <string name="enter_otp_here">Enter OTP here</string>
+
+    <string name="FireBaseRegistrationError">Failed  Registration</string>
+    <string name="FireBaseSignInError"> Log In  Failed </string>
+    <string name="FireBaseConnectivityError">No Internet</string>
+    <string name="FireBaseConnectivityErrorMessageBody">Registration process could not be  completed due to
+    lack of internet connection.</string>
+    <string name="restart">restart</string>
+    <string name="retry">retry</string>
+    <string name="edit_user_account">Edit User Account</string>
+    <string name="title">Title</string>
+    <string name="old_value">Old Value :</string>
+    <string name="blank">-blank-</string>
+    <string name="input_new_phone_number">input new phone number</string>
+    <string name="update">update</string>
+    <string name="control_status_explain">control status determines which account recorded transactions are associated with</string>
+    <string name="input_new_name">input new name</string>
+    <string name="edit_phone_number">Edit Phone Number</string>
+    <string name="edit_name">Edit Name</string>
+    <string name="edit_control_status">Edit Control Status</string>
+    <string name="finish">finish</string>
+    <string name="title_activity_back_up3">BackUpActivity3</string>
+    <string name="application_back_up">Application Back Up And Recovery</string>
+    <string name="recover_data">Recover Data</string>
+    <string name="use_default_file">use default file</string>
+    <string name="provide_custom_zip_file">provide custom zip file</string>
+    <string name="server_zip_file">get files from server</string>
+    <string name="back_up_data_now">Back up data locally</string>
+    <string name="back_up_data_server">Back up data to server</string>
+    <string name="disaster_recovery">Disaster Recovery</string>
+    <string name="back_up_data">Back up data</string>
+    <string name="recovery_warning">Recovery Warning</string>
+    <string name="recovery_warning_body">"Attempting to access application database may result in application being unavailable for some time (not more than 5 minutes) . please prepare to be patient  "
+    </string>
+    <string name="download_warning">Download Warning</string>
+    <string name="download_warning_body">"About to download transaction data,data set may be large  "</string>
+    <string name="min">Min</string>
+    <string name="max">Max</string>
+    <string name="type">Type</string>
+    <string name="screenshot_of_path_to_data_directory">screenshot of path to data directory</string>
+    <string name="whatsapp_icon">whatsapp icon</string>
+    <string name="phone_icon">phone icon</string>
 </resources>

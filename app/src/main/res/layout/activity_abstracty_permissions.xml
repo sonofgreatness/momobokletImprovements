@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AbstractyPermissionsActivity">
+    tools:context="com.free.momobooklet_by_sm.AbstractyPermissionsActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

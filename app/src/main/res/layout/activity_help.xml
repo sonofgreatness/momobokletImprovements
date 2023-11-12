@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/loginPageBackgroundColor"
-    tools:context=".HelpActivity">
+    tools:context=".presentation.help.HelpActivity"
+
+
+    >
     <androidx.core.widget.NestedScrollView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -36,13 +39,69 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/internal_folder_screenshot"
-                />
+                android:contentDescription="@string/screenshot_of_path_to_data_directory" />
 
 
             <include
                 android:id="@+id/main_help_commission"
                 layout="@layout/help_page_subsection"
                 />
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*"
+                >
+                <TableRow>
+                <TextView
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="@string/min"
+                    android:gravity="center"
+                    android:layout_column = "1"
+                    />
+                <TextView
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="@string/max"
+                    android:gravity="center"
+                    android:layout_column = "1"
+                    />
+                <TextView
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:text="@string/type"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center"
+                    android:layout_column = "1"
+                    />
+                <TextView
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="@string/amount"
+                    android:gravity="center"
+                    android:layout_column = "1"
+                    />
+                </TableRow>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/commission_chart_table_content_rv"
+                    >
+                </androidx.recyclerview.widget.RecyclerView>
+                </TableLayout>
             <include
                 android:id="@+id/main_help_accounts"
                 layout="@layout/help_page_subsection"
@@ -69,7 +128,7 @@
                     android:layout_marginStart="48dp"
                     android:layout_below="@id/help_contact_us"
                     android:layout_alignParentStart="true"
-                    />
+                    android:contentDescription="@string/phone_icon" />
                 <ImageView
                     android:id="@+id/help_contact_us_whatsapp"
                     android:layout_width="wrap_content"
@@ -78,7 +137,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="48dp"
                     android:layout_marginEnd="48dp"
-                    android:src="@drawable/ic_icons8_whatsapp" />
+                    android:src="@drawable/ic_icons8_whatsapp"
+                    android:contentDescription="@string/whatsapp_icon" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_height="wrap_content"

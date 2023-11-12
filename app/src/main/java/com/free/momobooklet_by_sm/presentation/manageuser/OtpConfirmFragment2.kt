@@ -20,7 +20,9 @@ import com.free.momobooklet_by_sm.MainActivity
 import com.free.momobooklet_by_sm.MainActivity2
 import com.free.momobooklet_by_sm.R
 import com.free.momobooklet_by_sm.common.util.Constants
+import com.free.momobooklet_by_sm.common.util.classes.Role
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.FireBaseRegistrationState
+import com.free.momobooklet_by_sm.data.dto.user.UserRegistrationRequest
 import com.free.momobooklet_by_sm.databinding.FragmentOtpConfirmBinding
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import kotlinx.coroutines.delay
@@ -34,7 +36,6 @@ class OtpConfirmFragment2 : Fragment() {
     private lateinit  var  rootView: View
     private lateinit var  mUserViewModel: UserViewModel
     private lateinit var  userPhoneNumber: String
-    private  var  dialogBundle : Bundle = Bundle()
     private val positionAnim : ValueAnimator = ObjectAnimator.ofInt(this, "wordPosition", 0, 3)
     private var strings:Array<String> = arrayOf("loading   ","loading.  ", "loading.. ", "loading...")
     var position : Int = 0
@@ -49,14 +50,11 @@ class OtpConfirmFragment2 : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentOtpConfirmBinding.inflate(inflater, container,false)
         mUserViewModel = (activity as MainActivity2).mUserViewModel
-
-
         userPhoneNumber = requireArguments().getString(Constants.PHONE_NUMBER_KEY).toString()
         binding.otpSubtitleUsermobile.text =
-
             "( ".plus(Constants.COUNTRY_CODE).plus(" )").plus(userPhoneNumber)
 
-       setButtonInActiveState()
+        setButtonInActiveState()
         setupUpNavigationOnClick()
         setupSubmitButtonOnClick()
         registerUser()
@@ -81,7 +79,16 @@ class OtpConfirmFragment2 : Fragment() {
        if(mUserViewModel.usableState.value == UserViewModel.MyState.Fetched) // internet available
 
         {
-            mUserViewModel.registerUserWithPhoneNumber(userPhoneNumber, activity as MainActivity2)
+            //mUserViewModel.registerUserWithPhoneNumber(userPhoneNumber, activity as MainActivity2)
+
+                val randomUser = UserRegistrationRequest(
+                    "+26876911464",
+                    "momo pay",
+                    "password",
+                    "email.js",
+                    Role.USER
+                )
+                mUserViewModel.registerUserInBackEndDB(randomUser, requireActivity())
             updateUIafterRegistration()
 
         }

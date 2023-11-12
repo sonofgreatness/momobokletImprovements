@@ -6,22 +6,13 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    tools:context="com.example.momobooklet_by_sm.presentation.managefiles.ManagePDFsLandingFragment">
+    tools:context="com.free.momobooklet_by_sm.presentation.managefiles.ManagePDFsLandingFragment">
 
-
-    <!--LinearLayout
-        android:id="@+id/line"
-        style="@style/Widget.Shrine.Backdrop"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingTop="88dp"-->
 
         <include
             android:id = "@+id/backdrop"
             layout="@layout/files_backdrop" />
-    <!--/LinearLayout-->
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

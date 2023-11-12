@@ -1,11 +1,5 @@
 package com.example.momobooklet_by_sm.common.util
 
-import android.app.Activity
-import com.example.momobooklet_by_sm.domain.repositories.CommissionDatesManagerRepository
-import org.junit.Assert.assertEquals
-
-import org.junit.Test
-
 class CommisionDatesManagerTest
 {
  /*-----private val datesManager: CommissionDatesManagerRepository

@@ -1,12 +1,13 @@
 package com.example.momobooklet_by_sm.presentation.managefiles
 
-import com.example.momobooklet_by_sm.common.util.classes.ReportType
+
+import com.free.momobooklet_by_sm.common.util.classes.ReportType
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 
 class GenerateReportFileTest
 {
-    private val GenerateReportFile =GenerateReportFile()
+    private val GenerateReportFile = com.free.momobooklet_by_sm.presentation.managefiles.GenerateReportFile()
 
     @Test
     fun incrementOrdinalsinListofReportTypes_Test()

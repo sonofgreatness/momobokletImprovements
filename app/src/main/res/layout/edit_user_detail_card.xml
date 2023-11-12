@@ -1,6 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/teal_200"
+    app:cardCornerRadius="5dp"
+    app:strokeWidth="2dp"
+    android:id="@+id/cardview"
+    app:cardPreventCornerOverlap="true"
+    android:layout_marginTop="3dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/edit_user_detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_phone_number"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            />
+
+        <RelativeLayout
+            android:id="@+id/edit_user_detail_old_value_RL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/edit_user_detail_old_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/old_value"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="@color/black"
+            android:textAlignment="viewStart"
+            android:layout_marginStart="20dp"
+            />
+            <TextView
+                android:id="@+id/edit_user_detail_old_value_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/old_value"
+                android:textAlignment="viewEnd"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textColor="@color/black"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/edit_user_detail_new_value_RL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/edit_user_detail_new_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Updated Value"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textColor="@color/black"
+                android:textAlignment="viewStart"
+                android:layout_marginStart="20dp"
+                />
+
+
+            <TextView
+                android:id="@+id/edit_user_detail_new_value_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/blank"
+                android:textAlignment="viewEnd"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                android:textColor="@color/black"
+                android:alpha="0.37"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_user_detail_update_value_CL"
+            >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_user_detail_update_input"
+                style="@style/Widget.Shrine.TextInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:hint="@string/input_new_phone_number"
+                android:textColorHint="@color/textColorPrimary"
+                app:counterEnabled="true"
+                app:counterMaxLength="8"
+                app:counterTextColor="@color/textColorPrimary"
+                app:endIconDrawable="@drawable/black_cancel"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/black"
+                app:helperText="@string/error_phone"
+                app:helperTextEnabled="true"
+                app:helperTextTextColor="@color/textColorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.57"
+                app:startIconDrawable="@drawable/swazi_phone"
+                app:startIconTint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_user_detail_update_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:textColor="@color/black"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:id ="@+id/edit_user_detail_button_RL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/edit_user_detail_button"
+                    style="@style/Widget.Shrine.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/update" />
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
+
+
