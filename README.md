@@ -16,7 +16,9 @@
 </p>
 <br>
 <br>
-
-
-
+# About The Author
+You can connect with me here:
+* [Simphiwe Magagula](https://wa.link/oc1up8)
+* [Twitter](https://twitter.com/janisharali)
+* [YouTube Channel](https://www.youtube.com/@unusualcode)
 
