@@ -1,0 +1,2 @@
+git reset --hard 677f6aab5f9b41faf0ca3e69519d263b7999ac44 
+git push -f origin for_blog

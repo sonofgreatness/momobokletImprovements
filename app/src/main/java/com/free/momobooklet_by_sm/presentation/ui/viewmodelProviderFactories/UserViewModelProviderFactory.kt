@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.free.momobooklet_by_sm.domain.repositories.ConnectivityObserver
 import com.free.momobooklet_by_sm.domain.repositories.UserRepository
 import com.free.momobooklet_by_sm.domain.repositories.user.BackEndUserRepository
+import com.free.momobooklet_by_sm.domain.use_cases.manage_users.AuthenticateUserInBackEndUseCase
+import com.free.momobooklet_by_sm.domain.use_cases.manage_users.RegisterUserInBackEndUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.manage_users.RegisterUserInFirebaseUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.manage_users.SignInUserInFirebaseUseCase
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
@@ -17,7 +19,8 @@ class UserViewModelProviderFactory @Inject constructor (
     val connectivityObserver: ConnectivityObserver,
      val registerUserInFirebaseUseCase: RegisterUserInFirebaseUseCase,
     val signInUserInFirebaseUseCase: SignInUserInFirebaseUseCase,
-    val backEndUserRepositoryImpl: BackEndUserRepository
+    val registerUserInBackEndUseCase: RegisterUserInBackEndUseCase,
+    val authenticateUserInBackEndUseCase: AuthenticateUserInBackEndUseCase
     ) : ViewModelProvider.Factory {
 
         @RequiresApi(Build.VERSION_CODES.O)
@@ -25,7 +28,8 @@ class UserViewModelProviderFactory @Inject constructor (
             return UserViewModel(userRepository,connectivityObserver,
                 registerUserInFirebaseUseCase,
                 signInUserInFirebaseUseCase,
-                backEndUserRepositoryImpl
+                registerUserInBackEndUseCase,
+                authenticateUserInBackEndUseCase
             ) as T
         }
     }

@@ -1,6 +1,6 @@
 package my.free.data.apis.backend.repositoryTests
 
-import com.example.momobooklet_by_sm.presentation.data.remote.dto.AuthTokenDto
+import com.free.momobooklet_by_sm.data.dto.AuthTokenDto
 import com.free.momobooklet_by_sm.common.util.Constants
 import com.free.momobooklet_by_sm.common.util.classes.Role
 import com.free.momobooklet_by_sm.data.dto.transaction.TransactionRequest
@@ -20,7 +20,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

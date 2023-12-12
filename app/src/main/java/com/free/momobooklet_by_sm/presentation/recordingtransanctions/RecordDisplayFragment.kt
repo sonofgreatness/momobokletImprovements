@@ -28,6 +28,7 @@ import androidx.transition.TransitionManager
 import com.free.momobooklet_by_sm.MainActivity
 import com.free.momobooklet_by_sm.R
 import com.free.momobooklet_by_sm.common.util.Constants
+import com.free.momobooklet_by_sm.data.dto.transaction.TransactionRequest
 import com.free.momobooklet_by_sm.data.local.models.TransactionModel
 import com.free.momobooklet_by_sm.data.local.models.UserModel
 import com.free.momobooklet_by_sm.databinding.FragmentRecordDisplayBinding
@@ -39,6 +40,7 @@ import com.github.gcacace.signaturepad.views.SignaturePad
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class RecordDisplayFragment : Fragment() {
     private lateinit var mTransactionViewModel: TransactionViewModel
@@ -321,9 +323,10 @@ class RecordDisplayFragment : Fragment() {
     private fun setmainUser() {
 
         try {
-            if (mUserViewModel.readAllData.value?.size != 0)
+
+                mUserViewModel.setActiveUsers()
                 mainUser = mUserViewModel.userInControl.value?.get(0)
-        }
+            }
         catch (ex:Exception)
         {
             Log.d("No Active User", "${ex.message}")
@@ -425,6 +428,11 @@ class RecordDisplayFragment : Fragment() {
     }
 
 
+
+
+    /**
+     * adds Transaction to room database
+     **/
     @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun addTransaction(phoneNumber: String) {
@@ -461,7 +469,22 @@ class RecordDisplayFragment : Fragment() {
             currentTime.trim(),
             phoneNumber
         )
+        val transactionRequest = TransactionRequest(
+            transaction.Transaction_ID,
+            customerName = transaction.C_Name,
+            customerId =transaction.C_ID,
+        customerPhone = transaction.C_PHONE,
+        transactionType = transaction.Transaction_type,
+        amount  = transaction.Amount,
+        username = transaction.AgentPhoneNumber,
+            signature  = transaction.Signature.map{
+                it.toInt()
+            } as ArrayList<Int>,
+            timestamp = null
+            )
+
         mTransactionViewModel.addTransaction(transaction)
+        mTransactionViewModel.uploadTransaction(transactionRequest, requireActivity())
 
     }
 

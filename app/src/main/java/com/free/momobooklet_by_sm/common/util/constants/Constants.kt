@@ -4,6 +4,7 @@ class Constants {
   companion object {
 
 
+
       const val  BUY_IDENTIFIER = "buy"
       const val  SELL_IDENTIFIER = "sell"
       const val  DATE_DATE_PATTERN = "dd-MM-yyyy"
@@ -30,7 +31,7 @@ class Constants {
       const val  PDF_TABLE_HEADER_TEXT_COLOR = "#009688"
       const val PDF_TABLE_TEXT_HEADER_SIZE = 11
       const val  BASE_URL ="https://script.google.com/macros/s/AKfycbw9kMBVQD6xWXpSEvy6S9jU-GRPkoZHzTakoL2stByXp5Va6aZaJWeqPGXoHOON59IYeQ/"
-      const val  BASE_URL3 ="http://192.168.84.27:8080/"
+      const val  BASE_URL3 ="http://172.22.48.1:8080/"
 
       const val  BASE_URL2 ="https://script.google.com/macros/s/AKfycbyALy6Zn2Co8zr5eyVGoKpAIXRLxhCkG6s5ZH8MVI40wk--C6nWrVyAmpFFMaRNzavnwQ/exec"
       const val  MIXPANEL_TOKEN = "a34dd4774bd7d4f78b8285e889ebdab6"
@@ -66,6 +67,7 @@ class Constants {
       const val NOTIFICATION_ID = 1
       const val OUTPUT_PATH = "json_outputs"
       const val TAG_OUTPUT = "OUTPUT"
+
       const val FIREBASE_TAG = "Firebase TAG"
       const val  AGENT_PHONENUMBER_KEY = "agentPhoneNumber"
       const val FIREBASE_REGISTRATION_KEY ="firebase registration status"
@@ -73,7 +75,6 @@ class Constants {
       const val FIREBASE_REGISTRATION_ERROR_MESSAGE_KEY=  "firebase registration error message"
       const val FIREBASE_CODESENT = "CodeSent"
       const val FIREBASE_VERIFIED = "VerificationCompleted"
-
       const val ZIP_PREFIX_FILES = "files/"
       const val ZIP_PREFIX_DATABASES = "databases/"
       const val ZIP_PREFIX_DATABASEJSONFILES = "database_data/"
@@ -85,15 +86,23 @@ class Constants {
       const val BACKUP_ERROR_MESSAGE  = "back up failed ,error message  ="
       const val RECOVERY_LOADING_MESSAGE = "loading  recovery"
       const val RECOVERY_SUCCESS_MESSAGE = "loading  recovery"
-
-              const val EXTERRNALBACKUP_SUCCESS_MESSAGE  = "back up to external folder successful"
+      const val EXTERRNALBACKUP_SUCCESS_MESSAGE  = "back up to external folder successful"
       const val EXTERRNALBACKUP_ERROR_MESSAGE  = "back up up to external folder failed ,error message  ="
-
       const val BACKUP_FILENAME = "backup_file.zip"
       const val RECOVERY_FILENAME = "recovery_file.zip"
+
       const val ZIP_PREFIX_PREFS = "shared_prefs/"
       const val BACKUP_TRANSACTIONS_FILENAME = "transactionsBackUp.json"
       const val BACKUP_USERS_FILENAME = "usersBackUp.json"
+      const val BACKEND_REG_OK = "User Registered Succesfully"
+      const val BACKEND_REG_FAIL = "User registration failed check server connection ..."
+      const val BACKEND_AUTH_OK = "User authenticated Succesfully"
+      const val BACKEND_AUTH_FAIL = "User  authentication  failed check server connection ..."
+      const val BACKEND_REG_FLAG = "Boolean flag for when backed registration is called"
+      const val AUTH_PREFS_NAME = "User Authentication Prefs"
+      const val BACKEND_TRANSACT_ADD_OK = "Succcessfully Added  transaction (s)"
+      const val BACKEND_TRANSACT_ADD_FAIL = "Failed to add transaction(s)"
+
   }
 
 }

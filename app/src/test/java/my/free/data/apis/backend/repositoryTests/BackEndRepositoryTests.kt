@@ -1,6 +1,6 @@
 package my.free.data.apis.backend.repositoryTests
 
-import com.example.momobooklet_by_sm.presentation.data.remote.dto.AuthTokenDto
+import com.free.momobooklet_by_sm.data.dto.AuthTokenDto
 import com.free.momobooklet_by_sm.common.util.Constants
 import com.free.momobooklet_by_sm.common.util.classes.Role
 import com.free.momobooklet_by_sm.data.dto.transaction.TransactionRequest
@@ -185,6 +185,8 @@ class BackEndRepositoryTests {
         val   authToken : AuthTokenDto = gson.fromJson(actualResponse.body()?.string(),listType)
 
         return  authToken.accessToken
+
+
     }
 
 

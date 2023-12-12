@@ -1,15 +1,21 @@
 package com.free.momobooklet_by_sm.presentation.ui.viewmodels
 
+import android.app.Activity
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.free.momobooklet_by_sm.common.util.classes.operationalStates.BackEndRegistrationState
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.ExportState
+import com.free.momobooklet_by_sm.common.util.classes.operationalStates.Resource
+import com.free.momobooklet_by_sm.data.dto.transaction.TransactionRequest
 import com.free.momobooklet_by_sm.data.local.models.TransactionModel
 import com.free.momobooklet_by_sm.domain.repositories.CommissionDatesManagerRepository
 import com.free.momobooklet_by_sm.domain.repositories.TransactionRepository
+import com.free.momobooklet_by_sm.domain.use_cases.manage_transactions.uploadTransactionsUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.ExportService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -23,7 +29,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TransactionViewModel @Inject constructor (
     val transactionRepository: TransactionRepository,
-    val datesManager: CommissionDatesManagerRepository
+    val datesManager: CommissionDatesManagerRepository,
+  private  val uploadTransactionsUseCase: uploadTransactionsUseCase
 ) : ViewModel() {
 
     // state for export csv status
@@ -55,6 +62,37 @@ class TransactionViewModel @Inject constructor (
             Timber.e("t_viewM->${transactionRepository.readAllTransactiondata()}")
         }
     }
+
+    fun uploadTransaction(request: TransactionRequest, activity: Activity)
+    {
+        viewModelScope.launch {
+            uploadTransactionsUseCase(request).collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        Toast.makeText(
+                            activity.applicationContext,
+                            "remote upload  begun",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        Timber.d("LoadUploadTransactViewM ===>  LOADING")
+                    }
+                    is Resource.Success -> {
+
+                        Toast.makeText(activity.applicationContext, "Transaction Added", Toast.LENGTH_SHORT)
+                            .show()
+                        Timber.d("SuccessTransactUploadViewM  ===>  Successful Added Transaction :${it.message}")
+                    }
+                    is Resource.Error -> {
+
+                        Timber.d("ErrorUploadViewM ===>  Error Transaction upload because ${it.message} username ==> ${request.username}")
+                    }
+                }
+            }
+        }
+    }
+
+
 
     fun getAllTransaction() = viewModelScope.launch {
         transactionRepository.readAllTransactiondata().collect(){
@@ -154,8 +192,5 @@ class TransactionViewModel @Inject constructor (
                 _searchResults.postValue(searchList)
         }
     }
-
-
-
 
 }

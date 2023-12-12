@@ -16,6 +16,9 @@ import com.free.momobooklet_by_sm.R
 import com.free.momobooklet_by_sm.databinding.FragmentRegister2Binding
 import com.free.momobooklet_by_sm.MainActivity2
 import com.free.momobooklet_by_sm.common.util.Constants
+import com.free.momobooklet_by_sm.common.util.Constants.Companion.MOMO_EMAIL_KEY
+import com.free.momobooklet_by_sm.common.util.Constants.Companion.MOMO_NAME_KEY
+import com.free.momobooklet_by_sm.common.util.Constants.Companion.MOMO_PASSWORD_KEY
 import com.free.momobooklet_by_sm.common.util.classes.DrawableSpan
 import com.free.momobooklet_by_sm.data.local.models.UserModel
 import com.free.momobooklet_by_sm.domain.repositories.ConnectivityObserver
@@ -97,6 +100,10 @@ class RegisterFragment2 : Fragment() {
                 mUserViewModel.addUser(user)
                 changeTextToProgressbar(view)// Heavy On  MAIN THREAD
                 mBundle.putString(Constants.PHONE_NUMBER_KEY, regphone)
+                mBundle.putString(MOMO_NAME_KEY, regMoMoName)
+                mBundle.putString(MOMO_PASSWORD_KEY,  regPass)
+                mBundle.putString(MOMO_EMAIL_KEY, regEmail)
+
                 handleMoveToNextFragment(view)
             }
         } else {

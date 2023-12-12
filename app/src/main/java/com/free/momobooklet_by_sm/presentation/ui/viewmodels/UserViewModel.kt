@@ -5,6 +5,7 @@ import android.app.Activity
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
+import com.free.momobooklet_by_sm.common.util.classes.operationalStates.BackEndRegistrationState
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.FireBaseRegistrationState
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.Resource
 import com.free.momobooklet_by_sm.data.dto.user.AuthenticationRequest
@@ -12,12 +13,14 @@ import com.free.momobooklet_by_sm.data.dto.user.UserRegistrationRequest
 import com.free.momobooklet_by_sm.data.local.models.UserModel
 import com.free.momobooklet_by_sm.domain.repositories.ConnectivityObserver
 import com.free.momobooklet_by_sm.domain.repositories.UserRepository
-import com.free.momobooklet_by_sm.domain.repositories.user.BackEndUserRepository
+import com.free.momobooklet_by_sm.domain.use_cases.manage_users.AuthenticateUserInBackEndUseCase
+import com.free.momobooklet_by_sm.domain.use_cases.manage_users.RegisterUserInBackEndUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.manage_users.RegisterUserInFirebaseUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.manage_users.SignInUserInFirebaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -29,7 +32,8 @@ class UserViewModel @Inject constructor(
     val connectivityObserver: ConnectivityObserver,
     private val registerUserInFirebaseUseCase: RegisterUserInFirebaseUseCase,
     private val signInUserInFirebaseUseCase: SignInUserInFirebaseUseCase,
-    private val backEndUserRepositoryImpl: BackEndUserRepository
+    private val registerUserInBackEndUseCase: RegisterUserInBackEndUseCase,
+    private val authenticateUserInBackEndUseCase: AuthenticateUserInBackEndUseCase
 ) : ViewModel() {
 
 
@@ -70,6 +74,10 @@ class UserViewModel @Inject constructor(
             val registrationStateTobeUsedOnMainThread : LiveData<FireBaseRegistrationState>
             get() = _registrationStateTobeUsedOnMainThread
 
+
+    private   val  _backendregistrationStateTobeUsedOnMainThread = MutableLiveData<BackEndRegistrationState>()
+    val backendregistrationStateTobeUsedOnMainThread : LiveData<BackEndRegistrationState>
+        get() = _backendregistrationStateTobeUsedOnMainThread
 
     private  val _signInStateTobeUsedOnMainThread = MutableLiveData<FireBaseRegistrationState>()
       val signInStateTobeUsedOnMainThread : LiveData<FireBaseRegistrationState>
@@ -209,11 +217,11 @@ class UserViewModel @Inject constructor(
         }
     }
 
-   private  fun setActiveUsers() {
+    fun setActiveUsers() {
         viewModelScope.launch {
-            userRepository.readActiveuser().collect {
+            userRepository.getActiveUser().let{
                 _userInControl.postValue(it)
-                Timber.e("viewMgetAll->$it")
+                Timber.e("UserVieM Post,  User in Control ->$it")
             }
         }
     }
@@ -227,7 +235,7 @@ class UserViewModel @Inject constructor(
     private fun getPsuedoActiveUser() {
         viewModelScope.launch {
             var activeUsers = userRepository.getActiveUser()
-            if (activeUsers == null)
+            if (activeUsers != null)
                 _userInControl.postValue(activeUsers)
             else {
                 activeUsers = userRepository.getAllUserAccounts()
@@ -251,22 +259,83 @@ class UserViewModel @Inject constructor(
 
     }
 
-    fun registerUserInBackEndDB(request: UserRegistrationRequest?, activity: Activity) {
-    viewModelScope.launch {
 
-        val response = backEndUserRepositoryImpl.addUser(request)
-        Toast.makeText(activity.applicationContext,response.body().toString(), Toast.LENGTH_LONG).show()
-        Timber.d("add User To  Local DB -> ${response.code()}")
-    }
-    }
+    /**
+    * */
+    fun authenticateUserInBackEnd(request: AuthenticationRequest, activity: Activity){
 
-
-    fun authenticateUserInBackEndDB(request:AuthenticationRequest, activity: Activity) {
         viewModelScope.launch {
-            val response = backEndUserRepositoryImpl.authenticateUser(request)
-            Toast.makeText(activity.applicationContext,response.message(), Toast.LENGTH_LONG).show()
+            authenticateUserInBackEndUseCase(request).collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        _backendregistrationStateTobeUsedOnMainThread.postValue(BackEndRegistrationState.Loading)
+                        Toast.makeText(
+                            activity.applicationContext,
+                            "Authentication  begun",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        Timber.d("LoadBackEndAuthViewM ===>  LOADING")
+                    }
+                    is Resource.Success -> {
+
+                        _backendregistrationStateTobeUsedOnMainThread.postValue(BackEndRegistrationState.Success)
+                        Toast.makeText(activity.applicationContext, "Authenticated", Toast.LENGTH_SHORT)
+                            .show()
+                        Timber.d("SuccessBackEndAuthViewM  ===>  Successful Authenticated :${it.message}")
+                    }
+                    is Resource.Error -> {
+                        _backendregistrationStateTobeUsedOnMainThread.postValue(
+                            BackEndRegistrationState.Error(
+                                it.message)
+                        )
+                        Timber.d("ErrorBackEndAuthViewM ===>  Error In Authentication because ${it.message}")
+                    }
+                }
+            }
         }
     }
+
+    /**
+     * */
+    @SuppressLint("LogNotTimber")
+    fun registerUserInBackEndDB(request: UserRegistrationRequest, activity: Activity) {
+    viewModelScope.launch {
+
+        registerUserInBackEndUseCase(request).collect {
+            when (it) {
+                is Resource.Loading -> {
+                    _backendregistrationStateTobeUsedOnMainThread.postValue(BackEndRegistrationState.Loading)
+                    Toast.makeText(
+                        activity.applicationContext,
+                        "Registration  begun",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    Log.d("LoadBackEndRegViewM", "LOADING")
+                }
+                is Resource.Success -> {
+
+                    _backendregistrationStateTobeUsedOnMainThread.postValue(BackEndRegistrationState.Success)
+                    Toast.makeText(activity.applicationContext, "Registered", Toast.LENGTH_SHORT)
+                        .show()
+                    Log.d("SuccessBackEndRegViewM", "Successful Registraton :${it.message}")
+                }
+                is Resource.Error -> {
+                    _backendregistrationStateTobeUsedOnMainThread.postValue(
+                        BackEndRegistrationState.Error(
+                            it.message)
+                    )
+                    Log.d("ErrorBackEndRegViewM", "ErrorInRegistration because ${it.message}")
+                }
+            }
+        }
+
+            }
+        }
+
+
+
 
 
         @SuppressLint("LogNotTimber")
@@ -276,14 +345,14 @@ class UserViewModel @Inject constructor(
             when (it) {
                 is Resource.Loading -> {
                     _registrationStateTobeUsedOnMainThread.postValue(FireBaseRegistrationState.Loading)
-                    Toast.makeText(activity.applicationContext, "Registration  begun", Toast.LENGTH_SHORT)
+                    Toast.makeText(activity.applicationContext, "Registration  begun please wait for otp...", Toast.LENGTH_SHORT)
                         .show()
                     Log.d("LoadFirebaseRegViewM", "LOADING")
                 }
                 is Resource.Success -> {
 
                     _registrationStateTobeUsedOnMainThread.postValue(FireBaseRegistrationState.Success)
-                    Toast.makeText(activity.applicationContext, "Registered", Toast.LENGTH_SHORT)
+                    Toast.makeText(activity.applicationContext, "Registered  please wait for otp...", Toast.LENGTH_SHORT)
                         .show()
                     Log.d("SuccessFirebaseRegViewM", "Successful Registraton :${it.message}" )
                 }

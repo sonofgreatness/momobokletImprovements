@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import com.free.momobooklet_by_sm.MainActivity
 import com.free.momobooklet_by_sm.MainActivity2
 import com.free.momobooklet_by_sm.R
@@ -34,21 +35,37 @@ class DialogueFragment2 : DialogFragment() {
 
         title = requireArguments().getString(Constants.FIREBASE_REGISTRATION_KEY).toString()
         message =   requireArguments().getString(Constants.FIREBASE_REGISTRATION_ERROR_MESSAGE_KEY).toString()
-        userPhoneNumber  = requireArguments().getString(Constants.FIREBASE_REGISTRATION_ERROR_MESSAGE_KEY).toString()
-        val otp = requireArguments().getString(Constants.OTP_KEY).toString()
         mUserViewModel = (activity as MainActivity2).mUserViewModel
 
         Toast.makeText((activity as MainActivity2).applicationContext, "Failed to  re register", Toast.LENGTH_SHORT).show()
 
 
+        userPhoneNumber  = requireArguments().getString(Constants.PHONE_NUMBER_KEY).toString()
+
+        val userMoMoName =requireArguments().getString(Constants.MOMO_NAME_KEY).toString()
+        val userEmail =requireArguments().getString(Constants.MOMO_EMAIL_KEY).toString()
+        val userPassword = requireArguments().getString(Constants.MOMO_PASSWORD_KEY).toString()
+        val mBundle = Bundle()
+
         return  AlertDialog.Builder((activity as MainActivity2).applicationContext)
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton(getString(R.string.retry)) { _, _ ->
-                if (otp.isEmpty())
-                    restartRegistration()
-                else
-                    restartSignIn(otp)
+
+                if(mUserViewModel.usableState.value == UserViewModel.MyState.Fetched) // internet available
+                {
+
+                    mBundle.putString(Constants.PHONE_NUMBER_KEY, userPhoneNumber)
+                    mBundle.putString(Constants.MOMO_NAME_KEY, userMoMoName)
+                    mBundle.putString(Constants.MOMO_PASSWORD_KEY, userPassword)
+                    mBundle.putString(Constants.MOMO_EMAIL_KEY, userEmail)
+
+                    findNavController().navigate(R.id.action_dialogueFragment2_to_otpConfirmFragment2,mBundle)
+
+                }
+                else{
+                    moveToMainActivity()
+                }
 
             }
             .setNegativeButton(getString(R.string.cancel)) { _, _ ->
@@ -56,33 +73,6 @@ class DialogueFragment2 : DialogFragment() {
             }
             .create()
     }
-
-    private fun restartRegistration() {
-        try {
-            mUserViewModel.registerUserWithPhoneNumber(
-                userPhoneNumber,
-                activity as MainActivity
-            )
-        } catch (ex: Exception) {
-            Toast.makeText(requireContext(), "Failed to  re register", Toast.LENGTH_SHORT).show()
-            dismiss()
-        }
-    }
-
-    private fun restartSignIn(otp:String)
-    {
-        try {
-
-            mUserViewModel.signInUserIn(otp,
-                userPhoneNumber,
-                activity as MainActivity
-            )
-        } catch (ex: Exception) {
-            Toast.makeText(requireContext(), "Failed to  re SignIn {$userPhoneNumber , $otp}", Toast.LENGTH_SHORT).show()
-            dismiss()
-        }
-    }
-
 
 
     override fun onCancel(dialog: DialogInterface) {

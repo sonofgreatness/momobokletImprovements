@@ -20,13 +20,18 @@ import com.free.momobooklet_by_sm.MainActivity
 import com.free.momobooklet_by_sm.MainActivity2
 import com.free.momobooklet_by_sm.R
 import com.free.momobooklet_by_sm.common.util.Constants
+import com.free.momobooklet_by_sm.common.util.Constants.Companion.MOMO_EMAIL_KEY
+import com.free.momobooklet_by_sm.common.util.Constants.Companion.MOMO_NAME_KEY
+import com.free.momobooklet_by_sm.common.util.Constants.Companion.MOMO_PASSWORD_KEY
 import com.free.momobooklet_by_sm.common.util.classes.Role
+import com.free.momobooklet_by_sm.common.util.classes.operationalStates.BackEndRegistrationState
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.FireBaseRegistrationState
 import com.free.momobooklet_by_sm.data.dto.user.UserRegistrationRequest
 import com.free.momobooklet_by_sm.databinding.FragmentOtpConfirmBinding
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class OtpConfirmFragment2 : Fragment() {
 
@@ -36,6 +41,10 @@ class OtpConfirmFragment2 : Fragment() {
     private lateinit  var  rootView: View
     private lateinit var  mUserViewModel: UserViewModel
     private lateinit var  userPhoneNumber: String
+    private lateinit var userMoMoName : String
+    private lateinit var userPassword : String
+    private lateinit var userEmail:String
+
     private val positionAnim : ValueAnimator = ObjectAnimator.ofInt(this, "wordPosition", 0, 3)
     private var strings:Array<String> = arrayOf("loading   ","loading.  ", "loading.. ", "loading...")
     var position : Int = 0
@@ -51,6 +60,9 @@ class OtpConfirmFragment2 : Fragment() {
         _binding = FragmentOtpConfirmBinding.inflate(inflater, container,false)
         mUserViewModel = (activity as MainActivity2).mUserViewModel
         userPhoneNumber = requireArguments().getString(Constants.PHONE_NUMBER_KEY).toString()
+        userMoMoName =requireArguments().getString(MOMO_NAME_KEY).toString()
+        userEmail =requireArguments().getString(MOMO_EMAIL_KEY).toString()
+        userPassword = requireArguments().getString(MOMO_PASSWORD_KEY).toString()
         binding.otpSubtitleUsermobile.text =
             "( ".plus(Constants.COUNTRY_CODE).plus(" )").plus(userPhoneNumber)
 
@@ -65,10 +77,129 @@ class OtpConfirmFragment2 : Fragment() {
     }
 
 
+
+    /***************************************************************
+     * Collect OTP from EDIT TEXT
+     *
+     *
+     * gets the status of FireBase DB registration process
+     *                when status  is Success or  Loading
+     *                  enables button
+     *                when status is Error
+     **************************************************************/
+    private fun setupSubmitButtonOnClick() {
+
+        val stateOfRegistration = mUserViewModel.registrationStateTobeUsedOnMainThread.value
+        Timber.d("submitOnClick stateOf FirebaseRegistration  -->  $stateOfRegistration")
+        binding.otpEnterBtn.setOnClickListener {
+            if (checkOTPLength()) {
+                processFireBaseSignInState(stateOfRegistration)
+                submitButtonClicked = true
+            }
+            else
+                submitButtonClicked = false
+        }
+    }
+
+    /**
+     * processFireBaseSignInState
+     *  -- reads firebase Registration state
+     *     -- begins sign in if state is +
+     *     --
+     **/
+    private fun processFireBaseSignInState(stateOfRegistration: FireBaseRegistrationState?) {
+
+        when(stateOfRegistration)
+        {
+            is FireBaseRegistrationState.Success ->{
+                setUpObserveactions(collectOTP())
+                sigInUser(collectOTP())
+            }
+            else ->
+            {
+                Toast.makeText(requireContext(), "moved from processFirebaseSignInState", Toast.LENGTH_SHORT).show()
+                // moveToUserAccountsFragment()
+                setUpObserveactions(collectOTP())
+                sigInUser(collectOTP())
+
+            }
+        }
+
+
+    }
+
+    private fun checkOTPLength() : Boolean{
+        return if (binding.otpEditText1.text?.length ==Constants.CHARACTER_COUNT_OTP)
+            true
+        else{
+            binding.otpEditText1.requestFocus()
+            false
+        }
+    }
+    private fun collectOTP():String{
+        return binding.otpEditText1.text.toString()
+    }
+
+
+
+
+    /******************************************************************************
+     * when submit is  clicked move to user Accounts fragment
+     *    or Error DialogueFragment
+     *
+     *******************************************************************************/
+    private fun setUpObserveactions(otp:String) {
+        mUserViewModel.signInStateTobeUsedOnMainThread.observe(viewLifecycleOwner)
+        {
+            if (submitButtonClicked)
+            {
+                when(it){
+
+                    is FireBaseRegistrationState.Success->
+                    {
+                        moveToMainActivity()
+                        Toast.makeText(requireContext(), "moved from setupObservers", Toast.LENGTH_SHORT).show()
+                    }
+                    is FireBaseRegistrationState.Error -> {
+
+                        handleSignInError(resources.getString(R.string.FireBaseSignInError),
+                            it.exception_message?: "Error Unknown",
+                            otp)
+                    }
+                    else -> {
+                        Toast.makeText(requireContext(), "Loading",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    /**************************
+     *
+     *************************/
+    private fun sigInUser(otp: String) {
+
+        val connectivityState = mUserViewModel.usableState.value
+
+        if(connectivityState == UserViewModel.MyState.Fetched) // internet available
+
+        {
+            mUserViewModel.signInUserIn(otp,userPhoneNumber,activity  as MainActivity2)
+            updateUIafterSignIn(resources.getString(R.string.FireBaseSignInError),
+                otp)
+        }
+        else
+        {
+
+            notifyUserNoConnection()
+        }
+    }
+
     /****************************************
      *1 . Check Connectivity ,
      *     if connected  begin Registration
      *       collect result from Registration
+     *     notifyUserFailedRegistration
      *
      ***************************************/
 
@@ -79,17 +210,13 @@ class OtpConfirmFragment2 : Fragment() {
        if(mUserViewModel.usableState.value == UserViewModel.MyState.Fetched) // internet available
 
         {
-            //mUserViewModel.registerUserWithPhoneNumber(userPhoneNumber, activity as MainActivity2)
 
-                val randomUser = UserRegistrationRequest(
-                    "+26876911464",
-                    "momo pay",
-                    "password",
-                    "email.js",
-                    Role.USER
-                )
-                mUserViewModel.registerUserInBackEndDB(randomUser, requireActivity())
-            updateUIafterRegistration()
+            mUserViewModel.registerUserWithPhoneNumber(userPhoneNumber, activity as MainActivity2)
+            val registrationRequest = getRegistrationRequest()
+            mUserViewModel.registerUserInBackEndDB(registrationRequest, requireActivity())
+            //updateUIafterRegistrationInFireBase()
+            updateUIafterRegistrationInBackend()
+
 
         }
         else
@@ -98,14 +225,61 @@ class OtpConfirmFragment2 : Fragment() {
         }
     }
 
+    /*************************************************
+     *
+     * gets the status of BackEnd DB registration process
+     *                when status  is Success or  Loading
+     *                  enables button
+     *                when status is Error
+     ***********************************************/
+    private fun updateUIafterRegistrationInBackend() {
+        val stateOfRegistration = mUserViewModel.backendregistrationStateTobeUsedOnMainThread.value
+        Timber.d("back end registration process status---..---> $stateOfRegistration")
+        stateOfRegistration.apply {
+            when {
+                this == BackEndRegistrationState.Loading -> {
+                    waitThenHandleCodeSent()
+                }
+                this  == BackEndRegistrationState.Success -> {
+                    handleCodeSentCase()
+                }
+                else -> { //error
+                    if (this != null)
+                    {
+                    notifyUserFailedRegistration(
+                        resources.getString(R.string.FireBaseRegistrationError),
+                        (this as BackEndRegistrationState.Error).exception_message?: "Registration failed , Error Unknown"
+                    )
+                    }
+                    else
+                    {
+                        Toast.makeText(requireContext(), "welcome back \uD83D\uDE40 ",Toast.LENGTH_SHORT).show()
+                        waitThenHandleCodeSent()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getRegistrationRequest(): UserRegistrationRequest {
+        return UserRegistrationRequest(
+            userPhoneNumber,
+            userMoMoName,
+            userPassword,
+            userEmail,
+            Role.USER
+        )
+    }
+
 
     /*************************************************
-     * gets the status of registration process
-     *
+     * gets the status of Firebase registration process
+     *                when status  is Success or  Loading
+     *                  enables button
+     *                when status is Error
      ***********************************************/
     @SuppressLint("LogNotTimber")
-    private fun updateUIafterRegistration() {
-
+    private fun updateUIafterRegistrationInFireBase() {
         val stateOfRegistration = mUserViewModel.registrationStateTobeUsedOnMainThread.value
         Log.d("sop2", "$stateOfRegistration")
         stateOfRegistration.apply {
@@ -130,7 +304,7 @@ class OtpConfirmFragment2 : Fragment() {
     private fun waitThenHandleCodeSent() {
 
         lifecycleScope.launch{
-            delay(3000L)
+            delay(300L)
             handleCodeSentCase()
         }
     }
@@ -199,90 +373,7 @@ class OtpConfirmFragment2 : Fragment() {
         }
     }
 
-    /***************************************************************
-     * Collect OTP from EDIT TEXT
-     **************************************************************/
-    private fun setupSubmitButtonOnClick() {
-        binding.otpEnterBtn.setOnClickListener {
-            if (checkOTPLength()) {
-                submitButtonClicked = true
-                setUpObserveactions(collectOTP())
-                sigInUser(collectOTP())
 
-            }
-            else
-                submitButtonClicked = false
-        }
-    }
-
-
-
-
-    private fun checkOTPLength() : Boolean{
-        return if (binding.otpEditText1.text?.length ==Constants.CHARACTER_COUNT_OTP)
-            true
-        else{
-            binding.otpEditText1.requestFocus()
-            false
-        }
-    }
-    private fun collectOTP():String{
-        return binding.otpEditText1.text.toString()
-    }
-
-
-
-
-    /******************************************************************************
-     * when submit is  clicked move to user Accounts fragment
-     *    or Error DialogueFragment
-     *
-     *******************************************************************************/
-    private fun setUpObserveactions(otp:String) {
-        mUserViewModel.signInStateTobeUsedOnMainThread.observe(viewLifecycleOwner)
-        {
-            if (submitButtonClicked)
-            {
-                when(it){
-
-                    is FireBaseRegistrationState.Success->
-                    {
-                        moveToMainActivity()
-                    }
-                    is FireBaseRegistrationState.Error -> {
-
-                        handleSignInError(resources.getString(R.string.FireBaseSignInError),
-                            it.exception_message?: "Error Unknown",
-                            otp)
-                    }
-                    else -> {
-                        Toast.makeText(requireContext(), "Loading",Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
-    }
-
-    /**************************
-     *
-     *************************/
-    private fun sigInUser(otp: String) {
-
-        val connectivityState = mUserViewModel.usableState.value
-
-        if(connectivityState == UserViewModel.MyState.Fetched) // internet available
-
-        {
-            mUserViewModel.signInUserIn(otp,userPhoneNumber,activity  as MainActivity2)
-            updateUIafterSignIn(resources.getString(R.string.FireBaseSignInError),
-                otp)
-        }
-        else
-        {
-
-            notifyUserNoConnection()
-        }
-    }
 
     @SuppressLint("LogNotTimber")
     private fun updateUIafterSignIn(title: String, otp: String) {

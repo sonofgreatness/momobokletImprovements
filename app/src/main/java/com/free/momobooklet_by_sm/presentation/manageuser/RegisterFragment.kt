@@ -98,6 +98,9 @@ class RegisterFragment : Fragment() {
                     mUserViewModel.addUser(user)
                     changeTextToProgressbar(view)
                     mBundle.putString(PHONE_NUMBER_KEY, regphone)
+                    mBundle.putString(Constants.MOMO_NAME_KEY, regMoMoName)
+                    mBundle.putString(Constants.MOMO_PASSWORD_KEY,  regPass)
+                    mBundle.putString(Constants.MOMO_EMAIL_KEY, regEmail)
                     moveUserToOtpConfirmed()
 
                 }

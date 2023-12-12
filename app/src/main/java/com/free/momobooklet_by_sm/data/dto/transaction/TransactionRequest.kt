@@ -11,6 +11,6 @@ data class TransactionRequest
     private val  customerPhone :String,
     private val   transactionType :Boolean,
     private val   amount :Float,
-    private val   username : String,
+    val   username : String,
     private val   signature : ArrayList<Int>,
 )

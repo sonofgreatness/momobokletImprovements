@@ -10,6 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.free.momobooklet_by_sm.MainActivity
 import com.free.momobooklet_by_sm.R
 import com.free.momobooklet_by_sm.common.util.Constants
+import com.free.momobooklet_by_sm.common.util.Constants.Companion.BACKEND_REG_FLAG
+import com.free.momobooklet_by_sm.common.util.classes.Role
+import com.free.momobooklet_by_sm.data.dto.user.UserRegistrationRequest
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 
 /********************************************************************************************
@@ -28,22 +31,39 @@ import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
     private  lateinit var  mUserViewModel: UserViewModel
     private  lateinit  var userPhoneNumber: String
 
-   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
        title = requireArguments().getString(Constants.FIREBASE_REGISTRATION_KEY).toString()
        message =   requireArguments().getString(Constants.FIREBASE_REGISTRATION_ERROR_MESSAGE_KEY).toString()
-       userPhoneNumber  = requireArguments().getString(Constants.FIREBASE_REGISTRATION_ERROR_MESSAGE_KEY).toString()
-       val otp = requireArguments().getString(Constants.OTP_KEY).toString()
-       mUserViewModel = (activity as MainActivity).mUserViewModel
+       userPhoneNumber  = requireArguments().getString(Constants.PHONE_NUMBER_KEY).toString()
+
+            val userMoMoName =requireArguments().getString(Constants.MOMO_NAME_KEY).toString()
+            val userEmail =requireArguments().getString(Constants.MOMO_EMAIL_KEY).toString()
+            val userPassword = requireArguments().getString(Constants.MOMO_PASSWORD_KEY).toString()
+             val mBundle = Bundle()
+
+            mUserViewModel = (activity as MainActivity).mUserViewModel
 
            return  AlertDialog.Builder(requireContext())
            .setTitle(title)
            .setMessage(message)
            .setPositiveButton(getString(R.string.retry)) { _, _ ->
-               if (otp.isEmpty())
-               restartRegistration()
-               else
-                   restartSignIn(otp)
+
+               if(mUserViewModel.usableState.value == UserViewModel.MyState.Fetched) // internet available
+               {
+
+                   mBundle.putString(Constants.PHONE_NUMBER_KEY, userPhoneNumber)
+                   mBundle.putString(Constants.MOMO_NAME_KEY, userMoMoName)
+                   mBundle.putString(Constants.MOMO_PASSWORD_KEY, userPassword)
+                   mBundle.putString(Constants.MOMO_EMAIL_KEY, userEmail)
+
+                   findNavController().navigate(R.id.action_dialogueFragment_to_otpConfirmFragment,mBundle)
+
+               }
+               else{
+                   moveToUserAccountsFragment()
+               }
 
            }
            .setNegativeButton(getString(R.string.cancel)) { _, _ ->
@@ -52,31 +72,6 @@ import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
            .create()
    }
 
-    private fun restartRegistration() {
-        try {
-            mUserViewModel.registerUserWithPhoneNumber(
-                userPhoneNumber,
-                activity as MainActivity
-            )
-        } catch (ex: Exception) {
-            Toast.makeText(requireContext(), "Failed to  re register", Toast.LENGTH_SHORT).show()
-            dismiss()
-        }
-    }
-
-    private fun restartSignIn(otp:String)
-    {
-        try {
-
-           mUserViewModel.signInUserIn(otp,
-                userPhoneNumber,
-                activity as MainActivity
-            )
-        } catch (ex: Exception) {
-            Toast.makeText(requireContext(), "Failed to  re SignIn {$userPhoneNumber , $otp}", Toast.LENGTH_SHORT).show()
-            dismiss()
-        }
-    }
 
 
 
