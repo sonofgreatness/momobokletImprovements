@@ -8,14 +8,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.free.momobooklet_by_sm.common.util.classes.operationalStates.BackEndRegistrationState
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.ExportState
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.Resource
 import com.free.momobooklet_by_sm.data.dto.transaction.TransactionRequest
 import com.free.momobooklet_by_sm.data.local.models.TransactionModel
 import com.free.momobooklet_by_sm.domain.repositories.CommissionDatesManagerRepository
 import com.free.momobooklet_by_sm.domain.repositories.TransactionRepository
-import com.free.momobooklet_by_sm.domain.use_cases.manage_transactions.uploadTransactionsUseCase
+import com.free.momobooklet_by_sm.domain.use_cases.manage_transactions.DownloadTransactionsUseCase
+import com.free.momobooklet_by_sm.domain.use_cases.manage_transactions.UploadTransactionsUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.ExportService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -30,7 +30,8 @@ import javax.inject.Inject
 class TransactionViewModel @Inject constructor (
     val transactionRepository: TransactionRepository,
     val datesManager: CommissionDatesManagerRepository,
-  private  val uploadTransactionsUseCase: uploadTransactionsUseCase
+  private  val UploadTransactionsUseCase: UploadTransactionsUseCase,
+    private val downloadTransactionsUseCase: DownloadTransactionsUseCase
 ) : ViewModel() {
 
     // state for export csv status
@@ -66,7 +67,7 @@ class TransactionViewModel @Inject constructor (
     fun uploadTransaction(request: TransactionRequest, activity: Activity)
     {
         viewModelScope.launch {
-            uploadTransactionsUseCase(request).collect {
+            UploadTransactionsUseCase(request).collect {
                 when (it) {
                     is Resource.Loading -> {
                         Toast.makeText(
@@ -86,6 +87,34 @@ class TransactionViewModel @Inject constructor (
                     is Resource.Error -> {
 
                         Timber.d("ErrorUploadViewM ===>  Error Transaction upload because ${it.message} username ==> ${request.username}")
+                    }
+                }
+            }
+        }
+    }
+    fun downloadTransaction(username: String, activity: Activity)
+    {
+        viewModelScope.launch {
+            downloadTransactionsUseCase(username).collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        Toast.makeText(
+                            activity.applicationContext,
+                            "remote download  begun",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        Timber.d("LoadDownloadTransactViewM ===>  LOADING")
+                    }
+                    is Resource.Success -> {
+
+                        Toast.makeText(activity.applicationContext, "Transaction Downloaded", Toast.LENGTH_SHORT)
+                            .show()
+                        Timber.d("SuccessTransactUploadViewM  ===>  Successful Downloaded Transaction :${it.message}")
+                    }
+                    is Resource.Error -> {
+
+                        Timber.d("ErrorUploadViewM ===>  Error Download upload because ${it.message} username ==> $username")
                     }
                 }
             }

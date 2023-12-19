@@ -28,9 +28,21 @@ class ExampleUnitTest {
         val formatter = SimpleDateFormat("yyyy-MM-dd")
         val currentDate = formatter.parse(testString)
         val finalformaterr = SimpleDateFormat("dd-MM-yyyy")
-         val testDateString =  finalformaterr.format(currentDate)
+         val testDateString =  finalformaterr.format(currentDate!!)
         assertEquals(testDateString, "27-05-2023")
     }
 
+    @Test
+    fun converttimeTodate(){
+        //given
+        val testString = "19-12-2023 09:13:42 AM"
+        //when
+        val underTest = testString.substring(0,10).trim()
+        //then
+        assertEquals(underTest, "19-12-2023")
+    }
+
+
 }
+
 

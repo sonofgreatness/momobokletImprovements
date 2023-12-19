@@ -6,6 +6,7 @@ data class TransactionRequest
     (
     private  val  transactionId :String,
     private val  timestamp : Timestamp?,
+    private val time : String,
     private val  customerName :String,
     private val  customerId :String,
     private val  customerPhone :String,

@@ -480,8 +480,8 @@ class RecordDisplayFragment : Fragment() {
             signature  = transaction.Signature.map{
                 it.toInt()
             } as ArrayList<Int>,
-            timestamp = null
-            )
+            timestamp = null,
+        time = transaction.Time)
 
         mTransactionViewModel.addTransaction(transaction)
         mTransactionViewModel.uploadTransaction(transactionRequest, requireActivity())

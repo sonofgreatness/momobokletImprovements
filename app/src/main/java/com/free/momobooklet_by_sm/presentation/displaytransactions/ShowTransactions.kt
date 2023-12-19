@@ -4,6 +4,7 @@ package com.free.momobooklet_by_sm.presentation.displaytransactions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -15,9 +16,11 @@ import com.free.momobooklet_by_sm.BackUpActivity
 import com.free.momobooklet_by_sm.presentation.help.HelpActivity
 import com.free.momobooklet_by_sm.MainActivity
 import com.free.momobooklet_by_sm.R
+import com.free.momobooklet_by_sm.data.local.models.UserModel
 import com.free.momobooklet_by_sm.databinding.FragmentShowTransactionsBinding
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.BackupViewModel
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.TransactionViewModel
+import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -29,6 +32,9 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
     private val binding get() = _binding
     private lateinit var mTransactionViewModel: TransactionViewModel
     private lateinit var  mBackupViewModel: BackupViewModel
+    private  lateinit var  mUserViewModel: UserViewModel
+    private var mainUser: UserModel? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,9 +43,10 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
         // Inflate the layout for this fragment
         _binding = FragmentShowTransactionsBinding.inflate(inflater, container, false)
         //inflate menu
+        mUserViewModel = (activity as MainActivity).mUserViewModel
         mTransactionViewModel = (activity as MainActivity).mTransactionViewModel
         mBackupViewModel  = (activity as MainActivity).mBackupViewModel
-
+        setmainUser()
         setupToolbar()
         adapter =  ListAdapter(null,requireActivity().application)
         setupRecyclerView()
@@ -48,6 +55,22 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
         return view
     }
 
+
+    /*************************************************************************
+     * Gets UserModel with IsIncontrol value == TRUE
+     *****************************************************************************/
+    private fun setmainUser() {
+
+        try {
+
+            mUserViewModel.setActiveUsers()
+            mainUser = mUserViewModel.userInControl.value?.get(0)
+        }
+        catch (ex:Exception)
+        {
+            Log.d("No Active User", "${ex.message}")
+        }
+    }
 
     @Throws(IOException::class)
     fun getFileFromAssets(context: Context, fileName: String): File = File(context.cacheDir, fileName)
@@ -84,10 +107,10 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
                     Timber.d("perform search")
                     return@setOnMenuItemClickListener true
                 }
-                /*R.id.sync->{
+                R.id.sync->{
                     showAboutToDownloadMessage()
-                return@setOnMenuItemClickListener true
-                }*/
+                    return@setOnMenuItemClickListener true
+                }
                 else -> {
                     return@setOnMenuItemClickListener true}
             }
@@ -122,7 +145,8 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
            .setNegativeButton("Abort"){_, _ ->
            }
            .setPositiveButton("Continue") { _, _ ->
-              mBackupViewModel.importDataSet()
+             // mBackupViewModel.importDataSet()
+             mTransactionViewModel.downloadTransaction(mainUser!!.MoMoNumber,requireActivity())
            }
            .show()
     }

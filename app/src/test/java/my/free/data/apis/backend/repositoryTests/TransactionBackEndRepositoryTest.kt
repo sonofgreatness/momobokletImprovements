@@ -142,7 +142,8 @@ class TransactionBackEndRepositoryTest {
             TransactionRequest(
                 UUID.randomUUID().toString(),
                 null,
-                "customer_name",
+                "dd-mm-yyyyy",
+                "customername",
                 "customer_id",
                 "customer_phone",
                 false,
@@ -155,6 +156,7 @@ class TransactionBackEndRepositoryTest {
         incorrectTestTransaction = TransactionRequest(
             "uuid1",
             time,
+            "dd-mm-yyyyy",
             "customer_name",
             "customer_id",
             "customer_phone",

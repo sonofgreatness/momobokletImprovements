@@ -68,7 +68,7 @@ class ListAdapter(val queryText: String?, val app:Application) : RecyclerView.Ad
         setBackgroundSpanForTransactionType(currentItem, holder)
         setBackgroundSpanForDatePhoneAndAmount(holder, currentItem)
 
-        if (currentItem.Signature.size > 2)
+        if (currentItem.Signature.size > 2 && currentItem.Signature.isNotEmpty())
         {
         val bitmap: Bitmap =
         BitmapFactory.decodeByteArray(currentItem.Signature, 0, currentItem.Signature.size)

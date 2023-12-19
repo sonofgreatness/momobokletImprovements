@@ -107,7 +107,8 @@ class BackEndRepositoryTests {
             TransactionRequest(
                 "uuid1",
                       time,
-            "customer_name",
+                "dd-mm-yyyy",
+                "customer_name",
             "customer_id",
             "customer_phone",
             false,
@@ -120,6 +121,7 @@ class BackEndRepositoryTests {
         incorrectTestTransaction = TransactionRequest(
             "uuid1",
             time,
+            "dd-mm-yyyy",
             "customer_name",
             "customer_id",
             "customer_phone",

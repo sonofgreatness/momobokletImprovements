@@ -10,12 +10,12 @@
         android:title="search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
-    <!--<item
+    <item
         android:id="@+id/sync"
         android:icon="@drawable/swap_icon"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:title="sync"
-        />-->
+        />
 
     <group
         android:checkableBehavior ="none">

@@ -102,6 +102,8 @@ class Constants {
       const val AUTH_PREFS_NAME = "User Authentication Prefs"
       const val BACKEND_TRANSACT_ADD_OK = "Succcessfully Added  transaction (s)"
       const val BACKEND_TRANSACT_ADD_FAIL = "Failed to add transaction(s)"
+      const val BACKEND_TRANSACT_GET_OK = "Successfully downloaded transactions"
+      const val BACKEND_TRANSACT_GET_FAIL = "Failed to get transaction(s)"
 
   }
 

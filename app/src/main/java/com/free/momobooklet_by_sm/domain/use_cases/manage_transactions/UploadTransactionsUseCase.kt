@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import javax.inject.Inject
 
-class uploadTransactionsUseCase
+class UploadTransactionsUseCase
 @Inject constructor(
     val repository: TransactionBackEndRepository,
     val application: Application
@@ -24,13 +24,14 @@ class uploadTransactionsUseCase
             emit(Resource.Loading("Registration Loading"))
             val accessToken = getAccessTokenFromSharedPrefs(request.username)
             if (accessToken != null) {
-                val response = repository.addTransaction(request, accessToken)
+                val response = repository.addTransaction(request,"Bearer $accessToken")
                 if (response.isSuccessful) {
 
-                    emit(Resource.Success(Constants.BACKEND_TRANSACT_ADD_OK))
+                    emit(Resource.Success(Constants.BACKEND_TRANSACT_GET_OK))
 
                 } else
-                    emit(Resource.Error("error code = "+response.code().toString()+"\n token ==>${accessToken} "+Constants.BACKEND_TRANSACT_ADD_FAIL))
+                    emit(Resource.Error("error code = "+response.code().toString()+"" +
+                            "\n message  =${response.errorBody()}\n"+"\n token ==>${accessToken} "+Constants.BACKEND_TRANSACT_ADD_FAIL))
             }
             else
             {

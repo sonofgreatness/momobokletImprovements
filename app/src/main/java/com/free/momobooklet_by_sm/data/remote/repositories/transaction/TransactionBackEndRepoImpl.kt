@@ -13,7 +13,7 @@ class TransactionBackEndRepoImpl
 
     {
     override suspend fun addTransaction(request: TransactionRequest?, token: String):
-              Response<ResponseBody> = api.addTransaction(request,toString())
+              Response<ResponseBody> = api.addTransaction(request,token)
 
     override suspend fun getAllTransactions(token: String): Response<ResponseBody>?
                 = api.getAllTransactions(token)
