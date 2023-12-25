@@ -32,7 +32,7 @@ class DownloadTransactionsUseCase @Inject constructor(
             if (accessToken != null) {
                 val response = repository.getAllTransactions("Bearer $accessToken")
                 if (response?.isSuccessful == true) {
-                    writeTransactionstoDb(response.body()?.string())
+                writeTransactionstoDb(response.body()?.string())
                         Timber.d("Download Transactions  ==>"+response.body()?.string())
                     emit(Resource.Success(Constants.BACKEND_TRANSACT_GET_OK))
 
@@ -55,7 +55,7 @@ class DownloadTransactionsUseCase @Inject constructor(
     }
 
     /**
-     * converts  Json response to List<Transation>
+     * converts  Json response to List<Transaction>
      *     then adds transactions to local db
      **/
 

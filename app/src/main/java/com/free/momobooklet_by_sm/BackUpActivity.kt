@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import com.free.momobooklet_by_sm.common.util.Constants
 import com.free.momobooklet_by_sm.databinding.ActivityBackUp3Binding
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.BackupDataBaseViewModel
+import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +25,7 @@ class BackUpActivity : AppCompatActivity() {
 private lateinit var binding: ActivityBackUp3Binding
 
 val mBackUpDatabaseViewModel: BackupDataBaseViewModel by viewModels()
+    val mUserViewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

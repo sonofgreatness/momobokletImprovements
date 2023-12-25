@@ -206,6 +206,7 @@ class OtpConfirmFragment  : Fragment() {
                     }
                     is FireBaseRegistrationState.Error -> {
 
+
                         handleSignInError(resources.getString(R.string.FireBaseSignInError),
                             it.exception_message?: "Error Unknown",
                             otp)

@@ -161,6 +161,7 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
         val headerAdapter = HeaderAdapter()
         val concatAdapter = ConcatAdapter(headerAdapter, adapter)
         val recyclerView = binding.recyclerViewShowtransactions
+
         recyclerView.adapter = concatAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }

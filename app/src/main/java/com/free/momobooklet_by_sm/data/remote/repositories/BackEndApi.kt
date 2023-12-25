@@ -62,7 +62,7 @@ interface BackEndApi {
         @Header("Authorization") token: String
     ): Response<ResponseBody>
 
-    @GET("/api/v1/backup/getAll")
+    @GET("/api/v1/backup/details")
    suspend fun getListOfbackups(@Header("Authorization") token: String): Response<ResponseBody>
 
 }

@@ -5,6 +5,7 @@ import android.animation.AnimatorSet
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +16,10 @@ import androidx.navigation.fragment.findNavController
 import com.free.momobooklet_by_sm.BackUpActivity
 import com.free.momobooklet_by_sm.R
 import com.free.momobooklet_by_sm.common.util.classes.RecoveryActionType
+import com.free.momobooklet_by_sm.data.local.models.UserModel
 import com.free.momobooklet_by_sm.databinding.FragmentFirstBinding
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.BackupDataBaseViewModel
+import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -26,6 +29,8 @@ class FirstFragment : Fragment() {
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
     private lateinit var mBackUpDatabaseViewModel: BackupDataBaseViewModel
+    private lateinit var  mUserViewModel: UserViewModel
+    private var mainUser: UserModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,8 +39,11 @@ class FirstFragment : Fragment() {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         mBackUpDatabaseViewModel= (activity as BackUpActivity).mBackUpDatabaseViewModel
+        mUserViewModel =(activity as BackUpActivity).mUserViewModel
+        mBackUpDatabaseViewModel.getBackupDetailsFromServer(requireActivity().application, "71000000")
         setUpImageOnClicks()
         setUpImageAnimations()
+        setmainUser()
         return binding.root
 
     }
@@ -45,8 +53,11 @@ class FirstFragment : Fragment() {
         setUpDefaultRecoverButtonOnClick()
         setUpCustomRecoverButtonOnClick()
         setUpBackupButtonOnClick()
+        setUpBackupToServerButtonOnClick()
         setUpRecoverFromServerBtn()
     }
+
+
 
     private fun setUpRecoverImageOnClick() {
         binding.backupRecoverRL.setOnClickListener {
@@ -110,6 +121,16 @@ class FirstFragment : Fragment() {
             backupDatabase()
         }
     }
+
+
+    private fun setUpBackupToServerButtonOnClick() {
+        binding.backupBtnServer.setOnClickListener{
+            mBackUpDatabaseViewModel.backuptoServer(requireActivity().application, "71000000")
+        }
+    }
+
+
+
     private fun showWarningMessage(action: RecoveryActionType) {
         AlertDialog.Builder(requireContext())
             .setTitle(resources.getString(R.string.recovery_warning))
@@ -176,6 +197,23 @@ class FirstFragment : Fragment() {
 
             mBackUpDatabaseViewModel.
                             backUpApplicationData(requireActivity().application,requireActivity())
+    }
+
+
+    /*************************************************************************
+     * Gets UserModel with IsIncontrol value == TRUE
+     *****************************************************************************/
+    private fun setmainUser() {
+
+        try {
+
+            mUserViewModel.setActiveUsers()
+            mainUser = mUserViewModel.userInControl.value?.get(0)
+        }
+        catch (ex:Exception)
+        {
+            Log.d("No Active User", "${ex.message}")
+        }
     }
 
     /************************************************************

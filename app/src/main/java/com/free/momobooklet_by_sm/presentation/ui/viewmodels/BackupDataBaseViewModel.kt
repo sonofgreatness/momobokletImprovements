@@ -5,16 +5,22 @@ import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.free.momobooklet_by_sm.MainActivity
 import com.free.momobooklet_by_sm.common.util.Constants
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.BackUpState
+import com.free.momobooklet_by_sm.common.util.classes.operationalStates.Resource
 import com.free.momobooklet_by_sm.domain.use_cases.disaster_recovery.*
+import com.free.momobooklet_by_sm.domain.use_cases.disaster_recovery.server.BackUpDatabaseToServerUseCase
+import com.free.momobooklet_by_sm.domain.use_cases.disaster_recovery.server.BackUpDetails
+import com.free.momobooklet_by_sm.domain.use_cases.disaster_recovery.server.DownloadBackupFileFromServer
+import com.free.momobooklet_by_sm.domain.use_cases.disaster_recovery.server.GetBackupDetailsFromServer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -24,10 +30,14 @@ class BackupDataBaseViewModel
                     private val unmountBackUpUseCase: UnmountBackUpUseCase,
                     private val recoverDatabaseDefaultUseCase: RecoverDatabaseDefaultUseCase,
                     private val unpackRecoveryUseCase: UnpackRecoveryUseCase,
-                    private val recoverDatabaseCustomUseCase: RecoverDatabaseCustomUseCase
+                    private val recoverDatabaseCustomUseCase: RecoverDatabaseCustomUseCase,
+                    private  val backUpDatabaseToServerUseCase: BackUpDatabaseToServerUseCase,
+                    private  val getBackupDetailsFromServer: GetBackupDetailsFromServer,
+                    private val downloadBackupFileFromServer: DownloadBackupFileFromServer
                     )
 
     : ViewModel()
+
 {
 
     /*************************************************************************
@@ -163,6 +173,7 @@ class BackupDataBaseViewModel
 
 
 
+
    private fun restoreDataFromBackUp(application: Application)
     {
 
@@ -191,6 +202,99 @@ class BackupDataBaseViewModel
     }
 
 
+    fun backuptoServer(application: Application,username:String){
+        viewModelScope.launch {
+            backUpDatabaseToServerUseCase(username).collect{
+                when(it)
+                {
+                    is BackUpState.Success ->{
+                        // move backupFile to external storage
+                        Toast.makeText(application.applicationContext,
+                            Constants.BACKEND_BACKUP_ADD_OK,Toast.LENGTH_SHORT).show()
+                        delay(1000L)
+                    }
+                    is BackUpState.Loading -> {
+                        Toast.makeText(application.applicationContext,
+                            Constants.BACKUP_LOADING_MESSAGE,Toast.LENGTH_SHORT).show()
+                    }
+                    is BackUpState.Error -> {
+                        Toast.makeText(application.applicationContext,
+                            Constants.BACKEND_BACKUP_ADD_FAIL.plus(it.exception_message),
+                            Toast.LENGTH_SHORT).show()
+                        Timber.d("backUpViewMFailed == > ${it.exception_message}")
+
+                    }
+                }
+            }
+        }
+    }
+
+
+    fun getBackupDetailsFromServer(application: Application,username:String){
+        viewModelScope.launch {
+            getBackupDetailsFromServer(username).collect{
+                when(it)
+                {
+                    is Resource.Success ->{
+                        // move backupFile to external storage
+                        Toast.makeText(application.applicationContext,
+                            it.data+it.message,Toast.LENGTH_SHORT).show()
+                        delay(1000L)
+                        Timber.d("backUpViewMGEtOK == > ${it.message} ${it.data}")
+                    }
+
+                    is Resource.Loading -> {
+                        Toast.makeText(application.applicationContext,
+                            Constants.BACKUP_LOADING_MESSAGE,Toast.LENGTH_SHORT).show()
+                    }
+                    is Resource.Error -> {
+                        Toast.makeText(application.applicationContext,
+                            Constants.BACKEND_BACKUP_ADD_FAIL.plus(it.message),
+                            Toast.LENGTH_SHORT).show()
+                        Timber.d("backUpViewMGetFailed == > ${it.message}")
+
+                    }
+                }
+            }
+        }
+    }
+
+
+    fun getListOfBackupDetails(): List<BackUpDetails>{
+        return getBackupDetailsFromServer.getBackupDetailsFromFile()
+    }
+
+    fun downloadBackupFromServer(application: Application,username: String, backupId: String){
+
+        viewModelScope.launch {
+            downloadBackupFileFromServer(username,backupId).collect{
+
+                when(it)
+                {
+                    is BackUpState.Success ->{
+                        // move backupFile to external storage
+                        Toast.makeText(application.applicationContext,
+                            Constants.BACKEND_BACKUP_FROM_SERVER_GET_OK,Toast.LENGTH_SHORT).show()
+                        delay(1000L)
+                    }
+                    is BackUpState.Loading -> {
+                        Toast.makeText(application.applicationContext,
+                            Constants.BACKUP_LOADING_MESSAGE,Toast.LENGTH_SHORT).show()
+                    }
+                    is BackUpState.Error -> {
+                        Toast.makeText(application.applicationContext,
+                            Constants.BACKEND_BACKUP_ADD_FAIL.plus(it.exception_message),
+                            Toast.LENGTH_SHORT).show()
+                        Timber.d("backUpViewMFailed == > ${it.exception_message}")
+
+                    }
+                }
+
+
+            }
+        }
+
+    }
    private  fun restart(activity: Activity) {
         val intent = Intent(activity.baseContext, MainActivity::class.java)
         activity.startActivity(intent)
