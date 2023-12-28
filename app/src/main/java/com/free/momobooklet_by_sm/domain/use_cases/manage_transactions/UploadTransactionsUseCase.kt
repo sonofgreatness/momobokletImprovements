@@ -36,13 +36,12 @@ class UploadTransactionsUseCase
             else
             {
                 emit(Resource.Error("Access Token null  -> "+Constants.BACKEND_TRANSACT_ADD_FAIL))
-
             }
 
         }
         catch(ex: Exception){
             emit(Resource.Error("Exception"+Constants.BACKEND_TRANSACT_ADD_FAIL))
-            Timber.d("Exception"+Constants.BACKEND_REG_FAIL +ex.message)
+            Timber.d("Exception ${Constants.BACKEND_REG_FAIL} ${ex.message}")
         }
     }
 

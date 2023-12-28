@@ -12,8 +12,10 @@ import javax.inject.Inject
 class TransactionRepositoryImpl @Inject constructor(private val userDao: TransactionDao) : TransactionRepository
 {
 
-     override fun readAllTransactiondata(): Flow<List<TransactionModel>> {
-         return userDao.readAllTransactiondata()
+
+
+     override fun readAllTransactiondata(momoNumber: String): Flow<List<TransactionModel>> {
+         return userDao.readAllTransactiondata(momoNumber)
      }
 
     override fun searchTransactions(query: String) : Flow<List<TransactionModel>>
@@ -35,7 +37,15 @@ class TransactionRepositoryImpl @Inject constructor(private val userDao: Transac
     }
 
 
-   override suspend fun getDailyTransactions(date:String, momoNumber: String): List<TransactionModel>
+    override suspend fun getNewestTransactions(
+        startDate: Long,
+        now: Long,
+        momoNumber: String
+    ): List<TransactionModel> {
+     return    userDao.getNewestTransactions(startDate,now, momoNumber)
+    }
+
+    override suspend fun getDailyTransactions(date:String, momoNumber: String): List<TransactionModel>
                                               = userDao.getDailyTransactions(date, momoNumber)
 
 
@@ -53,7 +63,7 @@ class TransactionRepositoryImpl @Inject constructor(private val userDao: Transac
 
     /*----------------------------------------------------------------------
                             BACKUP_META DATA
- -----------------------------------------------------------------------*/
+      --------------------------------------------------------------------------*/
     override fun  clearTransactionMetaData() = userDao.clearTransactionMetaData()
     override suspend fun  getTransactionMetaData():List<BACKUP_METADATA> = userDao.getTransactionMetaData()
     override suspend fun addTransactionMetaData(data: BACKUP_METADATA) = userDao.addTransactionMetaData(data)

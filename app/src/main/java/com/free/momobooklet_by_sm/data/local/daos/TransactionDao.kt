@@ -13,9 +13,10 @@ interface TransactionDao {
         ( onConflict = OnConflictStrategy.REPLACE)
     suspend fun addTransaction(transaction:TransactionModel)
 
-    @Query("""SELECT * FROM RECORDS_SHEET""")
+    @Query("""SELECT * FROM RECORDS_SHEET 
+        WHERE AgentPhoneNumber =:momoNumber""")
 
-    fun readAllTransactiondata () : Flow<List<TransactionModel>>
+    fun readAllTransactiondata (momoNumber: String) : Flow<List<TransactionModel>>
 
 
 
@@ -26,13 +27,11 @@ interface TransactionDao {
 
 
     @Query("""
-            SELECT * FROM RECORDS_SHEET WHERE Transaction_type = 1
-            """)
+            SELECT * FROM RECORDS_SHEET WHERE Transaction_type = 1""")
     fun getBuyTransactions():Flow<List<TransactionModel>>
 
     @Query("""
-            SELECT * FROM RECORDS_SHEET WHERE Transaction_type = 0
-           """)
+            SELECT * FROM RECORDS_SHEET WHERE Transaction_type = 0""")
     fun getSellTransactions():Flow<List<TransactionModel>>
 
     @Delete
@@ -53,6 +52,22 @@ interface TransactionDao {
 
     @Query("SELECT * FROM RECORDS_SHEET")
     suspend fun getAllTransactionsRegularData_All(): List<TransactionModel>
+
+
+
+
+    @Query("""
+        SELECT * FROM RECORDS_SHEET WHERE AgentPhoneNumber =:momoNumber 
+        AND timestamp BETWEEN :startDate AND :now
+        """)
+    /********************************************************************************
+     * Queries the database for transactions
+     *   with timestamps between  a start date and now
+     *@param startDate : Timestamp in Long format
+     *@param now : Timestamp of  System.currentTime
+     *@param momoNumber  -> gets Transactions for a particular user
+     ***********************************************************************/
+    suspend fun getNewestTransactions(startDate :Long , now: Long, momoNumber: String): List<TransactionModel>
 
 
 

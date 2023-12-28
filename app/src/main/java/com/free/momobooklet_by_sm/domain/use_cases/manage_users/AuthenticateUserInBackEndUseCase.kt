@@ -23,8 +23,6 @@ class AuthenticateUserInBackEndUseCase
 constructor(val repository: BackEndUserRepository,
             val application:Application) {
 
-
-
     operator fun invoke(request : AuthenticationRequest) : Flow<Resource<String>> = flow{
 
         try{
@@ -40,7 +38,7 @@ constructor(val repository: BackEndUserRepository,
         }
         catch(ex: Exception){
             emit(Resource.Error(Constants.BACKEND_AUTH_FAIL))
-            Timber.d(Constants.BACKEND_REG_FAIL +ex.message)
+            Timber.d("${Constants.BACKEND_REG_FAIL} ${ex.message}")
         }
 
 

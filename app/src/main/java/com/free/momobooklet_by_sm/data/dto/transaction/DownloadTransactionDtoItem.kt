@@ -4,6 +4,7 @@ package com.free.momobooklet_by_sm.data.dto.transaction
 import com.free.momobooklet_by_sm.data.local.models.TransactionModel
 import com.google.gson.annotations.SerializedName
 import timber.log.Timber
+import java.sql.Timestamp
 import java.util.ArrayList
 
 data class DownloadTransactionDtoItem(
@@ -20,7 +21,7 @@ data class DownloadTransactionDtoItem(
     @SerializedName("time")
     val time: String?,
     @SerializedName("timestamp")
-    val timestamp: String?,
+    val timestamp: Timestamp,
     @SerializedName("transactionId")
     val transactionId: String,
     @SerializedName("transactionType")
@@ -55,7 +56,8 @@ data class DownloadTransactionDtoItem(
             C_PHONE = customerPhone,
             Date =  time?.substring(0,10)?.trim().toString(),
             Amount = amount.toFloat(),
-           Signature = mySignature
+           Signature = mySignature,
+            timestamp =  timestamp.time
 
         )
 

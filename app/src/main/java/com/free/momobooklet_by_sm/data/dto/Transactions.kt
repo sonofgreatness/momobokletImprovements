@@ -102,6 +102,7 @@ class Transactions (
                                 this.convertCustomerPhone(),
                                 this.convertTransactionType(transactionType),
                                 this.convertAmount(amount),
+            0,
                                 byteArrayOf(0),
                                 convertTime(),
                                 convertAgentPhoneNumber())

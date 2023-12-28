@@ -42,6 +42,8 @@ class ImportToRoomWorker(val appContext: Context, params: WorkerParameters) :
          -------------------------------------------------*/
         val  gson =Gson()
         val listType = object : TypeToken<List<Transactions>>(){}.type
+
+
         val arrayListofTransactions: List<Transactions>
         val listofTransactions: MutableList<TransactionModel> by lazy {
             ArrayList()

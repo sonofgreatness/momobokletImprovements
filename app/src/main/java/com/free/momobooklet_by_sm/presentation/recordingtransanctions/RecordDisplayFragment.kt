@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -37,10 +36,11 @@ import com.free.momobooklet_by_sm.presentation.ui.viewmodels.CommissionViewModel
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.TransactionViewModel
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
 import com.github.gcacace.signaturepad.views.SignaturePad
+import timber.log.Timber
 import java.io.ByteArrayOutputStream
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class RecordDisplayFragment : Fragment() {
     private lateinit var mTransactionViewModel: TransactionViewModel
@@ -53,8 +53,8 @@ class RecordDisplayFragment : Fragment() {
 
     private lateinit var _binding: FragmentRecordDisplayBinding
     private val binding get() = _binding
-    private val dataObject: com.free.momobooklet_by_sm.presentation.recordingtransanctions.TempTransData =
-        com.free.momobooklet_by_sm.presentation.recordingtransanctions.TempTransData(
+    private val dataObject: TempTransData =
+        TempTransData(
             arguments?.getString("name_key"),
             arguments?.getString("phone_key"),
             arguments?.getString("pin_key"),
@@ -148,7 +148,7 @@ class RecordDisplayFragment : Fragment() {
                 val stream = ByteArrayOutputStream()
                 signature.compress(Bitmap.CompressFormat.PNG, 100, stream)
                 val byteArray = stream.toByteArray()
-                val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
                 imageView.setImageBitmap(signature)
                 signatureCaptured = true
             }
@@ -159,7 +159,7 @@ class RecordDisplayFragment : Fragment() {
         //Make Dialer button invisible in popUpWindow
         customView.findViewById<Button>(R.id.dialer_button).visibility = View.INVISIBLE
         //CHange Text in Record button To Save
-        customView.findViewById<Button>(R.id.recordtransact_btn2).setText("SAVE")
+        customView.findViewById<Button>(R.id.recordtransact_btn2).text = "SAVE"
         // define OnclickListener for accept button
         customView.findViewById<View>(R.id.accept_signature)
             .setOnClickListener { //CHECK IF USER HAS SIGNED , PROMPT THEM TO IF THEY HAVEN'T
@@ -224,7 +224,7 @@ class RecordDisplayFragment : Fragment() {
             }
         //define pop up canceller
         customView.findViewById<ImageView>(R.id.popup_canceller)
-            .setOnClickListener(View.OnClickListener {
+            .setOnClickListener({
 
                 customView.findViewById<View>(R.id.accept_signature).isEnabled = true
                 customView.findViewById<View>(R.id.clear_signaturepad).isEnabled = true
@@ -329,7 +329,7 @@ class RecordDisplayFragment : Fragment() {
             }
         catch (ex:Exception)
         {
-            Log.d("No Active User", "${ex.message}")
+            Timber.d("No Active User ${ex.message}")
         }
     }
 
@@ -456,6 +456,8 @@ class RecordDisplayFragment : Fragment() {
         dataObject.transactionamount = transactionamount
         dataObject.transactiontype = dbtransactiontype
         dataObject.customersiganature = byteArrayMaker()
+        val timestamp  =Date(System.currentTimeMillis()).time
+
 
         val transaction = TransactionModel(
             UUID.randomUUID().toString(),
@@ -465,6 +467,7 @@ class RecordDisplayFragment : Fragment() {
             dataObject.customerphone,
             dataObject.transactiontype,
             dataObject.transactionamount.toFloat(),
+            timestamp,
             dataObject.customersiganature,
             currentTime.trim(),
             phoneNumber
@@ -487,6 +490,7 @@ class RecordDisplayFragment : Fragment() {
         mTransactionViewModel.uploadTransaction(transactionRequest, requireActivity())
 
     }
+
 
     /******************************************************
      * byteArrayMaker -> gets Bitmap of signature  and

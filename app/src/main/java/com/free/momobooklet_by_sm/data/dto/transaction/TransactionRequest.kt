@@ -1,11 +1,9 @@
 package com.free.momobooklet_by_sm.data.dto.transaction
 
-import java.sql.Timestamp
-
 data class TransactionRequest
     (
     private  val  transactionId :String,
-    private val  timestamp : Timestamp?,
+    private val  timestamp : Long?,
     private val time : String,
     private val  customerName :String,
     private val  customerId :String,

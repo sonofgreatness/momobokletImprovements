@@ -17,6 +17,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import retrofit2.HttpException
 import retrofit2.Response
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -30,24 +31,24 @@ class DownloadWorker @Inject constructor(
     CoroutineWorker(appContext,params) {
 
     override suspend fun doWork(): Result {
-        Log.d("downloadWorker", "begin")
-        val agentPhoneNumber =   inputData.getString(AGENT_PHONENUMBER_KEY)
+        Timber.d("begin")
+        val agentPhoneNumber = inputData.getString(AGENT_PHONENUMBER_KEY)
 
         startForegroundService()
         delay(5000L)
-        Log.d("downloadWorker1.5", "begin+++")
+        Timber.d("begin+++")
 
-        var response :Response<ResponseBody>?
+        var response: Response<ResponseBody>?
 
         try {
-            Log.d("downloadWorker 1.7","before requestMade")
-            response= remoteTransactionsRepository.getTransactions(mapOf("AgentPhoneNumber" to agentPhoneNumber!!))
-        }catch (ex:HttpException)
-        {
+            Timber.d("downloadWorker 1.7 before requestMade")
+            response =
+                remoteTransactionsRepository.getTransactions(mapOf("AgentPhoneNumber" to agentPhoneNumber!!))
+        } catch (ex: HttpException) {
 
             response = null
-            Log.d("downloadWorker 1.8","message :: -> ${ex.localizedMessage}")
-        //remoteTransactionsRepository.getTransactions(mapOf("AgentPhoneNumber" to agentPhoneNumber!!))
+            Timber.d("downloadWorker 1.8 message :: -> ${ex.localizedMessage}")
+            //remoteTransactionsRepository.getTransactions(mapOf("AgentPhoneNumber" to agentPhoneNumber!!))
         }
         Log.d("downloadWorker1.9", "begin++plus")
         response?.body()?.let { body ->
@@ -59,7 +60,7 @@ class DownloadWorker @Inject constructor(
                 outputStream.use { stream ->
                     try {
                         stream.write(body.bytes())
-                    } catch(e: IOException) {
+                    } catch (e: IOException) {
                         return@withContext Result.failure(
                             workDataOf(
                                 WorkerKeys.ERROR_MSG to e.localizedMessage

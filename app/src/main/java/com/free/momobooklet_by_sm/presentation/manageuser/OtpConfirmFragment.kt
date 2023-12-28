@@ -75,42 +75,15 @@ class OtpConfirmFragment  : Fragment() {
         setButtonInActiveState()
         setupUpNavigationOnClick()
         setupSubmitButtonOnClick()
-        //registerUser()
-        authenticateUser()
+        registerUser()
+
 
 
         rootView = binding.root
         return rootView
     }
 
-    private fun authenticateUser() {
-        if(mUserViewModel.usableState.value == UserViewModel.MyState.Fetched) // internet available
 
-        {
-
-            //mUserViewModel.registerUserWithPhoneNumber(userPhoneNumber, activity as MainActivity)
-            val registrationRequest = AuthenticationRequest(
-                "71000000",
-                  "pool"
-            )
-                //getRegistrationRequest()
-
-
-
-            val authenticationRequest = getAuthenticationRequest()
-            mUserViewModel.authenticateUserInBackEnd(authenticationRequest, requireActivity())
-            //updateUIafterRegistrationInFireBase()
-            updateUIafterRegistrationInBackend()
-
-
-
-        }
-        else
-        {
-            notifyUserNoConnection()
-            Log.d("upL1", "noNetworkFromRegister")
-        }
-    }
 
     private fun getAuthenticationRequest(): AuthenticationRequest {
 

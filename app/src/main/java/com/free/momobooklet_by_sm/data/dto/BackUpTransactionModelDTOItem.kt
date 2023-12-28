@@ -1,6 +1,7 @@
 package com.free.momobooklet_by_sm.data.dto
 
 import com.free.momobooklet_by_sm.data.local.models.TransactionModel
+import java.sql.Timestamp
 
 data class BackUpTransactionModelDTOItem(
     val AgentPhoneNumber: String,
@@ -12,7 +13,8 @@ data class BackUpTransactionModelDTOItem(
     val Signature: List<Int>,
     val Time: String,
     val Transaction_ID: String,
-    val Transaction_type: Boolean
+    val Transaction_type: Boolean,
+    val timestamp: Timestamp
 ) {
     fun makeTransactionModel(): TransactionModel {
         return TransactionModel(
@@ -25,7 +27,8 @@ data class BackUpTransactionModelDTOItem(
             Amount = Amount.toFloat(),
             C_PHONE =  C_PHONE,
             AgentPhoneNumber = AgentPhoneNumber,
-            Signature = listToByteArray(Signature)
+            Signature = listToByteArray(Signature),
+            timestamp =  timestamp.time
         )
     }
     private fun listToByteArray(list: List<Int>) : ByteArray{

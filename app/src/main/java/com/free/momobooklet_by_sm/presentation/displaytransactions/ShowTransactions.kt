@@ -146,7 +146,8 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
            }
            .setPositiveButton("Continue") { _, _ ->
              // mBackupViewModel.importDataSet()
-             mTransactionViewModel.downloadTransaction(mainUser!!.MoMoNumber,requireActivity())
+             //mTransactionViewModel.downloadTransaction(mainUser!!.MoMoNumber,requireActivity())
+            mTransactionViewModel.exportWorker(requireActivity().application)
            }
            .show()
     }

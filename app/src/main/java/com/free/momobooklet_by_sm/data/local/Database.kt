@@ -9,7 +9,7 @@ import com.free.momobooklet_by_sm.data.local.daos.CommissionDao
 import com.free.momobooklet_by_sm.data.local.daos.TransactionDao
 import com.free.momobooklet_by_sm.data.local.daos.UserAccountsDao
 import com.free.momobooklet_by_sm.data.local.models.*
-import com.free.momobooklet_by_sm.data.local.models.TransactionModel
+
 
 @Database
     (
@@ -18,6 +18,7 @@ import com.free.momobooklet_by_sm.data.local.models.TransactionModel
         DailyCommissionModel_FTS::class, TransactionModel_FTS::class,BACKUP_METADATA::class
     ], version = 1, exportSchema = false
 )
+
     abstract class Database : RoomDatabase() {
     abstract fun getDao(): TransactionDao
     abstract fun getUserAccountsDao(): UserAccountsDao
@@ -39,7 +40,7 @@ import com.free.momobooklet_by_sm.data.local.models.TransactionModel
                     com.free.momobooklet_by_sm.data.local.Database::class.java,
                     "user_database_test"
                 )
-                    .createFromAsset("databases/testDB.db")
+                   .createFromAsset("databases/timestamped.db")
                     .addCallback(CALLBACK2)
                     .fallbackToDestructiveMigration()
                     .build()

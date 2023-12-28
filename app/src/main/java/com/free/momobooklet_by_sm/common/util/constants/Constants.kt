@@ -4,6 +4,7 @@ class Constants {
   companion object {
 
 
+
       const val  BUY_IDENTIFIER = "buy"
       const val  SELL_IDENTIFIER = "sell"
       const val  DATE_DATE_PATTERN = "dd-MM-yyyy"
@@ -105,12 +106,12 @@ class Constants {
       const val BACKEND_TRANSACT_GET_OK = "Successfully downloaded transactions"
       const val BACKEND_TRANSACT_GET_FAIL = "Failed to get transaction(s)"
       const val BACKEND_BACKUP_ADD_OK = "Succcessfully Added  backup (s)"
-     const  val BACKEND_BACKUP_ADD_FAIL = "Failed to get backup (s)"
+      const  val BACKEND_BACKUP_ADD_FAIL = "Failed to get backup (s)"
       const val BACKUP_DETAILS_FILE = "temp_backup_details.json"
-       const val BACKUP_FROM_SERVER_FILENAME ="server_backup.zip"
+      const val BACKUP_FROM_SERVER_FILENAME ="server_backup.zip"
       const val BACKEND_BACKUP_FROM_SERVER_GET_OK = "Succcessfully downloaded  backup"
       const val BACKUP_FROM_SERVER_FAIL = "Failed to download  backup"
-
+      const val TRANSACTIONS_EXPORT_PREFS_NAME = "Transaction export Prefs"
 
   }
 
