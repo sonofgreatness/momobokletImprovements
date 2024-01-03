@@ -18,6 +18,7 @@ import com.free.momobooklet_by_sm.MainActivity
 import com.free.momobooklet_by_sm.R
 import com.free.momobooklet_by_sm.data.local.models.UserModel
 import com.free.momobooklet_by_sm.databinding.FragmentShowTransactionsBinding
+import com.free.momobooklet_by_sm.domain.workers.remote.transactions.TransactionBackupManager
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.BackupViewModel
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.TransactionViewModel
 import com.free.momobooklet_by_sm.presentation.ui.viewmodels.UserViewModel
@@ -145,18 +146,18 @@ class ShowTransactions : Fragment() , SearchView.OnQueryTextListener  {
            .setNegativeButton("Abort"){_, _ ->
            }
            .setPositiveButton("Continue") { _, _ ->
-             // mBackupViewModel.importDataSet()
-             //mTransactionViewModel.downloadTransaction(mainUser!!.MoMoNumber,requireActivity())
-            mTransactionViewModel.exportWorker(requireActivity().application)
+
+               TransactionBackupManager(requireContext().applicationContext).downloadTransactionData()
+
            }
            .show()
     }
 
 
-    /************************************************
-     * Sets recyclerview adapters
-     *                  Header adapter for the Titles
-     *                  adapter for the the list elements
+    /******************************************************
+     * Sets recyclerview adapters                         *
+     *                  Header adapter for the Titles     *
+     *                  adapter for the the list elements *
      *****************************************************/
     private fun setupRecyclerView() {
         val headerAdapter = HeaderAdapter()

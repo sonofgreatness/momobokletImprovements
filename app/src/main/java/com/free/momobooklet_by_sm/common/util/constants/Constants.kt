@@ -90,7 +90,8 @@ class Constants {
       const val EXTERRNALBACKUP_ERROR_MESSAGE  = "back up up to external folder failed ,error message  ="
       const val BACKUP_FILENAME = "backup_file.zip"
       const val RECOVERY_FILENAME = "recovery_file.zip"
-
+      const val DOWNLOADED_TRANSACTIONS_FILE = "downloadetransactions.json"
+      const val UPLOAD_TRANSACTIONS_EXT = "Exp.json"
       const val ZIP_PREFIX_PREFS = "shared_prefs/"
       const val BACKUP_TRANSACTIONS_FILENAME = "transactionsBackUp.json"
       const val BACKUP_USERS_FILENAME = "usersBackUp.json"

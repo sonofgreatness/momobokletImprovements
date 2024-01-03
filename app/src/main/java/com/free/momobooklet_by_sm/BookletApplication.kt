@@ -3,18 +3,21 @@ package com.free.momobooklet_by_sm
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.os.Build
 import androidx.work.Configuration
 import androidx.work.DelegatingWorkerFactory
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.free.momobooklet_by_sm.domain.repositories.RemoteTransactionsRepository
 import com.free.momobooklet_by_sm.domain.repositories.TransactionRepository
 import com.free.momobooklet_by_sm.domain.repositories.UserRepository
+import com.free.momobooklet_by_sm.domain.use_cases.manage_transactions.DownloadTransactionsUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.manage_transactions.UploadTransactionsUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.manage_users.AuthenticateUserInBackEndUseCase
 import com.free.momobooklet_by_sm.domain.workers.factories.MyWorkerFactory
-import com.free.momobooklet_by_sm.domain.workers.remote.transactions.TransactionBackupManager
+import com.free.momobooklet_by_sm.domain.workers.remote.transactions.PeriodicWorker
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -34,7 +37,8 @@ class BookletApplication :Application() , Configuration.Provider{
     @Inject
     lateinit var authenticateUserInBackEndUseCase: AuthenticateUserInBackEndUseCase
 
-
+   @Inject
+   lateinit var downloadTransactionsUseCase:DownloadTransactionsUseCase
 
 
     init {
@@ -54,8 +58,18 @@ class BookletApplication :Application() , Configuration.Provider{
         val notificationManager = getSystemService(NotificationManager::class.java)
         notificationManager.createNotificationChannel(channel)
 
-  //initiate daily transaction backup
-        TransactionBackupManager(context = this).startBackup()
+
+        //initiate daily transaction backup
+        val periodicStartingPointWorkRequest = PeriodicWorkRequestBuilder<PeriodicWorker>(
+            repeatInterval = 23, // Repeat every 23 hours
+            repeatIntervalTimeUnit = TimeUnit.HOURS
+        )
+            .setInitialDelay(
+                5, TimeUnit.MINUTES) // Start after 1 hour
+            .build()
+        WorkManager.getInstance(this).enqueue(periodicStartingPointWorkRequest)
+
+
 
     }
 
@@ -67,6 +81,7 @@ class BookletApplication :Application() , Configuration.Provider{
             transactionRepository,
             userRepository,
             uploadTransactionsUseCase,
+            downloadTransactionsUseCase,
             authenticateUserInBackEndUseCase))
 
 
@@ -79,6 +94,7 @@ class BookletApplication :Application() , Configuration.Provider{
                     transactionRepository,
                     userRepository,
                     uploadTransactionsUseCase,
+                    downloadTransactionsUseCase,
                     authenticateUserInBackEndUseCase
             ))
             .build()

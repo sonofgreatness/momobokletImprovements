@@ -1,7 +1,6 @@
 package com.free.momobooklet_by_sm.presentation.ui.viewmodels
 
 import android.app.Activity
-import android.app.Application
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -9,8 +8,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.*
-import com.free.momobooklet_by_sm.common.util.Constants
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.ExportState
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.Resource
 import com.free.momobooklet_by_sm.data.dto.transaction.TransactionRequest
@@ -21,10 +18,6 @@ import com.free.momobooklet_by_sm.domain.repositories.UserRepository
 import com.free.momobooklet_by_sm.domain.use_cases.manage_transactions.DownloadTransactionsUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.manage_transactions.UploadTransactionsUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.managefiles_use_cases.ExportService
-import com.free.momobooklet_by_sm.domain.workers.remote.DownloadWorker
-import com.free.momobooklet_by_sm.domain.workers.remote.ImportToRoomWorker
-import com.free.momobooklet_by_sm.domain.workers.remote.transactions.ExportTransactiondToFileWorker
-import com.free.momobooklet_by_sm.domain.workers.remote.transactions.UploadTransactionsWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow

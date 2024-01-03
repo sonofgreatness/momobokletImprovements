@@ -17,10 +17,12 @@ import timber.log.Timber
 import javax.inject.Inject
 @HiltViewModel
 class
-BackupViewModel @Inject constructor(val application: Application,
-                                    val remoteTransactionsRepository: RemoteTransactionsRepository,
-
-                                          ):ViewModel()  {
+BackupViewModel
+@Inject
+constructor(
+    val application: Application,
+    val remoteTransactionsRepository: RemoteTransactionsRepository,
+    ):ViewModel()  {
 
     /********************************************************************************************
      * Handles Import/ Export  data  from and to Remote DB

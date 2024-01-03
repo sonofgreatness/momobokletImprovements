@@ -487,7 +487,7 @@ class RecordDisplayFragment : Fragment() {
         time = transaction.Time)
 
         mTransactionViewModel.addTransaction(transaction)
-        mTransactionViewModel.uploadTransaction(transactionRequest, requireActivity())
+       //mTransactionViewModel.uploadTransaction(transactionRequest, requireActivity())
 
     }
 

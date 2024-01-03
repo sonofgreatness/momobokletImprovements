@@ -1,15 +1,14 @@
-package com.free.momobooklet_by_sm.domain.workers.remote.transactions
+package com.free.momobooklet_by_sm.domain.workers.remote.transactions.upload
 
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.free.momobooklet_by_sm.common.util.Constants.Companion.UPLOAD_TRANSACTIONS_EXT
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.Resource
 import com.free.momobooklet_by_sm.data.dto.transaction.TransactionRequest
 import com.free.momobooklet_by_sm.data.dto.transaction.UploadTransactionsDto
-import com.free.momobooklet_by_sm.data.dto.user.AuthenticationRequest
 import com.free.momobooklet_by_sm.domain.repositories.UserRepository
 import com.free.momobooklet_by_sm.domain.use_cases.manage_transactions.UploadTransactionsUseCase
-import com.free.momobooklet_by_sm.domain.use_cases.manage_users.AuthenticateUserInBackEndUseCase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -24,8 +23,7 @@ import javax.inject.Inject
 class UploadTransactionsWorker
 @Inject constructor(
     private val uploadTransactionsUseCase: UploadTransactionsUseCase,
-    private  val authenticateUserInBackEndUseCase: AuthenticateUserInBackEndUseCase,
-    private  val userRepository: UserRepository,
+    private val userRepository: UserRepository,
     val appContext: Context,
     params: WorkerParameters
 ) :
@@ -41,6 +39,8 @@ class UploadTransactionsWorker
         val listOfUsers = userRepository.getAllUserAccounts()
         val listOfListOfTransaction : MutableList<List<TransactionRequest>> = ArrayList()
 
+        Timber.d("UpLOad transactionWorker Called")
+
         return  withContext(Dispatchers.IO) {
             try {
 
@@ -50,24 +50,6 @@ class UploadTransactionsWorker
                     listOfListOfTransaction.add(getTransactions(it.MoMoNumber))
                 }
 
-                //authenticates all users  in server
-
-                listOfUsers.forEach {
-                    val request = AuthenticationRequest(
-                        username = it.MoMoNumber,
-                        password = it.AgentPassword)
-
-                    authenticateUserInBackEndUseCase(request).collect{ resource ->
-                        when(resource){
-                             is Resource.Error -> {
-                                 Result.failure()
-                             }
-                            else -> {
-
-                            }
-                        }
-                    }
-                }
 
 
                 // uploads all transactions to server
@@ -108,7 +90,7 @@ class UploadTransactionsWorker
     private fun getTransactions(moMoNumber: String): List<TransactionRequest> {
         val finalList : MutableList<TransactionRequest> = ArrayList()
 
-        val filename = moMoNumber.plus("Exp.json")
+        val filename = moMoNumber.plus(UPLOAD_TRANSACTIONS_EXT)
         val file = File(appContext.cacheDir, filename)
         try {
 
@@ -124,6 +106,8 @@ class UploadTransactionsWorker
                 finalList.add(it.createTransactionRequest())
             }
 
+
+            fis.close()
 
         }catch (e:Exception)
         {

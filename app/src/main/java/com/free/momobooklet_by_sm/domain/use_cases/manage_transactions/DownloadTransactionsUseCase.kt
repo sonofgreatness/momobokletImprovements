@@ -1,27 +1,22 @@
 package com.free.momobooklet_by_sm.domain.use_cases.manage_transactions
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import com.free.momobooklet_by_sm.common.util.Constants
+import com.free.momobooklet_by_sm.common.util.Constants.Companion.DOWNLOADED_TRANSACTIONS_FILE
 import com.free.momobooklet_by_sm.common.util.classes.operationalStates.Resource
-import com.free.momobooklet_by_sm.data.dto.AuthTokenDto
-import com.free.momobooklet_by_sm.data.dto.transaction.DownloadTransactionDto
-import com.free.momobooklet_by_sm.data.dto.transaction.DownloadTransactionDtoItem
-import com.free.momobooklet_by_sm.domain.repositories.TransactionRepository
 import com.free.momobooklet_by_sm.domain.repositories.transaction.TransactionBackEndRepository
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
+import java.io.File
+import java.io.FileWriter
 import javax.inject.Inject
 
 class DownloadTransactionsUseCase @Inject constructor(
     val repository: TransactionBackEndRepository,
-    val application: Application,
-    val localRepository: TransactionRepository
-)
+    val application: Application
+    )
 {
 
     operator fun invoke(username: String) : Flow<Resource<String>> = flow{
@@ -32,8 +27,7 @@ class DownloadTransactionsUseCase @Inject constructor(
             if (accessToken != null) {
                 val response = repository.getAllTransactions("Bearer $accessToken")
                 if (response?.isSuccessful == true) {
-                writeTransactionstoDb(response.body()?.string())
-                        Timber.d("Download Transactions  ==>"+response.body()?.string())
+                writeTransactionstoFile(response.body()?.string(),username)
                     emit(Resource.Success(Constants.BACKEND_TRANSACT_GET_OK))
 
                 } else
@@ -54,20 +48,29 @@ class DownloadTransactionsUseCase @Inject constructor(
         }
     }
 
-    /**
-     * converts  Json response to List<Transaction>
-     *     then adds transactions to local db
-     **/
+    /*******************************************************
+     * converts  Json response to List<Transaction>        *
+     *     then adds transactions to file named
+     *           downloadedTransactions.json
+     ******************************************************/
 
-    private suspend fun writeTransactionstoDb(actualResponse: String?) {
-        val gson  = Gson()
-        val listType = object : TypeToken<DownloadTransactionDto>(){}.type
-        val   transactions : DownloadTransactionDto = gson.fromJson(actualResponse,listType)
-
-        transactions.forEach {
-          Timber.d ("Iterating through  ${it.createTransaction().Transaction_ID}")
-            localRepository.addTransaction(it.createTransaction())
+    @Throws(Exception::class)
+    private  fun writeTransactionstoFile(actualResponse: String?,username:String) {
+        val file = File(application.applicationContext.cacheDir,
+                               username.plus(
+                                 DOWNLOADED_TRANSACTIONS_FILE))
+        if (file.exists())
+            file.delete()
+        file.createNewFile()
+        val writer = FileWriter(file)
+        try {
+            writer.write(actualResponse)
+            writer.close()
+        }catch (e:Exception)
+        {
+            throw e
         }
+
 
     }
 

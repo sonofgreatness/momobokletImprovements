@@ -7,12 +7,14 @@ import androidx.work.WorkerParameters
 import com.free.momobooklet_by_sm.domain.repositories.RemoteTransactionsRepository
 import com.free.momobooklet_by_sm.domain.repositories.TransactionRepository
 import com.free.momobooklet_by_sm.domain.repositories.UserRepository
+import com.free.momobooklet_by_sm.domain.use_cases.manage_transactions.DownloadTransactionsUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.manage_transactions.UploadTransactionsUseCase
 import com.free.momobooklet_by_sm.domain.use_cases.manage_users.AuthenticateUserInBackEndUseCase
 import com.free.momobooklet_by_sm.domain.workers.remote.DownloadWorker
-import com.free.momobooklet_by_sm.domain.workers.remote.transactions.ExportTransactiondToFileWorker
-import com.free.momobooklet_by_sm.domain.workers.remote.transactions.UploadTransactionsWorker
-import java.security.PrivateKey
+import com.free.momobooklet_by_sm.domain.workers.remote.transactions.download.DownloadTransactionsWorker
+import com.free.momobooklet_by_sm.domain.workers.remote.transactions.download.ImportTransactionsWorker
+import com.free.momobooklet_by_sm.domain.workers.remote.transactions.upload.ExportTransactiondToFileWorker
+import com.free.momobooklet_by_sm.domain.workers.remote.transactions.upload.UploadTransactionsWorker
 
 /*****************************
  * For DownloadWorker
@@ -24,6 +26,7 @@ class MyWorkerFactory constructor(
     private val transactionRepository: TransactionRepository,
     private  val userRepository: UserRepository,
     private val uploadTransactionsUseCase: UploadTransactionsUseCase,
+    private val downloadTransactionsUseCase: DownloadTransactionsUseCase,
     private  val authenticateUserInBackEndUseCase: AuthenticateUserInBackEndUseCase
     ) : WorkerFactory() {
 
@@ -37,13 +40,41 @@ class MyWorkerFactory constructor(
 
         return when(workerClassName) {
             DownloadWorker::class.java.name ->
-                DownloadWorker(remoteTransactionsRepository,appContext, workerParameters)
+                DownloadWorker(remoteTransactionsRepository
+                    ,appContext, workerParameters)
 
             ExportTransactiondToFileWorker::class.java.name ->
-                ExportTransactiondToFileWorker(transactionRepository,userRepository,appContext, workerParameters)
+                ExportTransactiondToFileWorker(
+                    transactionRepository,
+                    userRepository,
+                    authenticateUserInBackEndUseCase,
+                    appContext,
+                    workerParameters)
 
             UploadTransactionsWorker::class.java.name ->
-                UploadTransactionsWorker(uploadTransactionsUseCase, authenticateUserInBackEndUseCase,userRepository,appContext, workerParameters)
+                UploadTransactionsWorker(
+                    uploadTransactionsUseCase,
+                    userRepository,
+                    appContext,
+                    workerParameters
+                )
+            DownloadTransactionsWorker::class.java.name ->
+                DownloadTransactionsWorker(
+                    downloadTransactionsUseCase,
+                    userRepository,
+                    authenticateUserInBackEndUseCase,
+                    appContext,
+                    workerParameters
+                )
+
+            ImportTransactionsWorker::class.java.name ->
+                ImportTransactionsWorker(
+                    userRepository,
+                    transactionRepository,
+                    appContext,
+                    workerParameters
+                )
+
             else ->
                 // Return null, so that the base class can delegate to the default WorkerFactory.
                 null

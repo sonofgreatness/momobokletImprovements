@@ -1,16 +1,21 @@
-package com.free.momobooklet_by_sm.domain.workers.remote.transactions
+package com.free.momobooklet_by_sm.domain.workers.remote.transactions.upload
 
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.free.momobooklet_by_sm.common.util.Constants
+import com.free.momobooklet_by_sm.common.util.Constants.Companion.UPLOAD_TRANSACTIONS_EXT
+import com.free.momobooklet_by_sm.common.util.classes.operationalStates.Resource
+import com.free.momobooklet_by_sm.data.dto.user.AuthenticationRequest
 import com.free.momobooklet_by_sm.data.local.models.TransactionModel
 import com.free.momobooklet_by_sm.domain.repositories.TransactionRepository
 import com.free.momobooklet_by_sm.domain.repositories.UserRepository
+import com.free.momobooklet_by_sm.domain.use_cases.manage_users.AuthenticateUserInBackEndUseCase
 import com.google.gson.Gson
 import timber.log.Timber
 import java.io.File
 import java.io.FileWriter
+import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
@@ -24,6 +29,7 @@ class ExportTransactiondToFileWorker
 @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val userRepository: UserRepository,
+    private  val authenticateUserInBackEndUseCase: AuthenticateUserInBackEndUseCase,
     val appContext: Context,
     params: WorkerParameters
 ) :
@@ -36,25 +42,59 @@ class ExportTransactiondToFileWorker
      *         exports transactions to file named `usernameExp.json`
      ***********************************************************************/
     override suspend fun doWork(): Result {
+        Timber.d("Export transactionsWorker 123 Called")
+
+
         val listOfUsers = userRepository.getAllUserAccounts()
         val listOfListOfTransaction : MutableList<List<TransactionModel>> = ArrayList()
 
         try {
 
 
+
+            //authenticates all users  in server
+
             listOfUsers.forEach {
-                listOfListOfTransaction.add(
-                    getNewestTransactions(it.MoMoNumber)
-                )
+                val request = AuthenticationRequest(
+                    username = it.MoMoNumber,
+                    password = it.AgentPassword)
+
+                authenticateUserInBackEndUseCase(request).collect{ resource ->
+                    when(resource){
+                        is Resource.Error -> {
+                            Result.retry()
+                        }
+                        else -> {
+
+                        }
+                    }
+                }
+            }
+
+            listOfUsers.forEach {
+             val transactions = getNewestTransactions(it.MoMoNumber)
+                if (transactions.isNotEmpty())
+                         listOfListOfTransaction
+                             .add(transactions)
+
+                Timber.d("addition => ${getNewestTransactions(it.MoMoNumber)}")
 
             }
             listOfListOfTransaction.forEach {
-                writeTransactionsToFile(it)
+                Timber.d("writ to file called ")
+                if(it.isNotEmpty())
+                    writeTransactionsToFile(it)
             }
         }
-        catch (e:Exception){
+        catch (e: IOException){
+            Timber.d("Export Transactions Worker Failed   IOException ==> ${e.message}")
             return  Result.failure()
         }
+        catch (e: Exception){
+            Timber.d("Export Transactions Worker Failed    ==> ${e.message}   ${e.cause}")
+            return  Result.failure()
+        }
+
         return Result.success()
 
     }
@@ -67,7 +107,7 @@ class ExportTransactiondToFileWorker
     private fun writeTransactionsToFile(transactions: List<TransactionModel>) {
 
         val username = transactions[0].AgentPhoneNumber
-        val filename = username.plus("Exp.json")
+        val filename = username.plus(UPLOAD_TRANSACTIONS_EXT)
         val file = File(appContext.cacheDir, filename)
 
         if (file.exists())
@@ -104,9 +144,11 @@ class ExportTransactiondToFileWorker
         val endDate = Date(System.currentTimeMillis()).time
         return if (startDate != 0L) {
             updateStarDate(endDate,moMoNumber)
+            Timber.d("get new transactions $moMoNumber")
             transactionRepository.getNewestTransactions(startDate, endDate, moMoNumber)
         } else {
             updateStarDate(endDate,moMoNumber)
+            Timber.d("get all transactions $moMoNumber")
             transactionRepository.getAllTransactionsRegularData(moMoNumber)
         }
     }

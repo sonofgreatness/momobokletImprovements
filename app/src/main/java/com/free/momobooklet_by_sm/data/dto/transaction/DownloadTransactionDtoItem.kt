@@ -36,13 +36,12 @@ data class DownloadTransactionDtoItem(
             mySignature = ByteArray(signature.size)
 
             for ((i, byte) in signature.withIndex()) {
-                Timber.d("iterating through size =>${signature.size}    : => $i")
                 mySignature[i] = byte.toByte()
             }
         }
         else
         {
-            Timber.d("iterating through size 2222 =>")
+
             mySignature = ByteArray(1)
         }
 
