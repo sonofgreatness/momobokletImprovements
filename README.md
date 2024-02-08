@@ -59,4 +59,6 @@ You can connect with me here:
 * [YouTube Channel](https://www.youtube.com/@unusualcode)
 
 ## BackEnd 
+The backend of this app is not hosted 
+,No user should expect any of their data to be backed up  ...  
 [SpringBoot Application that is meant to provide backend , not yet deployed/hosted...](https://github.com/sonofgreatness/digibooklet-springboot-server.git)
