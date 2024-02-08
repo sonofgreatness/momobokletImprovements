@@ -39,9 +39,6 @@ Here's how to use our app:
 2. Log in or create a new account.
 3. Start using our amazing features!
 
-## Support
-
-If you encounter any problems or have any questions, please contact us at support@myandroidapp.com.
 
 ## Donate
 
@@ -52,8 +49,10 @@ Your support is what keeps us going! If you love our app and want to help us con
 
 My Android App is licensed under the MIT License. See `LICENSE` for more information.
 
-# About The Author
-You can connect with me here:
+
+## Support
+
+If you encounter any problems or have any questions, please contact us at :
 * [Simphiwe Magagula](https://wa.link/oc1up8)
 * [Twitter](https://twitter.com/janisharali)
 * [YouTube Channel](https://www.youtube.com/@unusualcode)
