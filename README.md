@@ -54,8 +54,6 @@ My Android App is licensed under the MIT License. See `LICENSE` for more informa
 
 If you encounter any problems or have any questions, please contact us at :
 * [Simphiwe Magagula](https://wa.link/oc1up8)
-* [Twitter](https://twitter.com/janisharali)
-* [YouTube Channel](https://www.youtube.com/@unusualcode)
 
 ## BackEnd 
 The backend of this app is not hosted 
