@@ -58,4 +58,4 @@ If you encounter any problems or have any questions, please contact us at :
 ## BackEnd 
 The backend of this app is not hosted 
 ,No user should expect any of their data to be backed up  ...  
-[SpringBoot Application that is meant to provide backend , not yet deployed/hosted...][(https://github.com/sonofgreatness/digibooklet-springboot-server/tree/master))]
+[SpringBoot Application that is meant to provide backend , not yet deployed/hosted...](https://github.com/sonofgreatness/digibooklet-springboot-server/tree/master)
